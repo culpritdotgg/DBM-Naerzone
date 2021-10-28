@@ -82,7 +82,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)--We use spell cast success for debuff timers in case it gets resisted by a player we still get CD timer for next one
-	if args.spellId == 74795 then
+	if args.spellId == 74792 then
 		if self:IsHeroic() then
 			timerShadowConsumptionCD:Start(20)
 		else
@@ -91,7 +91,7 @@ function mod:SPELL_CAST_SUCCESS(args)--We use spell cast success for debuff time
 		if self:LatencyCheck() then
 			self:SendSync("ShadowCD")
 		end
-	elseif args.spellId == 74567 then
+	elseif args.spellId == 74562 then
 		if self:IsHeroic() then
 			timerFieryConsumptionCD:Start(20)
 		else
@@ -104,7 +104,7 @@ function mod:SPELL_CAST_SUCCESS(args)--We use spell cast success for debuff time
 end
 
 function mod:SPELL_AURA_APPLIED(args)--We don't use spell cast success for actual debuff on >player< warnings since it has a chance to be resisted.
-	if args.spellId == 74795 then
+	if args.spellId == 74792 then
 		if self:LatencyCheck() then
 			self:SendSync("ShadowTarget", args.destName)
 		end
@@ -119,7 +119,7 @@ function mod:SPELL_AURA_APPLIED(args)--We don't use spell cast success for actua
 		if self.Options.SetIconOnConsumption then
 			self:SetIcon(args.destName, 7)
 		end
-	elseif args.spellId == 74567 then
+	elseif args.spellId == 74562 then
 		if self:LatencyCheck() then
 			self:SendSync("FieryTarget", args.destName)
 		end
@@ -138,11 +138,11 @@ function mod:SPELL_AURA_APPLIED(args)--We don't use spell cast success for actua
 end
 
 function mod:SPELL_AURA_REMOVED(args)
-	if args.spellId == 74795 then
+	if args.spellId == 74792 then
 		if self.Options.SetIconOnConsumption then
 			self:SetIcon(args.destName, 0)
 		end
-	elseif args.spellId == 74567 then
+	elseif args.spellId == 74562 then
 		if self.Options.SetIconOnConsumption then
 			self:SetIcon(args.destName, 0)
 		end
