@@ -45,7 +45,7 @@ local timerFieryConsumptionCD		= mod:NewNextTimer(25, 74562, nil, nil, nil, 3)
 local timerMeteorCD					= mod:NewNextTimer(40, 74648, nil, nil, nil, 3)--Target or aoe? tough call. It's a targeted aoe!
 local timerMeteorCast				= mod:NewCastTimer(7, 74648)--7-8 seconds from boss yell the meteor impacts.
 --local timerTwilightCutterCast		= mod:NewCastTimer(5, 74769)
-local timerTwilightCutter			= mod:NewBuffActiveTimer(10, 74769, nil, nil, nil, 6)
+local timerTwilightCutter			= mod:NewBuffActiveTimer(8, 74769, nil, nil, nil, 6)
 local timerTwilightCutterCD			= mod:NewNextTimer(15, 74769, nil, nil, nil, 6)
 local timerShadowBreathCD			= mod:NewCDTimer(16, 74806, nil, "Tank|Healer", nil, 5)--Edited. Same as debuff timers, same CD, can be merged into 1.
 local timerFieryBreathCD			= mod:NewCDTimer(16, 74525, nil, "Tank|Healer", nil, 5)--But unique icons are nice pertaining to phase you're in ;)
@@ -277,11 +277,11 @@ function mod:OnSync(msg, target)
 		timerFieryConsumptionCD:Cancel()
 		warnPhase2:Show()
 		timerShadowBreathCD:Start(18) -- Edited.
-		timerShadowConsumptionCD:Start(25)--Edited. not exact, 15 seconds from tank aggro, but easier to add 5 seconds to it as a estimate timer than trying to detect this
+		timerShadowConsumptionCD:Start(22)--Edited. not exact, 15 seconds from tank aggro, but easier to add 5 seconds to it as a estimate timer than trying to detect this
 		if self:IsHeroic() then --These i'm not sure if they start regardless of drake aggro, or if it should be moved too.
-			timerTwilightCutterCD:Start(30)
+			timerTwilightCutterCD:Start(40)
 		else
-			timerTwilightCutterCD:Start(35)
+			timerTwilightCutterCD:Start(40)
 		end
 	elseif msg == "Phase3" and self.vb.phase < 3 then
 		self:SetStage(3)
