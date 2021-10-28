@@ -81,7 +81,29 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
-function mod:SPELL_AURA_APPLIED(args)--We use spell cast success for debuff timers in case it gets resisted by a player we still get CD timer for next one
+-- function mod:SPELL_AURA_APPLIED(args)--We use spell cast success for debuff timers in case it gets resisted by a player we still get CD timer for next one
+-- 	if args.spellId == 74792 then
+-- 		if self:IsHeroic() then
+-- 			timerShadowConsumptionCD:Start(20)
+-- 		else
+-- 			timerShadowConsumptionCD:Start()
+-- 		end
+-- 		if self:LatencyCheck() then
+-- 			self:SendSync("ShadowCD")
+-- 		end
+-- 	elseif args.spellId == 74562 then
+-- 		if self:IsHeroic() then
+-- 			timerFieryConsumptionCD:Start(20)
+-- 		else
+-- 			timerFieryConsumptionCD:Start()
+-- 		end
+-- 		if self:LatencyCheck() then
+-- 			self:SendSync("FieryCD")
+-- 		end
+-- 	end
+-- end
+
+function mod:SPELL_AURA_APPLIED(args)--We don't use spell cast success for actual debuff on >player< warnings since it has a chance to be resisted.
 	if args.spellId == 74792 then
 		if self:IsHeroic() then
 			timerShadowConsumptionCD:Start(20)
@@ -91,20 +113,6 @@ function mod:SPELL_AURA_APPLIED(args)--We use spell cast success for debuff time
 		if self:LatencyCheck() then
 			self:SendSync("ShadowCD")
 		end
-	elseif args.spellId == 74562 then
-		if self:IsHeroic() then
-			timerFieryConsumptionCD:Start(20)
-		else
-			timerFieryConsumptionCD:Start()
-		end
-		if self:LatencyCheck() then
-			self:SendSync("FieryCD")
-		end
-	end
-end
-
-function mod:SPELL_AURA_APPLIED(args)--We don't use spell cast success for actual debuff on >player< warnings since it has a chance to be resisted.
-	if args.spellId == 74792 then
 		if self:LatencyCheck() then
 			self:SendSync("ShadowTarget", args.destName)
 		end
@@ -120,6 +128,14 @@ function mod:SPELL_AURA_APPLIED(args)--We don't use spell cast success for actua
 			self:SetIcon(args.destName, 7)
 		end
 	elseif args.spellId == 74562 then
+		if self:IsHeroic() then
+			timerFieryConsumptionCD:Start(20)
+		else
+			timerFieryConsumptionCD:Start()
+		end
+		if self:LatencyCheck() then
+			self:SendSync("FieryCD")
+		end
 		if self:LatencyCheck() then
 			self:SendSync("FieryTarget", args.destName)
 		end
