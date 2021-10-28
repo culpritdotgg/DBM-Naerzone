@@ -81,7 +81,7 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
-function mod:SPELL_CAST_SUCCESS(args)--We use spell cast success for debuff timers in case it gets resisted by a player we still get CD timer for next one
+function mod:SPELL_AURA_APPLIED(args)--We use spell cast success for debuff timers in case it gets resisted by a player we still get CD timer for next one
 	if args.spellId == 74792 then
 		if self:IsHeroic() then
 			timerShadowConsumptionCD:Start(20)
