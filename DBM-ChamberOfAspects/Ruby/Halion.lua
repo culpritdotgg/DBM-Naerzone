@@ -295,9 +295,9 @@ function mod:OnSync(msg, target)
 		timerShadowBreathCD:Start(18) -- Edited.
 		timerShadowConsumptionCD:Start(22)--Edited. not exact, 15 seconds from tank aggro, but easier to add 5 seconds to it as a estimate timer than trying to detect this
 		if self:IsHeroic() then --These i'm not sure if they start regardless of drake aggro, or if it should be moved too.
-			timerTwilightCutterCD:Start(40)
+			timerTwilightCutterCD:Start(36)
 		else
-			timerTwilightCutterCD:Start(40)
+			timerTwilightCutterCD:Start(36)
 		end
 	elseif msg == "Phase3" and self.vb.phase < 3 then
 		self:SetStage(3)
