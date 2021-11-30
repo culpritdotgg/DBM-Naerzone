@@ -345,7 +345,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			specWarnSoulreaperOtr:Play("tauntboss")
 		end
 	elseif args.spellId == 69200 then -- Raging Spirit
-		timerSoulShriekCD:Start(20, args.destName)
+		timerSoulShriekCD:Start(16, args.destName)
 		if args:IsPlayer() then
 			specWarnRagingSpirit:Show()
 			specWarnRagingSpirit:Play("targetyou")
@@ -360,30 +360,6 @@ function mod:SPELL_CAST_SUCCESS(args)
 		if self.Options.RagingSpiritIcon then
 			self:SetIcon(args.destName, 7, 5)
 		end
-	elseif args:IsSpellID(68980, 74325, 74326, 74327) then -- Harvest Soul
-		timerHarvestSoul:Start(args.destName)
-		timerHarvestSoulCD:Start()
-		if args:IsPlayer() then
-			specWarnHarvestSoul:Show()
-			specWarnHarvestSoul:Play("targetyou")
-		else
-			warnHarvestSoul:Show(args.destName)
-		end
-		if self.Options.HarvestSoulIcon then
-			self:SetIcon(args.destName, 6, 5)
-		end
-	elseif args:IsSpellID(73654, 74295, 74296, 74297) then -- Harvest Souls (Heroic)
-		specWarnHarvestSouls:Show()
-		--specWarnHarvestSouls:Play("phasechange")
-		timerHarvestSoulCD:Start(107) -- Custom edit to make Harvest Souls timers work again
-		timerVileSpirit:Cancel()
-		timerSoulreaperCD:Cancel()
-		soundSoulReaperSoon:Cancel()
-		timerDefileCD:Cancel()
-		warnDefileSoon:Cancel()
-		warnDefileSoon:CancelVoice()
-		self:SetWipeTime(50)--We set a 45 sec min wipe time to keep mod from ending combat if you die while rest of raid is in frostmourn
-		self:Schedule(50, RestoreWipeTime, self)
 	end
 end
 
@@ -409,6 +385,30 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args.spellId == 73650 and self:AntiSpam(3, 2) then		-- Restore Soul (Heroic)
 		timerHarvestSoulCD:Start(60)
 		timerVileSpirit:Start(10)--May be wrong too but we'll see, didn't have enough log for this one.
+	elseif args:IsSpellID(68980, 74325, 74326, 74327) then -- Harvest Soul
+		timerHarvestSoul:Start(args.destName)
+		timerHarvestSoulCD:Start()
+		if args:IsPlayer() then
+			specWarnHarvestSoul:Show()
+			specWarnHarvestSoul:Play("targetyou")
+		else
+			warnHarvestSoul:Show(args.destName)
+		end
+		if self.Options.HarvestSoulIcon then
+			self:SetIcon(args.destName, 6, 5)
+		end
+	elseif args:IsSpellID(73654, 74295, 74296, 74297) then -- Harvest Souls (Heroic)
+		specWarnHarvestSouls:Show()
+		--specWarnHarvestSouls:Play("phasechange")
+		timerHarvestSoulCD:Start(107) -- Custom edit to make Harvest Souls timers work again
+		timerVileSpirit:Cancel()
+		timerSoulreaperCD:Cancel()
+		soundSoulReaperSoon:Cancel()
+		timerDefileCD:Cancel()
+		warnDefileSoon:Cancel()
+		warnDefileSoon:CancelVoice()
+		self:SetWipeTime(50)--We set a 45 sec min wipe time to keep mod from ending combat if you die while rest of raid is in frostmourn
+		self:Schedule(50, RestoreWipeTime, self)
 	end
 end
 
