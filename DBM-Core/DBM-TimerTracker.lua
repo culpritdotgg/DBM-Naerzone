@@ -9,27 +9,27 @@ local ipairs = ipairs
 local tonumber = tonumber
 local unpack = unpack
 local floor, fmod, modf = math.floor, math.fmod, math.modf
+local strsplit = strsplit
 local L = DBM_CORE_L
 local LSM = DBM.LSM
 local GetTime = GetTime
-local GetDefaultLanguage = GetDefaultLanguage
-local orcishLocales = {
-	"Orcish", -- enUS
-	"오크어", -- koKR
-	"Orc", -- frFR
-	"Orcisch", -- deDE
-	"兽人语", -- zhCN
-	"Orco", -- esES + esMX
-	"獸人語", -- zhTW
-	"орочий" -- ruRU
-}
-local UnitFactionGroup = function(unit) -- workaround to detect faction in Mercenary Mode
-	if unit ~= "player" then return UnitFactionGroup(unit) end
-	local language = GetDefaultLanguage()
-	if tContains(orcishLocales, language) then
-		return "Horde"
+local GetBattlefieldScore, GetNumBattlefieldScores, GetUnitName, UnitFactionGroup = GetBattlefieldScore, GetNumBattlefieldScores, GetUnitName, UnitFactionGroup
+local function GetBattlefieldFaction(unit) -- workaround to detect faction in Cross-Faction BG
+	if not unit then return UnitFactionGroup("player") end
+	local numScores = GetNumBattlefieldScores()
+	if numScores == 0 then return UnitFactionGroup("player")
 	else
-		return "Alliance"
+		local unitName = GetUnitName(unit, true)
+		for i = 1, numScores do
+			local name, _, _, _, _, faction = GetBattlefieldScore(i)
+			if name == unitName then
+				if faction == 0 then
+					return "Horde"
+				else
+					return "Alliance"
+				end
+			end
+		end
 	end
 end
 local media = {}
@@ -170,7 +170,9 @@ local chatMessage = {
 	["Сражение в Ущелье Песни Войны начнется через 2 минуты."] = timerTypes["120-120"],
 	-- Низина Арати
 	["Битва за Низину Арати начнется через 30 секунд. Приготовьтесь!"] = timerTypes["30-120"],
+	["Битва за Низину Арати начнется через 30 секунд."] = timerTypes["30-120"],
 	["Битва за Низину Арати начнется через 1 минуту."] = timerTypes["60-120"],
+	["Битва за Низину Арати начнется через минуту."] = timerTypes["60-120"],
 	["Сражение в Низине Арати начнется через 2 минуты."] = timerTypes["120-120"],
 	-- Око Бури
 	["Битва за Око Бури начнется через 30 секунд."] = timerTypes["30-120"],
@@ -184,7 +186,9 @@ local chatMessage = {
 	["Сражение на Альтеракской долине начнется через 2 минуты."] = timerTypes["120-120"],
 	-- Берег Древних
 	["Битва за Берег Древних начнется через 30 секунд. Приготовьтесь!"] = timerTypes["30-120"],
+	["Сражение за Берег Древних начнется через 30 секунд. Готовьтесь!"] = timerTypes["30-120"],
 	["Битва за Берег Древних начнется через 1 минуту."] = timerTypes["60-120"],
+	["Сражение за Берег Древних начнется через 1 минуту."] = timerTypes["60-120"],
 	["Битва за Берег Древних начнется через 2 минуты."] = timerTypes["120-120"],
 	-- Берег древних 2-й раунд
 	["Второй раунд начнется через 30 секунд. Приготовьтесь!"] = timerTypes["30-60"],
@@ -193,8 +197,10 @@ local chatMessage = {
 	["Второй раунд сражения за Берег Древних начнется через 1 минуту."] = timerTypes["60-60"],
 	-- Другие
 	["Битва начнется через 30 секунд!"] = timerTypes["30-120"],
+	["Битва начнется через 30 секунд."] = timerTypes["30-120"],
 	["Битва начнется через 1 минуту."] = timerTypes["60-120"],
 	["Битва начнется через минуту!"] = timerTypes["60-120"],
+	["Битва начнется через 60 секунд."] = timerTypes["60-120"],
 	["Битва начнется через 2 минуты!"] = timerTypes["120-120"],
 	-- Арена
 	["15 секунд до начала боя на арене!"] = timerTypes["15-60"],
@@ -683,7 +689,7 @@ end
 
 function TT:SetGoTexture(timer)
 	if timer.type == TIMER_TYPE_PVP then
-		local factionGroup = UnitFactionGroup("player")
+		local factionGroup = GetBattlefieldFaction("player")
 
 		if factionGroup and factionGroup ~= "Neutral" then
 			timer.GoTexture:SetTexture("Interface\\AddOns\\DBM-Core\\textures\\Timer\\"..factionGroup.."-Logo")

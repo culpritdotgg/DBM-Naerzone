@@ -29,11 +29,12 @@ local soundFissure			= mod:NewSound(27810)
 local specwarnfissure		= mod:NewSpecialWarning("fissure")
 local warnMana				= mod:NewTargetAnnounce(27819, 2)
 local warnManaClose   		= mod:NewSpecialWarning("manaNear")
-local warnManaOnYou   		= mod:NewSpecialWarningYou(27819)
 local warnChainsTargets		= mod:NewTargetAnnounce(28410, 2)
 local warnMindControl 		= mod:NewSoonAnnounce(28410, 4)
 
 local specwarnP2Soon		= mod:NewSpecialWarning("specwarnP2Soon")
+local specWarnManaBomb		= mod:NewSpecialWarningMoveAway(27819, nil, nil, nil, 1, 2)
+local yellManaBomb			= mod:NewShortYell(27819)
 
 local blastTimer			= mod:NewBuffActiveTimer(4, 27808)
 local timerPhase2			= mod:NewTimer(227, "TimerPhase2")
@@ -45,10 +46,10 @@ local timerPossibleMC		= mod:NewTimer(20, "MCImminent", 28410)
 
 mod:AddBoolOption("BlastAlarm", true)
 mod:AddBoolOption("ShowRange", true)
-mod:AddBoolOption("EqUneqWeaponsKT", (mod:IsWeaponDependent() or isHunter) and not mod:IsTank())
+mod:AddBoolOption("EqUneqWeaponsKT", mod:IsDps())
 mod:AddBoolOption("EqUneqWeaponsKT2")
 
-if mod.Options.EqUneqWeaponsKT and (mod:IsWeaponDependent() or isHunter) and not mod:IsTank() and (mod:IsDifficulty("heroic25") or mod:IsDifficulty("normal25")) and not mod:IsEquipmentSetAvailable("pve") then
+if mod.Options.EqUneqWeaponsKT and (mod:IsDifficulty("heroic25") or mod:IsDifficulty("normal25")) and not mod:IsEquipmentSetAvailable("pve") then
 	for i = 1, select("#", GetFramesRegisteredForEvent("CHAT_MSG_RAID_WARNING")) do
 		local frame = select(i, GetFramesRegisteredForEvent("CHAT_MSG_RAID_WARNING"))
 		if frame.AddMessage then
@@ -76,7 +77,7 @@ function mod:OnCombatStart(delay)
 		mindControlCD:Start(287)
 		timerPossibleMC:Schedule(287)
 		warnMindControl:Schedule(282)
-		if self.Options.EqUneqWeaponsKT then
+		if self.Options.EqUneqWeaponsKT and self:IsDps() then
 			self:ScheduleMethod(286.0, "UnWKT")
 			self:ScheduleMethod(286.5, "UnWKT")
 		end
@@ -85,22 +86,25 @@ function mod:OnCombatStart(delay)
 end
 
 function mod:UnWKT()
-   if self:IsWeaponDependent() and (self.Options.EqUneqWeaponsKT or self.Options.EqUneqWeaponsKT2) then
-        PickupInventoryItem(16)
-        PutItemInBackpack()
-        PickupInventoryItem(17)
-        PutItemInBackpack()
-    elseif isHunter then
-        PickupInventoryItem(18)
-        PutItemInBackpack()
-    end
+	if (self.Options.EqUneqWeaponsKT or self.Options.EqUneqWeaponsKT2) and self:IsEquipmentSetAvailable("pve") then
+		PickupInventoryItem(16)
+		PutItemInBackpack()
+		PickupInventoryItem(17)
+		PutItemInBackpack()
+		DBM:Debug("MH and OH unequipped",2)
+		if isHunter then
+			PickupInventoryItem(18)
+			PutItemInBackpack()
+			DBM:Debug("Ranged unequipped",2)
+		end
+	end
 end
 
 function mod:EqWKT()
-	if (self.Options.EqUneqWeaponsKT or self.Options.EqUneqWeaponsKT2) and not self:IsWeaponDependent() and self:IsEquipmentSetAvailable("pve") then
+	if (self.Options.EqUneqWeaponsKT or self.Options.EqUneqWeaponsKT2) and self:IsEquipmentSetAvailable("pve") then
 		DBM:Debug("trying to equip pve",1)
 		UseEquipmentSet("pve")
-		CancelUnitBuff("player", (GetSpellInfo(25780)))
+		CancelUnitBuff("player", (GetSpellInfo(25780))) -- Righteous Fury
 	end
 end
 
@@ -127,7 +131,7 @@ function mod:SPELL_SUMMON(args)
 end
 
 function mod:SPELL_AURA_APPLIED(args)
-	if args:IsSpellID(27808) then -- Frost Blast
+	if args.spellId == 27808 then -- Frost Blast
 		table.insert(frostBlastTargets, args.destName)
 		self:UnscheduleMethod("AnnounceBlastTargets")
 		self:ScheduleMethod(0.5, "AnnounceBlastTargets")
@@ -136,13 +140,14 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		blastTimer:Start()
 		frostBlastCD:Start()
-	elseif args:IsSpellID(27819) then -- Detonate Mana
+	elseif args.spellId == 27819 then -- Detonate Mana
 		warnMana:Show(args.destName)
 		self:SetIcon(args.destName, 8, 5.5)
 		if self:GetDetonateRange(args.destName) <= 12 then
-			if UnitName("player") == args.destName then
-				warnManaOnYou:Show()
-				SendChatMessage("Взрыв маны на мне!","SAY")
+			if args:IsPlayer() then
+				specWarnManaBomb:Show()
+				specWarnManaBomb:Play("scatter")
+				yellManaBomb:Yell()
 			else
 				PlaySoundFile("Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav")
 				warnManaClose:Show()
@@ -158,7 +163,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		else
 			self:ScheduleMethod(1.0, "AnnounceChainsTargets")
 		end
-		if self.Options.EqUneqWeaponsKT then
+		if self.Options.EqUneqWeaponsKT and self:IsDps() then
 			self:ScheduleMethod(58.0, "UnWKT")
 			self:ScheduleMethod(58.5, "UnWKT")
 		end
@@ -176,7 +181,7 @@ end
 
 function mod:AnnounceChainsTargets()
 	warnChainsTargets:Show(table.concat(chainsTargets, "< >"))
-	if (not self:has_value(chainsTargets,UnitName("player")) and self.Options.EqUneqWeaponsKT) then
+	if (not self:has_value(chainsTargets,UnitName("player")) and self.Options.EqUneqWeaponsKT and self:IsDps()) then
 		DBM:Debug("Equipping scheduled",2)
         self:ScheduleMethod(1.0, "EqWKT")
 		self:ScheduleMethod(2.0, "EqWKT")
@@ -229,7 +234,7 @@ end
 
 function mod:SPELL_AURA_REMOVED(args)
     if args:IsSpellID(28410) then
-		if (args.destName == UnitName("player") or args:IsPlayer()) and (self.Options.EqUneqWeaponsKT or self.Options.EqUneqWeaponsKT2) then
+		if (args.destName == UnitName("player") or args:IsPlayer()) and (self.Options.EqUneqWeaponsKT or self.Options.EqUneqWeaponsKT2) and self:IsDps() then
 			DBM:Debug("Equipping scheduled",2)
 	        self:ScheduleMethod(0.1, "EqWKT")
 			self:ScheduleMethod(1.7, "EqWKT")
@@ -262,7 +267,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if (msg == L.YellMC1 or msg:find(L.YellMC1) or msg == L.YellMC2 or msg:find(L.YellMC2)) then
-		if mod.Options.EqUneqWeaponsKT and mod:IsWeaponDependent() then
+		if mod.Options.EqUneqWeaponsKT and self:IsDps() then
 			mod:UnWKT()
 			mod:UnWKT()
 			self:ScheduleMethod(59, "UnWKT")
