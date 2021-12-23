@@ -42,9 +42,9 @@ local specWarnBlisteringCold	= mod:NewSpecialWarningRun(70123, nil, nil, nil, 4,
 local timerNextAirphase			= mod:NewTimer(110, "TimerNextAirphase", 43810, nil, nil, 6)
 local timerNextGroundphase		= mod:NewTimer(45, "TimerNextGroundphase", 43810, nil, nil, 6)
 local timerNextFrostBreath		= mod:NewNextTimer(22, 69649, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_L.TANK_ICON)
-local timerNextBlisteringCold	= mod:NewCDTimer(67, 70123, nil, nil, nil, 2, nil, DBM_CORE_L.DEADLY_ICON, nil, 2)
+local timerNextBlisteringCold	= mod:NewCDTimer(67, 70123, nil, nil, nil, 2, nil, DBM_CORE_L.DEADLY_ICON, true, 2) -- Added "keep" arg
 local timerNextBeacon			= mod:NewNextCountTimer(16, 70126, nil, nil, nil, 3, nil, DBM_CORE_L.DEADLY_ICON)
-local timerBlisteringCold		= mod:NewCastTimer(6, 70123, nil, nil, nil, 2, nil, nil, true) -- Added "keep" arg
+local timerBlisteringCold		= mod:NewCastTimer(6, 70123, nil, nil, nil, 2)
 local timerUnchainedMagic		= mod:NewCDTimer(30, 69762, nil, nil, nil, 3)
 local timerInstability			= mod:NewBuffFadesTimer(5, 69766, nil, nil, nil, 5)
 local timerChilledtotheBone		= mod:NewBuffFadesTimer(8, 70106, nil, nil, nil, 5)
@@ -53,6 +53,7 @@ local timerNextMysticBuffet		= mod:NewNextTimer(6, 70128, nil, nil, nil, 2)
 local timerMysticAchieve		= mod:NewAchievementTimer(30, 4620, "AchievementMystic")
 local timerTailSmash			= mod:NewCDTimer(30, 71077, nil, nil, nil, 2)
 local soundUnchainedMagic		= mod:NewSoundYou(69762, nil, "SpellCaster")
+
 local berserkTimer				= select(3, DBM:GetMyPlayerInfo()) == "Lordaeron" and mod:NewBerserkTimer(420) or mod:NewBerserkTimer(600)
 
 mod:AddBoolOption("SetIconOnFrostBeacon", true)
@@ -198,7 +199,7 @@ function mod:OnCombatStart(delay)
 	berserkTimer:Start(-delay)
 	timerNextAirphase:Start(50-delay)
 	timerNextBlisteringCold:Start(33-delay)
-	timerTailSmash:Start(20-delay)	
+	timerTailSmash:Start(20-delay)
 	self.vb.warned_P2 = false
 	self.vb.warnedfailed = false
 	table.wipe(beaconTargets)

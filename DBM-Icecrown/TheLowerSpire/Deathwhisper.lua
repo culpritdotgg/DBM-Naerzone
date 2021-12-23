@@ -192,7 +192,6 @@ function mod:OnCombatStart(delay)
 	end
 	spiritDetectionFrame.enabled = self.Options.SpiritTargetDebug
 	spiritDetectionFrame:SetScript("OnEvent", spiritDetection)
-
 	berserkTimer:Start(-delay)
 	timerAdds:Start(5.5)
 	warnAddsSoon:Schedule(2.5)			-- 3sec pre-warning on start
