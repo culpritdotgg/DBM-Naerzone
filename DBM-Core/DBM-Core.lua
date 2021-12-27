@@ -91,7 +91,7 @@ end
 DBM = {
 	Revision = ("$Revision: 7009 $"):sub(12, -3),
 	Version = "7.09",
-	DisplayVersion = "7.09 DBM-Naerzone by Culprit (Zidras Fork)", -- the string that is shown as version
+	DisplayVersion = "7.09 DBM-Naerzone by Culprit (fork from Zidras)", -- the string that is shown as version
 	ReleaseRevision = 7009 -- the revision of the latest stable version that is available (for /dbm ver2)
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
