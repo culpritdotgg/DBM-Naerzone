@@ -43,7 +43,7 @@ local specWarnEmpoweredShockV	= mod:NewSpecialWarningMoveAway(72039, nil, nil, n
 local specWarnEmpoweredFlames	= mod:NewSpecialWarningRun(72040, nil, nil, nil, 4, 2)
 local specWarnShadowPrison		= mod:NewSpecialWarningStack(72999, nil, 6, nil, nil, 1, 6)
 
-local timerCombatStart			= mod:NewCombatTimer(20) -- Roleplay for first pull
+local timerCombatStart			= mod:NewCombatTimer(14) -- Roleplay for first pull
 local timerTargetSwitch			= mod:NewTimer(47, "TimerTargetSwitch", 70952)	-- every 46-47seconds
 local timerDarkNucleusCD		= mod:NewCDTimer(10, 71943, nil, false, nil, 5)	-- usually every 10 seconds but sometimes more
 local timerConjureFlamesCD		= mod:NewCDTimer(20, 71718, nil, nil, nil, 3) -- every 20-30 seconds but never more often than every 20sec
