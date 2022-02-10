@@ -249,7 +249,8 @@ end
 
 function mod:OnSync(msg, target)
 	if msg == "TwilightCutter" then
-		if self.Options.AnnounceAlternatePhase and self:AntiSpam(7, msg) then -- Edited to circumvent Warmane double cutter boss emote
+		-- if self.Options.AnnounceAlternatePhase and self:AntiSpam(7, msg) then -- Edited to circumvent Warmane double cutter boss emote
+		if self.Options.AnnounceAlternatePhase then -- Edited to circumvent Warmane double cutter boss emote
 			timerTwilightCutterCD:Cancel()
 			--warningTwilightCutter:Show()
 			--timerTwilightCutterCast:Start()
