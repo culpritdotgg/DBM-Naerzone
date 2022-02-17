@@ -19,6 +19,8 @@ mod:RegisterEvents(
 	"UNIT_TARGET"
 )
 
+local myRealm = select(3, DBM:GetMyPlayerInfo())
+
 local warnAddsSoon					= mod:NewAnnounce("WarnAddsSoon", 2)
 local warnDominateMind				= mod:NewTargetAnnounce(71289, 3)
 local warnSummonSpirit				= mod:NewSpellAnnounce(71426, 2)
@@ -44,7 +46,7 @@ local timerSummonSpiritCD			= mod:NewCDTimer(10, 71426, nil, true, 2)
 local timerFrostboltCast			= mod:NewCastTimer(2, 72007, nil, "HasInterrupt")
 local timerTouchInsignificance		= mod:NewTargetTimer(30, 71204, nil, "Tank|Healer", nil, 5)
 
-local berserkTimer					= select(3, DBM:GetMyPlayerInfo()) == "Lordaeron" and mod:NewBerserkTimer(420) or mod:NewBerserkTimer(600)
+local berserkTimer					= mod:NewBerserkTimer((myRealm == "Lordaeron" or myRealm == "Frostmourne") and 420 or 600)
 
 local soundWarnSpirit				= mod:NewSound(71426)
 
@@ -56,9 +58,6 @@ mod:AddBoolOption("SetIconOnEmpoweredAdherent", true)
 mod:AddBoolOption("ShieldHealthFrame", false, "misc")
 mod:AddInfoFrameOption(70842, false)
 mod:RemoveOption("HealthFrame")
-mod:AddBoolOption("EqUneqWeapons", mod:IsDps())
-mod:AddBoolOption("EqUneqTimer", false)
-mod:AddBoolOption("BlockWeapons", false)
 mod:AddBoolOption("SpiritTargetDebug", false)
 
 local spiritDetectionFrame = CreateFrame("Frame")
@@ -76,15 +75,38 @@ end
 spiritDetectionFrame:RegisterEvent("UNIT_THREAT_SITUATION_UPDATE")
 spiritDetectionFrame:RegisterEvent("UNIT_THREAT_LIST_UPDATE")
 
-if mod.Options.EqUneqWeapons and mod:IsHeroic() and not mod:IsEquipmentSetAvailable("pve") then
-	for i = 1, select("#", GetFramesRegisteredForEvent("CHAT_MSG_RAID_WARNING")) do
-		local frame = select(i, GetFramesRegisteredForEvent("CHAT_MSG_RAID_WARNING"))
-		if frame.AddMessage then
-			mod:Schedule(10, frame.AddMessage, frame, L.setMissing)
+
+local RaidWarningFrame = RaidWarningFrame
+local GetFramesRegisteredForEvent, RaidNotice_AddMessage = GetFramesRegisteredForEvent, RaidNotice_AddMessage
+local function selfWarnMissingSet()
+	if mod.Options.EqUneqWeapons and mod:IsHeroic() and not mod:IsEquipmentSetAvailable("pve") then
+		for i = 1, select("#", GetFramesRegisteredForEvent("CHAT_MSG_RAID_WARNING")) do
+			local frame = select(i, GetFramesRegisteredForEvent("CHAT_MSG_RAID_WARNING"))
+			if frame.AddMessage then
+				frame.AddMessage(frame, L.setMissing)
+			end
 		end
+		RaidNotice_AddMessage(RaidWarningFrame, L.setMissing, ChatTypeInfo["RAID_WARNING"])
 	end
-	mod:Schedule(10, RaidNotice_AddMessage, RaidWarningFrame, L.setMissing, ChatTypeInfo["RAID_WARNING"])
 end
+
+mod:AddMiscLine(L.EqUneqLineDescription)
+mod:AddBoolOption("EqUneqWeapons", mod:IsDps(), nil, selfWarnMissingSet)
+mod:AddBoolOption("EqUneqTimer", false)
+mod:AddBoolOption("BlockWeapons", false)
+
+local function selfSchedWarnMissingSet(self)
+	if self.Options.EqUneqWeapons and self:IsHeroic() and not self:IsEquipmentSetAvailable("pve") then
+		for i = 1, select("#", GetFramesRegisteredForEvent("CHAT_MSG_RAID_WARNING")) do
+			local frame = select(i, GetFramesRegisteredForEvent("CHAT_MSG_RAID_WARNING"))
+			if frame.AddMessage then
+				self:Schedule(10, frame.AddMessage, frame, L.setMissing)
+			end
+		end
+		self:Schedule(10, RaidNotice_AddMessage, RaidWarningFrame, L.setMissing, ChatTypeInfo["RAID_WARNING"])
+	end
+end
+mod:Schedule(0.5, selfSchedWarnMissingSet, mod) -- mod options default values were being read before SV ones, so delay this
 
 local dominateMindTargets = {}
 mod.vb.dominateMindIcon = 6
@@ -171,10 +193,10 @@ local function TrySetTarget(self)
 		for uId in DBM:GetGroupMembers() do
 			if UnitGUID(uId.."target") == deformedFanatic and self.Options.SetIconOnDeformedFanatic then
 				deformedFanatic = nil
-				SetRaidTarget(uId.."target", 8)
+				self:SetIcon(uId.."target", 8)
 			elseif UnitGUID(uId.."target") == empoweredAdherent and self.Options.SetIconOnEmpoweredAdherent then
 				empoweredAdherent = nil
-				SetRaidTarget(uId.."target", 7)
+				self:SetIcon(uId.."target", 7)
 			end
 			if not (deformedFanatic or empoweredAdherent) then
 				break
@@ -367,6 +389,14 @@ function mod:SPELL_INTERRUPT(args)
 	end
 end
 
+-- function mod:SPELL_SUMMON(args)
+-- 	if args.spellId == 71426 and self:AntiSpam(5, 1) then -- Summon Vengeful Shade
+-- 		warnSummonSpirit:Show()
+-- 		timerSummonSpiritCD:Start()
+-- 		soundWarnSpirit:Play("Interface\\AddOns\\DBM-Core\\sounds\\RaidAbilities\\spirits.mp3")
+-- 	end
+-- end
+
 local lastSpirit = 0
 function mod:SPELL_SUMMON(args)
 	if args:IsSpellID(71426) then -- Summon Vengeful Shade
@@ -393,14 +423,6 @@ function checkSpiritTarget()
 		mod:Schedule(0.15, checkSpiritTarget)
 	end
 end
-
--- function mod:SPELL_SUMMON(args)
--- 	if args.spellId == 71426 and self:AntiSpam(5, 1) then -- Summon Vengeful Shade
--- 		warnSummonSpirit:Show()
--- 		timerSummonSpiritCD:Start()
--- 		soundWarnSpirit:Play("Interface\\AddOns\\DBM-Core\\sounds\\RaidAbilities\\spirits.mp3")
--- 	end
--- end
 
 function mod:SWING_DAMAGE(sourceGUID, _, _, destGUID)
 	if destGUID == UnitGUID("player") and self:GetCIDFromGUID(sourceGUID) == 38222 then

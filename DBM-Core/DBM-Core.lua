@@ -89,10 +89,10 @@ local function showRealDate(curseDate)
 end
 
 DBM = {
-	Revision = ("$Revision: 7009 $"):sub(12, -3),
-	Version = "7.09",
-	DisplayVersion = "7.09 DBM-Naerzone by Culprit (fork from Zidras)", -- the string that is shown as version
-	ReleaseRevision = 7009 -- the revision of the latest stable version that is available (for /dbm ver2)
+	Revision = ("$Revision: 7010 $"):sub(12, -3),
+	Version = "7.10",
+	DisplayVersion = "7.10 DBM-Warmane by Culprit (forked from Zidras)", -- the string that is shown as version
+	ReleaseRevision = 7010 -- the revision of the latest stable version that is available (for /dbm ver2)
 }
 DBM.HighestRelease = DBM.ReleaseRevision --Updated if newer version is detected, used by update nags to reflect critical fixes user is missing on boss pulls
 
@@ -129,7 +129,7 @@ DBM.DefaultOptions = {
 		{r = 1.00, g = 0.10, b = 0.10}, -- Color 4 - #FF1A1A - Red
 	},
 	RaidWarningSound = "",
-	SpecialWarningSound = "Sound\\interface\\RaidWarning.wav",
+	SpecialWarningSound = "Sound\\Spells\\PVPFlagTaken.wav",
 	SpecialWarningSound2 = "Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.wav",
 	SpecialWarningSound3 = "Interface\\AddOns\\DBM-Core\\sounds\\Alert.mp3",
 	SpecialWarningSound4 = "Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.wav",
@@ -154,8 +154,8 @@ DBM.DefaultOptions = {
 		X = 0,
 		Y = -185,
 	},
-	StatusEnabled = false,
-	Enabled = false,
+	StatusEnabled = true,
+	Enabled = true,
 	ShowWarningsInChat = false,
 	ShowFakedRaidWarnings = false,
 	ShowSWarningsInChat = true,
@@ -239,7 +239,7 @@ DBM.DefaultOptions = {
 	WarningX = 0,
 	WarningY = 260,
 	WarningFont = standardFont,
-	WarningFontSize = 14,
+	WarningFontSize = 16,
 	WarningFontStyle = "None",
 	WarningFontShadow = true,
 	SpecialWarningDuration2 = 1.5,
@@ -279,7 +279,7 @@ DBM.DefaultOptions = {
 	SpecialWarningFlashCount4 = 2,
 	SpecialWarningFlashCount5 = 3,
 	SWarnClassColor = true,
-	SpecialWarningFontSize = 22,
+	SpecialWarningFontSize = 30,
 	SpecialWarningFontColor = {0.0, 0.0, 1.0},
 	HealthFrameGrowUp = false,
 	HealthFrameLocked = false,
@@ -301,7 +301,7 @@ DBM.DefaultOptions = {
 	DontRestoreIcons = false,
 	DontShowRangeFrame = false,
 	DontRestoreRange = false,
-	DontShowInfoFrame = true,
+	DontShowInfoFrame = false,
 	DontShowHudMap2 = true,
 	DontPlayCountdowns = false,
 	BlockNoteShare = false,
@@ -1857,6 +1857,13 @@ do
 		if IsInGroup() then
 			local channel = ((GetNumRaidMembers() == 0) and "PARTY") or "RAID_WARNING"
 			DBM:Unschedule(SendChatMessage)
+			-- Pull announcer
+			savedDifficulty, difficultyText, difficultyIndex, LastGroupSize = DBM:GetCurrentInstanceDifficulty()
+			if savedDifficulty:find("heroic") then
+				SendChatMessage("{rt8} "..L.ANNOUNCE_PULL_MODE:format(PLAYER_DIFFICULTY2).." {rt8}", channel)
+			elseif savedDifficulty:find("normal") then
+				SendChatMessage(L.ANNOUNCE_PULL_MODE:format(PLAYER_DIFFICULTY1), channel)
+			end
 			SendChatMessage(L.ANNOUNCE_PULL:format(timer, playerName), channel)
 			if timer > 7 then DBM:Schedule(timer - 7, SendChatMessage, L.ANNOUNCE_PULL:format(7, playerName), channel) end
 			if timer > 5 then DBM:Schedule(timer - 5, SendChatMessage, L.ANNOUNCE_PULL:format(5, playerName), channel) end
@@ -2113,7 +2120,11 @@ do
 			DBM:RequestTimers(3)
 		elseif cmd:sub(1, 6) == "silent" then
 			DBM.Options.SilentMode = DBM.Options.SilentMode == false and true or false
-			DBM:AddMsg("SilentMode is " .. (DBM.Options.SilentMode and "ON" or "OFF"))
+			DBM:AddMsg(L.SILENTMODE_IS .. (DBM.Options.SilentMode and "ON" or "OFF"))
+		elseif cmd:sub(1, 10) == "musicstart" then
+			DBM:TransitionToDungeonBGM(true)
+		elseif cmd:sub(1, 9) == "musicstop" then
+			DBM:TransitionToDungeonBGM(false, true)
 		elseif cmd:sub(1, 9) == "infoframe" then
 			if DBM.InfoFrame:IsShown() then
 				DBM.InfoFrame:Hide()
@@ -2780,6 +2791,36 @@ do
 		end
 	end
 end
+
+function DBM:GetNumGroupMembers()
+	return IsInGroup() and GetNumGroupMembers() or 1
+end
+
+--For returning the number of players actually in zone with us for status functions
+--This is very touchy though and will fail if everyone isn't in same SUB zone (ie same room/area)
+--It should work for pretty much any case but outdoor
+function DBM:GetNumRealGroupMembers()
+	if not IsInInstance() then--Not accurate outside of instances (such as world bosses)
+		return IsInGroup() and GetNumGroupMembers() or 1--So just return regular group members.
+	end
+	local playerCurrentZone = GetRealZoneText()
+	local realGroupMembers = 0
+	if GetNumRaidMembers() > 0 then
+		for i = 1, GetNumRaidMembers() do
+			local _, _, _, _, _, _, targetCurrentZone = GetRaidRosterInfo(i)
+			if targetCurrentZone == playerCurrentZone then
+				realGroupMembers = realGroupMembers + 1
+			end
+		end
+	elseif GetNumPartyMembers() > 0 then
+		local numPartyMembers = GetRealNumPartyMembers() -- this function return is terrible, but I didn't find any workaround to check unit zone, so for now this will do
+		realGroupMembers = numPartyMembers
+	else
+		return 1
+	end
+	return realGroupMembers
+end
+
 function DBM:GetUnitCreatureId(uId)
 	local guid = UnitGUID(uId)
 	return self:GetCIDFromGUID(guid)
@@ -2804,7 +2845,7 @@ function DBM:GetBossUnitId(name, bossOnly)--Deprecated, only old mods use this
 		end
 	end
 	if not returnUnitID and not bossOnly then
-		for uId in self:GetGroupMembers() do
+		for uId in DBM:GetGroupMembers() do
 			if UnitName(uId .. "target") == name and not UnitIsPlayer(uId .. "target") then
 				returnUnitID = uId.."target"
 			end
@@ -2831,7 +2872,7 @@ function DBM:GetUnitIdFromGUID(cidOrGuid, bossOnly)
 	end
 	--Didn't find valid unitID from boss units, scan raid targets
 	if not returnUnitID and not bossOnly then
-		for uId in self:GetGroupMembers() do
+		for uId in DBM:GetGroupMembers() do -- Do not use self on this function, because self might be bossModPrototype
 			local unitId = uId .. "target"
 			local bossGUID = UnitGUID(unitId)
 			local cid = self:GetCIDFromGUID(cidOrGuid)
@@ -2930,7 +2971,7 @@ function DBM:LoadModOptions(modId, inCombat, first)
 			--clean unused saved variables (do not work on combat load)
 			if not inCombat then
 				for option, optionValue in pairs(savedOptions[id][profileNum]) do
-					if mod.DefaultOptions[option] == nil then
+					if mod.DefaultOptions[option] == nil and not (option:find("talent") or option:find("FastestClear") or option:find("CVAR") or option:find("RestoreSetting") or option:find("Permanent")) then -- added Permanent for mod options that I want to keep between sessions e.g. Frame positions
 						savedOptions[id][profileNum][option] = nil
 					elseif mod.DefaultOptions[option] and (type(mod.DefaultOptions[option]) == "table") then--recover broken dropdown option
 						if savedOptions[id][profileNum][option] and (type(savedOptions[id][profileNum][option]) == "boolean") then
@@ -2969,6 +3010,8 @@ function DBM:LoadModOptions(modId, inCombat, first)
 			stats.normal25Pulls = stats.normal25Pulls or 0
 			stats.heroic25Kills = stats.heroic25Kills or 0
 			stats.heroic25Pulls = stats.heroic25Pulls or 0
+			stats.timewalkerKills = stats.timewalkerKills or 0
+			stats.timewalkerPulls = stats.timewalkerPulls or 0
 			mod.stats = stats
 			--run OnInitialize function
 			if mod.OnInitialize then mod:OnInitialize(mod) end
@@ -3260,6 +3303,8 @@ function DBM:ClearAllStats(modId)
 		defaultStats.normal25Pulls = 0
 		defaultStats.heroic25Kills = 0
 		defaultStats.heroic25Pulls = 0
+		defaultStats.timewalkerKills = 0
+		defaultStats.timewalkerPulls = 0
 		mod.stats = {}
 		mod.stats = defaultStats
 		_G[savedStatsName][id] = {}
@@ -3334,6 +3379,8 @@ function DBM:READY_CHECK()
 			self:PlaySoundFile("Sound\\interface\\levelup2.wav")
 		end
 	end
+	self:TransitionToDungeonBGM(false, true)
+	self:Schedule(4, self.TransitionToDungeonBGM, self)
 end
 
 function DBM:PLAYER_TALENT_UPDATE()
@@ -3348,6 +3395,50 @@ end
 --  Load Boss Mods on Demand  --
 --------------------------------
 do
+	function DBM:TransitionToDungeonBGM(force, cleanup)
+		if cleanup then--Runs on zone change/cinematic Start (first load delay) and combat end
+			self:Unschedule(self.TransitionToDungeonBGM)
+			if self.Options.RestoreSettingMusic then
+				SetCVar("Sound_EnableMusic", self.Options.RestoreSettingMusic)
+				self.Options.RestoreSettingMusic = nil
+				self:Debug("Restoring Sound_EnableMusic CVAR")
+			end
+			if self.Options.musicPlaying then--Primarily so DBM doesn't call StopMusic unless DBM is one that started it. We don't want to screw with other addons
+				StopMusic()
+				self.Options.musicPlaying = nil
+				self:Debug("Stopping music")
+			end
+			fireEvent("DBM_MusicStop", "ZoneOrCombatEndTransition")
+			return
+		end
+		if LastInstanceType ~= "raid" and LastInstanceType ~= "party" and not force then return end
+		fireEvent("DBM_MusicStart", "RaidOrDungeon")
+		if self.Options.EventSoundDungeonBGM and self.Options.EventSoundDungeonBGM ~= "None" and self.Options.EventSoundDungeonBGM ~= "" and not (self.Options.EventDungMusicMythicFilter and (savedDifficulty == "mythic" or savedDifficulty == "challenge")) then
+			if not self.Options.RestoreSettingMusic then
+				self.Options.RestoreSettingMusic = tonumber(GetCVar("Sound_EnableMusic")) or 1
+				if self.Options.RestoreSettingMusic == 0 then
+					SetCVar("Sound_EnableMusic", 1)
+				else
+					self.Options.RestoreSettingMusic = nil--Don't actually need it
+				end
+			end
+			local path = "MISSING"
+			if self.Options.EventSoundDungeonBGM == "Random" then
+				local usedTable = self.Options.EventSoundMusicCombined and DBM.Music or DBM.DungeonMusic
+				if #usedTable >= 3 then
+					local random = random(3, #usedTable)
+					path = usedTable[random].value
+				end
+			else
+				path = self.Options.EventSoundDungeonBGM
+			end
+			if path ~= "MISSING" then
+				PlayMusic(path)
+				self.Options.musicPlaying = true
+				self:Debug("Starting Dungeon music with file: "..path)
+			end
+		end
+	end
 	local function SecondaryLoadCheck(self)
 		local zoneName = GetRealZoneText()
 		local mapID = GetCurrentMapAreaID() > 4 and GetCurrentMapAreaID() or GetCurrentMapContinent() -- workaround to support world bosses mod loading
@@ -3357,17 +3448,27 @@ do
 			savedDifficulty, difficultyText = currentDifficulty, currentDifficultyText
 		end
 		self:Debug("Instance Check fired with mapID "..mapID.." and difficulty "..difficulty, 2)
+		-- Auto Logging for entire zone if record only bosses is off
+		if not DBM.Options.RecordOnlyBosses then
+			if LastInstanceType == "raid" or LastInstanceType == "party" then
+				self:StartLogging(0, nil)
+			else
+				self:StopLogging()
+			end
+		end
 		if DBM.Options.FixCLEUOnCombatStart then
 			self:Schedule(0.5, CombatLogClearEntries)
 			DBM:Debug("Scheduled FixCLEU")
 		end
---		if LastInstanceMapID == mapID then
---			self:Debug("No action taken because mapID hasn't changed since last check", 2)
---			return
---		end--ID hasn't changed, don't waste cpu doing anything else (example situation, porting into garrosh stage 4 is a loading screen)
-		LastInstanceMapID = mapID
-		LastGroupSize = instanceGroupSize
+		--These can still change even if mapID doesn't
 		difficultyIndex = difficulty
+		LastGroupSize = instanceGroupSize
+		if LastInstanceMapID == mapID then
+			self:TransitionToDungeonBGM()
+			self:Debug("No action taken because mapID hasn't changed since last check", 2)
+			return
+		end--ID hasn't changed, don't waste cpu doing anything else (example situation, porting into garrosh stage 4 is a loading screen)
+		LastInstanceMapID = mapID
 		if instanceType == "none" then
 			LastInstanceType = "none"
 			if not targetEventsRegistered then
@@ -3395,14 +3496,6 @@ do
 				DBM.RangeCheck:Hide(true)
 --			end
 		end
-		-- Auto Logging for entire zone if record only bosses is off
-		if not DBM.Options.RecordOnlyBosses then
-			if LastInstanceType == "raid" or LastInstanceType == "party" then
-				self:StartLogging(0, nil)
-			else
-				self:StopLogging()
-			end
-		end
 	end
 
 	function DBM:ZONE_CHANGED_NEW_AREA()
@@ -3411,6 +3504,8 @@ do
 		self:Debug("ZONE_CHANGED_NEW_AREA fired on zoneID: "..GetCurrentMapAreaID())
 		self:Unschedule(SecondaryLoadCheck)
 		self:Schedule(1, SecondaryLoadCheck, self)
+		self:TransitionToDungeonBGM(false, true)
+		self:Schedule(5, SecondaryLoadCheck, self)
 		if DBM.Options.FixCLEUOnCombatStart then
 			self:Schedule(0.5, CombatLogClearEntries)
 			DBM:Debug("Scheduled FixCLEU")
@@ -4153,9 +4248,9 @@ do
 				local bossName = name or L.UNKNOWN
 				local difficultyName = L.UNKNOWN
 				if difficulty == 4 then
-					difficultyName = PLAYER_DIFFICULTY4
+					difficultyName = RAID_DIFFICULTY4
 				elseif difficulty == 3 then
-					difficultyName = PLAYER_DIFFICULTY3
+					difficultyName = RAID_DIFFICULTY3
 				elseif difficulty == 2 then
 					difficultyName = PLAYER_DIFFICULTY2
 				else
@@ -4176,9 +4271,9 @@ do
 				local bossName = name or L.UNKNOWN
 				local difficultyName = L.UNKNOWN
 				if difficulty == 4 then
-					difficultyName = PLAYER_DIFFICULTY4
+					difficultyName = RAID_DIFFICULTY4
 				elseif difficulty == 3 then
-					difficultyName = PLAYER_DIFFICULTY3
+					difficultyName = RAID_DIFFICULTY3
 				elseif difficulty == 2 then
 					difficultyName = PLAYER_DIFFICULTY2
 				else
@@ -5028,6 +5123,7 @@ do
 		["normal"] = "normal",
 		["heroic"] = "heroic",
 		["worldboss"] = "normal",
+		["timewalker"] = "timewalker",
 		--Legacy
 		["normal10"] = "normal",
 		["normal20"] = "normal",
@@ -5440,6 +5536,8 @@ do
 				encounterDifficulty, encounterDifficultyText, encounterDifficultyIndex = nil, nil, nil
 
 				self:CreatePizzaTimer(time, "", nil, nil, nil, true)--Auto Terminate infinite loop timers on combat end
+				self:TransitionToDungeonBGM(false, true)
+				self:Schedule(22, self.TransitionToDungeonBGM, self)
 			end
 		end
 	end
@@ -5558,7 +5656,13 @@ function DBM:GetCurrentInstanceDifficulty()
 			end
 		else -- Non-dynamic raids
 			if difficulty == 1 then
-				return maxPlayers and "normal"..maxPlayers or "normal10", difficultyName.." - ", difficulty, maxPlayers
+				-- check for Timewalking instance (workaround using GetRaidDifficulty since on Warmane all the usual APIs fail and return "normal" difficulty)
+				local raidDifficulty = GetRaidDifficulty()
+				if raidDifficulty ~= difficulty and (raidDifficulty == 2 or raidDifficulty == 4) then -- extra checks due to lack of tests and no access to a timewalking server
+					return "timewalker", difficultyName.." - ", raidDifficulty, maxPlayers
+				else
+					return maxPlayers and "normal"..maxPlayers or "normal10", difficultyName.." - ", difficulty, maxPlayers
+				end
 			elseif difficulty == 2 then
 				return "normal25", difficultyName.." - ", difficulty, maxPlayers
 			elseif difficulty == 3 then
@@ -5996,6 +6100,30 @@ do
 			end
 		end
 		return alive
+	end
+
+	local function getNumRealAlivePlayers()
+		local alive = 0
+		local playerCurrentZone = GetRealZoneText() or L.UNKNOWN
+		if IsInRaid() then
+			for i = 1, GetNumRaidMembers() do
+				local _, _, _, _, _, _, zone = GetRaidRosterInfo(i)
+				if zone == playerCurrentZone then
+					alive = alive + ((UnitIsDeadOrGhost("raid"..i) and 0) or 1)
+				end
+			end
+		else
+			alive = (UnitIsDeadOrGhost("player") and 0) or 1
+			for i = 1, GetNumPartyMembers() do
+				if UnitInRange("party"..i) then -- this is VERY conservative to check for same zone. Might remove if too many false negatives
+					alive = alive + ((UnitIsDeadOrGhost("party"..i) and 0) or 1)
+				end
+			end
+		end
+		return alive
+	end
+	function DBM:NumRealAlivePlayers()
+		return getNumRealAlivePlayers()
 	end
 
 	local function isOnSameServer(presenceId)
@@ -6961,6 +7089,15 @@ end
 function bossModPrototype:IsHeroic()
 	local diff = savedDifficulty or DBM:GetCurrentInstanceDifficulty()
 	if diff == "heroic5" or diff == "heroic10" or diff == "heroic25" then
+		return true
+	end
+	return false
+end
+
+-- Timewalking
+function bossModPrototype:IsTimewalking()
+	local diff = savedDifficulty or DBM:GetCurrentInstanceDifficulty()
+	if diff == "timewalker" then
 		return true
 	end
 	return false

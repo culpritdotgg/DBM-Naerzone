@@ -325,7 +325,8 @@ L.BREAK_SEC					= "¡El descanso termina en %s segundo(s)!"
 L.TIMER_BREAK				= "¡Toca descanso!"
 L.ANNOUNCE_BREAK_OVER		= "El descanso ha terminado."
 
-L.TIMER_PULL					= "Iniciando en"
+L.TIMER_PULL				= "Iniciando en"
+L.ANNOUNCE_PULL_MODE		= "Dificultad: %s"
 L.ANNOUNCE_PULL				= "Iniciando en %d s (iniciado por %s)"
 L.ANNOUNCE_PULL_NOW			= "¡Iniciad ahora!"
 L.ANNOUNCE_PULL_TARGET		= "Llamando a %s en %d s (iniciado por %s)"
@@ -621,6 +622,7 @@ L.LAG_FOOTER					= "Sin respuesta: %s"
 --LDB
 L.LDB_TOOLTIP_HELP1	= "Clic izquierdo para abrir DBM"
 L.LDB_TOOLTIP_HELP2	= "Clic derecho para el menú de configuración"
+L.SILENTMODE_IS		= "El modo silencioso es "
 
 L.LDB_LOAD_MODS		= "Cargar módulo"
 

@@ -175,6 +175,10 @@ L:SetGeneralLocalization({
 	name = "송곳아귀"
 })
 
+L:SetMiscLocalization({
+	YellExplosion = "터져라, 뻥!"
+})
+
 -------------------
 -- 소환사 노보스 --
 -------------------
@@ -304,7 +308,7 @@ L:SetGeneralLocalization({
 ---------------------
 -- 장군 비야른그림 --
 ---------------------
-L = DBM:GetModLocalization("Gjarngrin")
+L = DBM:GetModLocalization("Bjarngrin")
 
 L:SetGeneralLocalization({
 	name = "장군 비야른그림"
@@ -331,7 +335,7 @@ L:SetGeneralLocalization({
 ----------
 -- 로켄 --
 ----------
-L = DBM:GetModLocalization("Kronus")
+L = DBM:GetModLocalization("Loken")
 
 L:SetGeneralLocalization({
 	name = "로켄"

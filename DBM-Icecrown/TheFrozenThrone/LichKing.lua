@@ -100,6 +100,7 @@ local soundSoulReaperSoon	= mod:NewSoundSoon(69409, nil, "Tank|Healer|TargetedCo
 
 local berserkTimer			= mod:NewBerserkTimer(900)
 
+mod:AddRangeFrameOption(8, 72133)
 mod:AddBoolOption("DefileIcon")
 mod:AddBoolOption("NecroticPlagueIcon")
 mod:AddBoolOption("RagingSpiritIcon", false)
@@ -110,6 +111,7 @@ mod:AddBoolOption("AnnounceValkGrabs", false)
 mod:AddBoolOption("AnnouncePlagueStack", false, "announce")
 mod:AddBoolOption("TrapArrow")
 mod:AddBoolOption("RemoveImmunes")
+mod:AddMiscLine(L.FrameGUIDesc)
 mod:AddBoolOption("ShowFrame", true)
 mod:AddBoolOption("FrameLocked", false)
 mod:AddBoolOption("FrameClassColor", true, nil, function()
@@ -118,9 +120,7 @@ end)
 mod:AddBoolOption("FrameUpwards", false, nil, function()
 	mod:ChangeFrameOrientation()
 end)
-mod:AddEditboxOption("FramePoint", "CENTER")
-mod:AddEditboxOption("FrameX", 150)
-mod:AddEditboxOption("FrameY", -50)
+mod:AddButton(L.FrameGUIMoveMe, function() mod:CreateFrame() end, nil, 130, 20)
 
 local warnedAchievement = false
 mod.vb.warned_preP2 = false
@@ -200,6 +200,9 @@ end
 function mod:OnCombatEnd()
 	self:UnregisterShortTermEvents()
 	self:DestroyFrame()
+	if self.Options.RangeFrame then
+		DBM.RangeCheck:Hide()
+	end
 end
 
 function mod:DefileTarget(targetname, uId)
@@ -275,6 +278,9 @@ function mod:SPELL_CAST_START(args)
 			"UNIT_TARGET"
 		)
 		self:DestroyFrame()
+		if self.Options.RangeFrame then
+			DBM.RangeCheck:Show(8)
+		end
 	elseif args:IsSpellID(72143, 72146, 72147, 72148) then -- Shambling Horror enrage effect.
 		timerEnrageCD:Cancel(args.sourceGUID)
 		warnShamblingEnrage:Show(args.sourceName)
@@ -286,6 +292,9 @@ function mod:SPELL_CAST_START(args)
 		timerRagingSpiritCD:Cancel()
 		NextPhase(self)
 		self:UnregisterShortTermEvents()
+		if self.Options.RangeFrame then
+			DBM.RangeCheck:Hide()
+		end
 	elseif args.spellId == 70372 then -- Shambling Horror
 		warnShamblingSoon:Cancel()
 		warnShamblingHorror:Show()
@@ -362,7 +371,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 			specWarnSoulreaperOtr:Play("tauntboss")
 		end
 	elseif args.spellId == 69200 then -- Raging Spirit
-		timerSoulShriekCD:Start(16, args.destName)
+		timerSoulShriekCD:Start(14, args.destName)
 		if args:IsPlayer() then
 			specWarnRagingSpirit:Show()
 			specWarnRagingSpirit:Play("targetyou")
@@ -402,7 +411,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	elseif args.spellId == 73650 and self:AntiSpam(3, 2) then		-- Restore Soul (Heroic)
 		timerHarvestSoulCD:Start(60)
 		timerVileSpirit:Start(10)--May be wrong too but we'll see, didn't have enough log for this one.
-		elseif args:IsSpellID(68980, 74325, 74326, 74327) then -- Harvest Soul
+	elseif args:IsSpellID(68980, 74325, 74326, 74327) then -- Harvest Soul
 		timerHarvestSoul:Start(args.destName)
 		timerHarvestSoulCD:Start()
 		if args:IsPlayer() then

@@ -292,6 +292,7 @@ L.TIMER_BREAK				= "Pause!"
 L.ANNOUNCE_BREAK_OVER		= "Pause ist vorbei (seit %s Uhr)"
 
 L.TIMER_PULL				= "Pull in"
+L.ANNOUNCE_PULL_MODE		= "Pull-Modus: %s"
 L.ANNOUNCE_PULL				= "Pull in %d Sekunden. (gesendet von: %s)"
 L.ANNOUNCE_PULL_NOW			= "Pull jetzt!"
 L.ANNOUNCE_PULL_TARGET		= "Pulle %s in %d Sekunden. (gesendet von: %s)"
@@ -557,6 +558,7 @@ L.LAG_FOOTER					= "Keine Antwort: %s"
 --LDB
 L.LDB_TOOLTIP_HELP1	= "Links-Klick, um DBM zu öffnen."
 L.LDB_TOOLTIP_HELP2	= "Rechts-Klick, um das Konfigurationsmenü zu öffnen."
+L.SILENTMODE_IS		= "Lautlos-Modus ist "
 
 L.LDB_LOAD_MODS		= "Lade Boss Mod"
 

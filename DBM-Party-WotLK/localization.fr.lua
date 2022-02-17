@@ -177,6 +177,10 @@ L:SetGeneralLocalization({
 	name = "Trollétripe"
 })
 
+L:SetMiscLocalization({
+	YellExplosion = "Cadavre fait boum !"
+})
+
 ------------------------
 -- Novos the Summoner --
 ------------------------
@@ -307,7 +311,7 @@ L:SetGeneralLocalization({
 --------------------------
 --  General Bjarngrim  --
 -------------------------
-L = DBM:GetModLocalization("Gjarngrin")
+L = DBM:GetModLocalization("Bjarngrin")
 
 L:SetGeneralLocalization({
 	name = "Général Bjarngrim"
@@ -334,7 +338,7 @@ L:SetGeneralLocalization({
 ------------
 -- Loken --
 ------------
-L = DBM:GetModLocalization("Kronus")
+L = DBM:GetModLocalization("Loken")
 
 L:SetGeneralLocalization({
 	name = "Loken"
@@ -796,7 +800,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetOptionLocalization({
-	SetIconOnSaroniteRockTarget	= "Met une icône sur la cible du Rocher de Saronite"
+	AchievementCheck	= "Annoncer les avertissements de réussite « Ne va pas à onze » pour faire la fête"
 })
 
 L:SetMiscLocalization({

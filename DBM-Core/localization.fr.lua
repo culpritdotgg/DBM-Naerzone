@@ -237,6 +237,7 @@ L.TIMER_BREAK				= "Pause !"
 L.ANNOUNCE_BREAK_OVER		= "La pause est terminée"
 
 L.TIMER_PULL				= "Pull dans"
+L.ANNOUNCE_PULL_MODE		= "Pull mode: %s"
 L.ANNOUNCE_PULL				= "Pull dans %d sec. (Envoyé par %s)"
 L.ANNOUNCE_PULL_NOW			= "Pull maintenant !"
 L.GEAR_WARNING				= "Attention: Vérification d'équipement. Votre ilvl équippé est de %d plus bas que celui dans vos sacs"
@@ -440,3 +441,6 @@ L.LAG_CHECKING               = "Vérification de la latence du raid..."
 L.LAG_HEADER                 = "Deadly Boss Mods - Résultats sur la latence"
 L.LAG_ENTRY                  = "%s: délai monde [%d ms] / délai domicile [%d ms]"
 L.LAG_FOOTER                 = "Pas de réponse: %s"
+
+--LDB
+L.SILENTMODE_IS		= "Le mode silencieux est "

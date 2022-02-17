@@ -180,6 +180,10 @@ L:SetGeneralLocalization({
 	name = "Cuernotrol"
 })
 
+L:SetMiscLocalization({
+	YellExplosion = "¡Cueh'po háse bum!"
+})
+
 ------------------------
 -- Novos el Invocador --
 ------------------------
@@ -311,7 +315,7 @@ L:SetGeneralLocalization({
 -----------------------
 -- General Bjarngrim --
 -----------------------
-L = DBM:GetModLocalization("Gjarngrin")
+L = DBM:GetModLocalization("Bjarngrin")
 
 L:SetGeneralLocalization({
 	name = "General Bjarngrim"

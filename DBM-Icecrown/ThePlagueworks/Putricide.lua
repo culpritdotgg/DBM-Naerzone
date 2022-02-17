@@ -18,6 +18,8 @@ mod:RegisterEvents(
 	"UNIT_HEALTH boss1"
 )
 
+local myRealm = select(3, DBM:GetMyPlayerInfo())
+
 local warnSlimePuddle				= mod:NewSpellAnnounce(70341, 2)
 local warnUnstableExperimentSoon	= mod:NewSoonAnnounce(70351, 3)
 local warnUnstableExperiment		= mod:NewSpellAnnounce(70351, 4)
@@ -71,7 +73,7 @@ local soundSpecWarnChokingGasBomb	= mod:NewSound(71255, nil, "Melee")
 local soundChokingGasSoon 			= mod:NewSoundSoon(71255, nil, "Melee")
 local soundSlimePuddle 				= mod:NewSound(70341)
 
-local berserkTimer			= select(3, DBM:GetMyPlayerInfo()) == "Lordaeron" and mod:NewBerserkTimer(480) or mod:NewBerserkTimer(600)
+local berserkTimer					= mod:NewBerserkTimer((myRealm == "Lordaeron" or myRealm == "Frostmourne") and 480 or 600)
 
 mod:AddBoolOption("OozeAdhesiveIcon")
 mod:AddBoolOption("GaseousBloatIcon")
@@ -175,8 +177,8 @@ function mod:SPELL_CAST_START(args)
 		if self:IsHeroic() then
 			self:ScheduleMethod(35, "NextPhase")	--after 5s PP sets target
 			timerNextPhase:Start(35)
-			timerMalleableGooCD:Start(45)
-			soundMalleableGooSoon:Schedule(30.5-3, "Interface\\AddOns\\DBM-Core\\sounds\\RaidAbilities\\malleable_soon.mp3")
+			timerMalleableGooCD:Start(45.5)
+			soundMalleableGooSoon:Schedule(45.5-3, "Interface\\AddOns\\DBM-Core\\sounds\\RaidAbilities\\malleable_soon.mp3")
 			timerChokingGasBombCD:Start(50)
 			soundChokingGasSoon:Schedule(50-3, "Interface\\AddOns\\DBM-Core\\sounds\\RaidAbilities\\choking_soon.mp3")
 			warnChokingGasBombSoon:Schedule(50-5)

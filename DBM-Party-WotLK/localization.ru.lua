@@ -178,6 +178,10 @@ L:SetGeneralLocalization({
 	name = "Кровотролль"
 })
 
+L:SetMiscLocalization({
+	YellExplosion = "Труп бдыжь!"
+})
+
 --------------------------
 --  Novos the Summoner  --
 --------------------------
@@ -307,7 +311,7 @@ L:SetGeneralLocalization({
 --------------------------
 --  General Bjarngrim  --
 -------------------------
-L = DBM:GetModLocalization("Gjarngrin")
+L = DBM:GetModLocalization("Bjarngrin")
 
 L:SetGeneralLocalization({
 	name = "Генерал Бьярнгрин"
@@ -334,7 +338,7 @@ L:SetGeneralLocalization({
 -------------
 --  Loken  --
 -------------
-L = DBM:GetModLocalization("Kronus")
+L = DBM:GetModLocalization("Loken")
 
 L:SetGeneralLocalization({
 	name = "Локен"

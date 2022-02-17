@@ -257,10 +257,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			specWarnTwilightCutter:Show()
 			specWarnTwilightCutter:Play("farfromline")
 		if not self.Options.AnnounceAlternatePhase then
-			--warningTwilightCutter:Show()
-			--timerTwilightCutterCast:Start()
+			-- timerTwilightCutterCD:Cancel()
+			-- warningTwilightCutter:Show()
+			-- timerTwilightCutterCast:Start()
 			timerTwilightCutter:Start()--Delay it since it happens 5 seconds after the emote
-			timerTwilightCutterCD:Start(30)
+			timerTwilightCutterCD:Start()
 		end
 		if self:LatencyCheck() then
 			self:SendSync("TwilightCutter2")
@@ -271,10 +272,11 @@ end
 function mod:OnSync(msg, target)
 	if msg == "TwilightCutter2" then
 		if self.Options.AnnounceAlternatePhase then -- Edited to circumvent Warmane double cutter boss emote
-			--warningTwilightCutter:Show()
-			--timerTwilightCutterCast:Start()
+			-- timerTwilightCutterCD:Cancel()
+			-- warningTwilightCutter:Show()
+			-- timerTwilightCutterCast:Start()
 			timerTwilightCutter:Start()--Delay it since it happens 5 seconds after the emote
-			timerTwilightCutterCD:Start(30)
+			timerTwilightCutterCD:Start()
 		end
 	elseif msg == "Meteor" then
 		if self.Options.AnnounceAlternatePhase then

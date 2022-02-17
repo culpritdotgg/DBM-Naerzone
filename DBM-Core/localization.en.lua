@@ -15,7 +15,7 @@ end
 L.HOW_TO_USE_MOD					= "Welcome to " .. L.DBM .. ". Type /dbm help for a list of supported commands. To access options type /dbm in your chat to begin configuration. Load specific zones manually to configure any boss specific settings to your liking as well. " .. L.DBM .. " will setup defaults for your spec, but you may want to fine tune these."
 L.SILENT_REMINDER					= "Reminder: " .. L.DBM .. " is still in silent mode."
 
-L.UPDATEREMINDER_URL				= "https://github.com/culpritcr/DBM-Naerzone"
+L.UPDATEREMINDER_URL				= "https://github.com/Zidras/DBM-Warmane/"
 
 L.LOAD_MOD_ERROR					= "Error while loading boss mods for %s: %s"
 L.LOAD_MOD_SUCCESS					= "Loaded '%s' mods. For more options such as custom alert sounds and personalized warning notes, type /dbm."
@@ -289,6 +289,7 @@ L.TIMER_BREAK						= "Break time!"
 L.ANNOUNCE_BREAK_OVER				= "Break has ended at %s"
 
 L.TIMER_PULL						= "Pull in"
+L.ANNOUNCE_PULL_MODE				= "Pull mode: %s"
 L.ANNOUNCE_PULL						= "Pull in %d sec. (Sent by %s)"
 L.ANNOUNCE_PULL_NOW					= "Pull now!"
 L.ANNOUNCE_PULL_TARGET				= "Pulling %s in %d sec. (Sent by %s)"
@@ -639,3 +640,4 @@ L.ENRAGE_ICON						= "|TInterface\\AddOns\\DBM-Core\\textures\\UI-EJ-Icons.blp:2
 
 --LDB
 L.LDB_TOOLTIP_HELP1					= "Click to open " .. L.DBM
+L.SILENTMODE_IS						= "SilentMode is "

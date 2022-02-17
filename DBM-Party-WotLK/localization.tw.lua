@@ -175,6 +175,10 @@ L:SetGeneralLocalization({
 	name = "血角食人妖"
 })
 
+L:SetMiscLocalization({
+	YellExplosion = "屍體要爆炸啦!"
+})
+
 --------------------------
 --  Novos the Summoner  --
 --------------------------
@@ -304,7 +308,7 @@ L:SetGeneralLocalization({
 --------------------------
 --  General Bjarngrim  --
 -------------------------
-L = DBM:GetModLocalization("Gjarngrin")
+L = DBM:GetModLocalization("Bjarngrin")
 
 L:SetGeneralLocalization({
 	name = "畢亞格林將軍"
@@ -331,7 +335,7 @@ L:SetGeneralLocalization({
 -------------
 --  Loken  --
 -------------
-L = DBM:GetModLocalization("Kronus")
+L = DBM:GetModLocalization("Loken")
 
 L:SetGeneralLocalization({
 	name = "洛肯"

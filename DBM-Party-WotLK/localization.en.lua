@@ -173,6 +173,10 @@ L:SetGeneralLocalization({
 	name = "Trollgore"
 })
 
+L:SetMiscLocalization({
+	YellExplosion = "Corpse go boom!"
+})
+
 --------------------------
 --  Novos the Summoner  --
 --------------------------
@@ -302,7 +306,7 @@ L:SetGeneralLocalization({
 --------------------------
 --  General Bjarngrim  --
 -------------------------
-L = DBM:GetModLocalization("Gjarngrin")
+L = DBM:GetModLocalization("Bjarngrin")
 
 L:SetGeneralLocalization({
 	name = "General Bjarngrim"
@@ -329,7 +333,7 @@ L:SetGeneralLocalization({
 -------------
 --  Loken  --
 -------------
-L = DBM:GetModLocalization("Kronus")
+L = DBM:GetModLocalization("Loken")
 
 L:SetGeneralLocalization({
 	name = "Loken"
@@ -767,10 +771,6 @@ L:SetGeneralLocalization({
 	name = "Eadric the Pure"
 })
 
-L:SetOptionLocalization({
-	SetIconOnHammerTarget	= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(66940)
-})
-
 L:SetMiscLocalization({
 	YellCombatEnd	= "I yield! I submit. Excellent work. May I run away now?"
 })
@@ -796,8 +796,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetOptionLocalization({
-	AchievementCheck			= "Announce 'Doesn't Go to Eleven' achievement warnings to party",
-	SetIconOnSaroniteRockTarget	= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(70851)
+	AchievementCheck			= "Announce 'Doesn't Go to Eleven' achievement warnings to party"
 })
 
 L:SetMiscLocalization({

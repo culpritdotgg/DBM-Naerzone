@@ -19,6 +19,7 @@ mod:RegisterEvents(
 )
 
 local strupper = strupper
+local myRealm = select(3, DBM:GetMyPlayerInfo())
 
 local warnAirphase				= mod:NewAnnounce("WarnAirphase", 2, 43810)
 local warnGroundphaseSoon		= mod:NewAnnounce("WarnGroundphaseSoon", 2, 43810)
@@ -54,7 +55,7 @@ local timerMysticAchieve		= mod:NewAchievementTimer(30, 4620, "AchievementMystic
 local timerTailSmash			= mod:NewCDTimer(30, 71077, nil, nil, nil, 2)
 local soundUnchainedMagic		= mod:NewSoundYou(69762, nil, "SpellCaster")
 
-local berserkTimer				= select(3, DBM:GetMyPlayerInfo()) == "Lordaeron" and mod:NewBerserkTimer(420) or mod:NewBerserkTimer(600)
+local berserkTimer				= mod:NewBerserkTimer((myRealm == "Lordaeron" or myRealm == "Frostmourne") and 420 or 600)
 
 mod:AddBoolOption("SetIconOnFrostBeacon", true)
 mod:AddBoolOption("SetIconOnUnchainedMagic", true)
@@ -222,8 +223,8 @@ function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(69649, 71056, 71057, 71058) or args:IsSpellID(73061, 73062, 73063, 73064) then--Frost Breath
 		warnFrostBreath:Show()
 		timerNextFrostBreath:Start()
-	elseif args:IsSpellID(71077) then --
-	    timerTailSmash:Start()
+	elseif args:IsSpellID(71077) then
+	    timerTailSmash:Start()	
 	end
 end
 

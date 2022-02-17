@@ -4,7 +4,6 @@ local L		= mod:GetLocalizedStrings()
 mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
 mod:SetCreatureID(10439)
 
-
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
@@ -27,7 +26,7 @@ end
 function mod:OnCombatEnd(wipe, isSecondRun)
 	if not wipe and not isSecondRun and self.Options.TimerGuards then
 		-- Custom bar that's bound to core so timer doesn't stop when mod stops its own timers
-		DBT:CreateBar(91, self.localization.timers.TimerGuards, 818, nil, nil, nil, nil, self.Options.TimerGuardsTColor, nil, nil, nil, self.Options.TimerGuardsCVoice)
+		DBM.Bars:CreateBar(91, self.localization.timers.TimerGuards, 818, nil, nil, nil, nil, self.Options.TimerGuardsTColor, nil, nil, nil, self.Options.TimerGuardsCVoice)
 	end
 end
 
