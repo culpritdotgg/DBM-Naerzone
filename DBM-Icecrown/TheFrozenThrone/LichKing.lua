@@ -316,6 +316,11 @@ function mod:SPELL_CAST_START(args)
 	elseif args.spellId == 73650 then -- Restore Soul (Heroic)
 		warnRestoreSoul:Show()
 		timerRestoreSoul:Start()
+		timerSoulreaperCD:Start(45)
+		soundSoulReaperSoon:Schedule(45-2.5, "Interface\\AddOns\\DBM-Core\\sounds\\RaidAbilities\\soulreaperSoon.mp3")
+		timerDefileCD:Start(40)
+		warnDefileSoon:Schedule(38)
+		warnDefileSoon:ScheduleVoice(38, "scatter")
 		if mod.Options.RemoveImmunes then
 			self:ScheduleMethod(39.99, "RemoveImmunes")
 		end
