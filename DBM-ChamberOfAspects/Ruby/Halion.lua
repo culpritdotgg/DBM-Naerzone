@@ -47,7 +47,7 @@ local timerMeteorCD					= mod:NewNextTimer(40, 74648, nil, nil, nil, 3)--Target 
 local timerMeteorCast				= mod:NewCastTimer(7, 74648)--7-8 seconds from boss yell the meteor impacts.
 local timerTwilightCutterCast		= mod:NewCastTimer(5, 74769)
 local timerTwilightCutter			= mod:NewBuffActiveTimer(9, 74769, nil, nil, nil, 6)
-local timerTwilightCutterCD			= mod:NewNextTimer(30, 74769, nil, nil, nil, 6)
+local timerTwilightCutterCD			= mod:NewNextTimer(15, 74769, nil, nil, nil, 6)
 local timerShadowBreathCD			= mod:NewCDTimer(16, 74806, nil, "Tank|Healer", nil, 5)--Edited. Same as debuff timers, same CD, can be merged into 1.
 local timerFieryBreathCD			= mod:NewCDTimer(16, 74525, nil, "Tank|Healer", nil, 5)--But unique icons are nice pertaining to phase you're in ;)
 
@@ -254,14 +254,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:SendSync("Meteor")
 		end
 	elseif msg == L.twilightcutter or msg:find(L.twilightcutter) then -- Edited (specific for Warmane since CHAT_MSG_RAID_BOSS_EMOTE fires twice: at 5s and at cutter)
-			specWarnTwilightCutter:Show()
-			specWarnTwilightCutter:Play("farfromline")
+			specWarnTwilightCutter:Schedule(5)
+			specWarnTwilightCutter:ScheduleVoice(5, "farfromline")
 		if not self.Options.AnnounceAlternatePhase then
-			-- timerTwilightCutterCD:Cancel()
-			-- warningTwilightCutter:Show()
-			-- timerTwilightCutterCast:Start()
-			timerTwilightCutter:Start()--Delay it since it happens 5 seconds after the emote
-			timerTwilightCutterCD:Start()
+			timerTwilightCutterCD:Cancel()
+			warningTwilightCutter:Show()
+			timerTwilightCutterCast:Start()
+			timerTwilightCutter:Schedule(5)--Delay it since it happens 5 seconds after the emote
+			timerTwilightCutterCD:Schedule(15)
 		end
 		if self:LatencyCheck() then
 			self:SendSync("TwilightCutter2")
@@ -272,11 +272,11 @@ end
 function mod:OnSync(msg, target)
 	if msg == "TwilightCutter2" then
 		if self.Options.AnnounceAlternatePhase then -- Edited to circumvent Warmane double cutter boss emote
-			-- timerTwilightCutterCD:Cancel()
-			-- warningTwilightCutter:Show()
-			-- timerTwilightCutterCast:Start()
-			timerTwilightCutter:Start()--Delay it since it happens 5 seconds after the emote
-			timerTwilightCutterCD:Start()
+			timerTwilightCutterCD:Cancel()
+			warningTwilightCutter:Show()
+			timerTwilightCutterCast:Start()
+			timerTwilightCutter:Schedule(5)--Delay it since it happens 5 seconds after the emote
+			timerTwilightCutterCD:Schedule(15)
 		end
 	elseif msg == "Meteor" then
 		if self.Options.AnnounceAlternatePhase then
@@ -319,7 +319,7 @@ function mod:OnSync(msg, target)
 		if self:IsHeroic() then --These i'm not sure if they start regardless of drake aggro, or if it should be moved too.
 			timerTwilightCutterCD:Start(40)
 		else
-			timerTwilightCutterCD:Start(40)
+			timerTwilightCutterCD:Start(35)
 		end
 	elseif msg == "Phase3" and self.vb.phase < 3 then
 		self:SetStage(3)
