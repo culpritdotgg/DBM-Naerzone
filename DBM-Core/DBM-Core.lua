@@ -37,6 +37,7 @@
 --
 local _, private = ...
 
+local wowVersionString, wowBuild, _, wowTOC = GetBuildInfo()
 local DBMPrefix = "DBMv4"
 private.DBMPrefix = DBMPrefix
 
@@ -79,8 +80,8 @@ local function currentFullDate()
 end
 
 DBM = {
-	Revision = parseCurseDate("20220806121056"),
 	DisplayVersion = "9.2 alpha", -- the string that is shown as version
+	Revision = parseCurseDate("20220818232247"),
 	ReleaseRevision = releaseDate(2022, 7, 15) -- the date of the latest stable version that is available, optionally pass hours, minutes, and seconds for multiple releases in one day
 }
 
