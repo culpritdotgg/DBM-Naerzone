@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Quest", "DBM-Outland")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:AddBoolOption("Timers", true)
 mod:SetModelID(18921)
 
@@ -9,7 +9,6 @@ mod:SetModelID(18921)
 --  Locals  --
 --------------
 local frame
-local bar
 local questTimers = {
 	[10277] = 427,-- The Caverns of Time -- 425 425 419.9 427.7 426.5
 	[10211] = 533,-- City of Light (shattrath) -- 528 528 532 533
@@ -34,7 +33,7 @@ frame:SetScript("OnEvent", function(self, e, id)
 			if bars[qid] then
 				bars[qid]:Cancel()
 			end
-			bars[qid] = DBM.Bars:CreateBar(questTimers[qid], tostring(title) or tostring(id), "Interface\\Icons\\Spell_Nature_TimeStop")
+			bars[qid] = DBT:CreateBar(questTimers[qid], tostring(title) or tostring(id), "Interface\\Icons\\Spell_Nature_TimeStop")
 			frame:RegisterEvent("QUEST_LOG_UPDATE")
 		end
 	elseif e == "QUEST_LOG_UPDATE" then

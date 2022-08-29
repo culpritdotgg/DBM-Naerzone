@@ -1,30 +1,34 @@
 local mod	= DBM:NewMod("Jaraxxus", "DBM-Coliseum")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220609005636")
 mod:SetMinSyncRevision(7007)
 mod:SetCreatureID(34780)
-mod:SetMinCombatTime(30)
+--mod:SetMinCombatTime(30)
 mod:SetUsedIcons(7, 8)
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEvents(
-	"SPELL_AURA_APPLIED",
-	"SPELL_AURA_REMOVED",
-	"SPELL_CAST_START",
-	"SPELL_CAST_SUCCESS",
-	"SPELL_DAMAGE",
-	"SPELL_HEAL",
-	"SPELL_MISSED",
-	"SPELL_PERIODIC_HEAL",
 	"CHAT_MSG_MONSTER_YELL"
 )
 
+mod:RegisterEventsInCombat(
+	"SPELL_CAST_START 66532 66963 66964 66965",
+	"SPELL_CAST_SUCCESS 66228 67106 67107 67108 67901 67902 67903 66258 66269 67898 67899 67900 66197 68123 68124 68125",
+	"SPELL_AURA_APPLIED 67051 67050 67049 66237 66197 68123 68124 68125 66334 67905 67906 67907 66532 66963 66964 66965",
+	"SPELL_AURA_REMOVED 67051 67050 67049 66237",
+	"SPELL_DAMAGE 66877 67070 67071 67072 66496 68716 68717 68718",
+	"SPELL_MISSED 66877 67070 67071 67072 66496 68716 68717 68718",
+	"SPELL_HEAL",
+	"SPELL_PERIODIC_HEAL"
+)
+
+--TODO, possibly just use args.amount from combatlog versus debuff scanning for flesh?
 local warnPortalSoon			= mod:NewSoonAnnounce(66269, 3)
 local warnVolcanoSoon			= mod:NewSoonAnnounce(66258, 3)
 local warnFlame					= mod:NewTargetAnnounce(66197, 4)
-local warnFlesh					= mod:NewTargetAnnounce(66237, 4, nil, "Healer")
+local warnFlesh					= mod:NewTargetNoFilterAnnounce(66237, 4, nil, "Healer")
 
 local specWarnFlame				= mod:NewSpecialWarningRun(66877, nil, nil, 2, 4, 2)
 local specWarnFlameGTFO			= mod:NewSpecialWarningMove(66877, nil, nil, 2, 4, 2)
@@ -36,18 +40,18 @@ local SpecWarnFelFireball		= mod:NewSpecialWarningInterrupt(66532, "HasInterrupt
 local SpecWarnFelFireballDispel	= mod:NewSpecialWarningDispel(66532, "RemoveMagic", nil, 2, 1, 2)
 
 local timerCombatStart			= mod:NewCombatTimer(86)--roleplay for first pull
-local timerFlame 				= mod:NewTargetTimer(8, 66197, nil, nil, nil, 3)--There are 8 debuff Ids. Since we detect first to warn, use an 8sec timer to cover duration of trigger spell and damage debuff.
+local timerFlame				= mod:NewTargetTimer(8, 66197, nil, nil, nil, 3)--There are 8 debuff Ids. Since we detect first to warn, use an 8sec timer to cover duration of trigger spell and damage debuff.
 local timerFlameCD				= mod:NewCDTimer(30, 66197, nil, nil, nil, 3)
-local timerNetherPowerCD		= mod:NewCDTimer(42.5, 67009, nil, "MagicDispeller", nil, 5, nil, DBM_CORE_L.MAGIC_ICON)
-local timerFlesh				= mod:NewTargetTimer(12, 66237, nil, "Healer", 2, 5, nil, DBM_CORE_L.HEALER_ICON)
-local timerFleshCD				= mod:NewCDTimer(23, 66237, nil, "Healer", 2, 5, nil, DBM_CORE_L.HEALER_ICON)
+local timerNetherPowerCD		= mod:NewCDTimer(42.5, 67009, nil, "MagicDispeller", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerFlesh				= mod:NewTargetTimer(12, 66237, nil, "Healer", 2, 5, nil, DBM_COMMON_L.HEALER_ICON)
+local timerFleshCD				= mod:NewCDTimer(23, 66237, nil, "Healer", 2, 5, nil, DBM_COMMON_L.HEALER_ICON)
 local timerPortalCD				= mod:NewCDTimer(120, 66269, nil, nil, nil, 1)
 local timerVolcanoCD			= mod:NewCDTimer(120, 66258, nil, nil, nil, 1)
 
 local enrageTimer				= mod:NewBerserkTimer(600)
 
-mod:AddSetIconOption("LegionFlameIcon", 66197)
-mod:AddSetIconOption("IncinerateFleshIcon", 66237)
+mod:AddSetIconOption("LegionFlameIcon", 66197, true, 0, {7})
+mod:AddSetIconOption("IncinerateFleshIcon", 66237, true, 0, {8})
 mod:AddInfoFrameOption(66237, true)
 mod:RemoveOption("HealthFrame")
 mod:AddBoolOption("IncinerateShieldFrame", false, "misc")
@@ -65,7 +69,7 @@ function mod:OnCombatStart(delay)
 	warnPortalSoon:Schedule(17-delay)
 	timerVolcanoCD:Start(82-delay)
 	warnVolcanoSoon:Schedule(77-delay)
-    timerNetherPowerCD:Start(15-delay)
+	timerNetherPowerCD:Start(15-delay)
 	timerFleshCD:Start(14-delay)
 	timerFlameCD:Start(20-delay)
 	enrageTimer:Start(-delay)
@@ -77,17 +81,6 @@ function mod:OnCombatEnd()
 	end
 	DBM.BossHealth:Clear()
 end
-
-function mod:SPELL_DAMAGE(_, _, _, destGUID, _, _, spellId)
-	if (spellId == 66877 or spellId == 67070 or spellId == 67071 or spellId == 67072) and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then		-- Legion Flame
-		specWarnFlameGTFO:Show()
-		specWarnFlameGTFO:Play("runaway")
-	elseif (spellId == 66496 or spellId == 68716 or spellId == 68717 or spellId == 68718) and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then	-- Fel Inferno
-		specWarnFelInferno:Show()
-		specWarnFelInferno:Play("runaway")
-	end
-end
-mod.SPELL_MISSED = mod.SPELL_DAMAGE
 
 local setIncinerateTarget, clearIncinerateTarget, updateInfoFrame
 local diffMaxAbsorb = {heroic25 = 85000, heroic10 = 40000, normal25 = 60000, normal10 = 30000}
@@ -115,7 +108,7 @@ do
 	end
 	mod.SPELL_PERIODIC_HEAL = mod.SPELL_HEAL
 
-	function setIncinerateTarget(mod, target, name)
+	function setIncinerateTarget(_, target, name)
 		incinerateTarget = target
 		healed = 0
 		DBM.BossHealth:RemoveBoss(getShieldHP)
@@ -136,6 +129,29 @@ do
 			addLine(incinerateFleshTargetName, getShieldHP().."%")
 		end
 		return lines, sortedLines
+	end
+end
+
+function mod:SPELL_CAST_START(args)
+	if args:IsSpellID(66532, 66963, 66964, 66965) and self:CheckInterruptFilter(args.sourceGUID, false, true) then	-- Fel Fireball (track cast for interupt, only when targeted)
+		SpecWarnFelFireball:Show(args.sourceName)
+		SpecWarnFelFireball:Play("kickcast")
+	end
+end
+
+function mod:SPELL_CAST_SUCCESS(args)
+	if args:IsSpellID(66228, 67106, 67107, 67108) then			-- Nether Power
+		specWarnNetherPower:Show(args.sourceName)
+		specWarnNetherPower:Play("dispelboss")
+		timerNetherPowerCD:Start()
+	elseif args:IsSpellID(67901, 67902, 67903, 66258) then		-- Infernal Volcano
+		timerVolcanoCD:Start()
+		warnVolcanoSoon:Schedule(110)
+	elseif args:IsSpellID(66269, 67898, 67899, 67900) then		-- Nether Portal
+		timerPortalCD:Start()
+		warnPortalSoon:Schedule(110)
+	elseif args:IsSpellID(66197, 68123, 68124, 68125) then		-- Legion Flame
+		warnFlame:Show(args.destName)
 	end
 end
 
@@ -160,6 +176,8 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 		setIncinerateTarget(self, args.destGUID, args.destName)
 	elseif args:IsSpellID(66197, 68123, 68124, 68125) then		-- Legion Flame ids 66199, 68126, 68127, 68128 (second debuff) do the actual damage. First 2 seconds are trigger debuff only.
+		timerFlame:Start(args.destName)
+		timerFlameCD:Start()
 		if args:IsPlayer() then
 			specWarnFlame:Show()
 			specWarnFlame:Play("runout")
@@ -191,28 +209,16 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
-function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(66532, 66963, 66964, 66965) and self:CheckInterruptFilter(args.sourceGUID) then	-- Fel Fireball (track cast for interupt, only when targeted)
-		SpecWarnFelFireball:Show(args.sourceName)
-		SpecWarnFelFireball:Play("kickcast")
+function mod:SPELL_DAMAGE(_, _, _, destGUID, _, _, spellId)
+	if (spellId == 66877 or spellId == 67070 or spellId == 67071 or spellId == 67072) and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then		-- Legion Flame
+		specWarnFlameGTFO:Show()
+		specWarnFlameGTFO:Play("runaway")
+	elseif (spellId == 66496 or spellId == 68716 or spellId == 68717 or spellId == 68718) and destGUID == UnitGUID("player") and self:AntiSpam(3, 1) then	-- Fel Inferno
+		specWarnFelInferno:Show()
+		specWarnFelInferno:Play("runaway")
 	end
 end
-
-function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(66228, 67106, 67107, 67108) then			-- Nether Power
-		specWarnNetherPower:Show(args.sourceName)
-		specWarnNetherPower:Play("dispelboss")
-		timerNetherPowerCD:Start()
-	elseif args:IsSpellID(67901, 67902, 67903, 66258) then		-- Infernal Volcano
-		timerVolcanoCD:Start()
-		warnVolcanoSoon:Schedule(110)
-	elseif args:IsSpellID(66269, 67898, 67899, 67900) then		-- Nether Portal
-		timerPortalCD:Start()
-		warnPortalSoon:Schedule(110)
-	elseif args:IsSpellID(66197, 68123, 68124, 68125) then		-- Legion Flame
-		warnFlame:Show(args.destName)
-	end
-end
+mod.SPELL_MISSED = mod.SPELL_DAMAGE
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.FirstPull or msg:find(L.FirstPull) then

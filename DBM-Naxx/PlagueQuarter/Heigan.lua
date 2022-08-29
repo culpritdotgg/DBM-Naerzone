@@ -1,22 +1,23 @@
 local mod	= DBM:NewMod("Heigan", "DBM-Naxx", 3)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 2248 $"):sub(12, -3))
+mod:SetRevision("20190516165414")
 mod:SetCreatureID(15936)
 
---mod:RegisterCombat("combat_yell", L.Pull)
-mod:RegisterCombat("combat")
+mod:RegisterCombat("combat_yell", L.Pull)
 
-local warnTeleportSoon	= mod:NewAnnounce("WarningTeleportSoon", 2, 46573)
-local warnTeleportNow	= mod:NewAnnounce("WarningTeleportNow", 3, 46573)
+local warnTeleportSoon			= mod:NewAnnounce("WarningTeleportSoon", 2, 46573)
+local warnTeleportNow			= mod:NewAnnounce("WarningTeleportNow", 3, 46573)
+local warnPlagueCloudEnd		= mod:NewEndAnnounce(30122, 1)
 
-local timerTeleport		= mod:NewTimer(90, "TimerTeleport", 46573, nil, nil, 6)
+local timerTeleport				= mod:NewTimer(90, "TimerTeleport", 46573, nil, nil, 6)
+local timerPlagueCloud			= mod:NewBuffActiveTimer(45, 30122, nil, nil, nil, 6)
 
 function mod:DancePhase()
-	timerTeleport:Show(47)
-	warnTeleportSoon:Schedule(37, 10)
-	warnTeleportNow:Schedule(47)
-	self:ScheduleMethod(47, "BackInRoom", 88)
+	timerPlagueCloud:Start()
+	warnTeleportSoon:Schedule(35, 10)
+	warnPlagueCloudEnd:Schedule(45)
+	self:ScheduleMethod(45, "BackInRoom", 88)
 	self:SetStage(2)
 end
 

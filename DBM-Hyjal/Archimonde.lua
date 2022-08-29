@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Archimonde", "DBM-Hyjal")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision$"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(17968)
 mod:SetZone()
 mod:SetUsedIcons(8)
@@ -21,13 +21,13 @@ local specWarnBurst		= mod:NewSpecialWarningYou(32014, nil, nil, nil, 3, 2)
 local yellBurst			= mod:NewYell(32014)
 
 local timerFearCD		= mod:NewCDTimer(41, 31970, nil, nil, nil, 2)
---local timerGripCD		= mod:NewCDTimer(6, 31972, nil, "RemoveMagic", nil, 3, nil, DBM_CORE_L.MAGIC_ICON)
+--local timerGripCD		= mod:NewCDTimer(6, 31972, nil, "RemoveMagic", nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 
 local berserkTimer		= mod:NewBerserkTimer(600)
 
 mod:AddSetIconOption("BurstIcon", 32014, true, false, {8})
 
-function mod:BurstTarget(targetname, uId)
+function mod:BurstTarget(targetname)
 	if not targetname then return end
 	if targetname == UnitName("player") then
 		specWarnBurst:Show()

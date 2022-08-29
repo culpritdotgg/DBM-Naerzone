@@ -11,7 +11,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-	WarnMark 		= "%s: %s",
+	WarnMark		= "%s: %s",
 	WarnPhase		= "Fase de %s",
 	SpecWarnMark	= "%s: %s"
 })
@@ -29,8 +29,10 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	Frost	= "Escarcha",
-	Nature	= "Naturaleza"
+	Frost		= "Escarcha",
+	Nature		= "Naturaleza",
+	YellPull	= "¡No puedo permitir que interferáis!" -- esES
+--	YellPull	= "¡No puedo permitir que interfieran!" -- esMX
 })
 
 -----------------------
@@ -82,10 +84,11 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	Human		= "humana",
-	Demon		= "demoníaca",
+	Human		= "Humana",
+	Demon		= "Demoníaca",
 	YellDemon	= "Desaparece, elfo pusilánime. ¡Yo mando ahora!",
-	YellPhase2	= "¿Qué has hecho? ¡Yo soy el maestro!"
+	YellPhase2	= "¿Qué has hecho? ¡Yo soy el maestro!",
+	YellPull	= "¡Al fin acaba mi destierro!"
 })
 
 -----------------------------
@@ -100,7 +103,8 @@ L:SetGeneralLocalization({
 L:SetMiscLocalization({
 	Caribdis	= "Guardia de las profundidades Caribdis",
 	Tidalvess	= "Guardia de las profundidades Tidalvess",
-	Sharkkis	= "Guardia de las profundidades Sharkkis"
+	Sharkkis	= "Guardia de las profundidades Sharkkis",
+	YellPull	= "¡Guardias, atención! Tenemos visita..."
 })
 
 --------------------------
@@ -124,8 +128,12 @@ L:SetTimerLocalization({
 L:SetOptionLocalization({
 	WarnMurlocs		= "Mostrar aviso cuando aparezcan múrlocs",
 	SpecWarnMurlocs	= "Mostrar aviso especial cuando aparezcan múrlocs",
-	TimerMurlocs	= "Mostrar temporizador para los siguientes múrlocs",
-	GraveIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(38049)
+	TimerMurlocs	= "Mostrar temporizador para los siguientes múrlocs"
+})
+
+L:SetMiscLocalization({
+	Grave			= "¡%s manda a sus enemigos a sus sepulturas de agua!",
+	Murlocs			= "¡El violento terremoto ha alertado a los múrlocs cercanos!"
 })
 
 -----------------
@@ -164,8 +172,6 @@ L:SetOptionLocalization({
 	TimerStrider		= "Mostrar temporizador para el siguiente Zancudo Colmillo Torcido",
 	TimerNaga			= "Mostrar temporizador para el siguiente Élite Colmillo Torcido",
 	SpecWarnElemental	= "Mostrar aviso previo especial para cuando aparezca un Elemental corrupto",
-	RangeFrame			= "Mostrar marco de distancia (10 m)",
-	ChargeIcon			= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(38280),
 	AutoChangeLootToFFA	= "Cambiar modo de botín a libre en Fase 2"
 })
 

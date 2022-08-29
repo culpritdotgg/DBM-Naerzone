@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod(449, "DBM-Party-Classic", 16, 236)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(10812, 10813)--10812 Grand Crusader Dathrohan (stage 1 classic, on live the boss starts out as Balnazzar)
 
 mod:RegisterCombat("combat")
@@ -20,10 +20,10 @@ local warningPsychicScream				= mod:NewSpellAnnounce(13704, 3)
 --local specWarnMaddeningCall			= mod:NewSpecialWarningInterrupt(86620, "HasInterrupt", nil, nil, 1, 2)
 
 local timerDominationCD					= mod:NewAITimer(180, 17405, nil, nil, nil, 3)
---local timerSleepCD						= mod:NewAITimer(180, 66290, nil, nil, nil, 3, nil, DBM_CORE_L.MAGIC_ICON)
-local timerPsychicScreamCD				= mod:NewAITimer(180, 13704, nil, nil, nil, 2, nil, DBM_CORE_L.MAGIC_ICON)
+--local timerSleepCD						= mod:NewAITimer(180, 66290, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerPsychicScreamCD				= mod:NewAITimer(180, 13704, nil, nil, nil, 2, nil, DBM_COMMON_L.MAGIC_ICON)
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart(--[[delay]])
 	--timerDominationCD:Start(1-delay)
 	--timerSleepCD:Start(1-delay)
 	--timerPsychicScreamCD:Start(1-delay)

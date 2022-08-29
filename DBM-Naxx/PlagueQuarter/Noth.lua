@@ -1,11 +1,10 @@
 local mod	= DBM:NewMod("Noth", "DBM-Naxx", 3)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 2248 $"):sub(12, -3))
+mod:SetRevision("20220629223621")
 mod:SetCreatureID(15954)
 
---mod:RegisterCombat("combat_yell", L.Pull)
-mod:RegisterCombat("combat")
+mod:RegisterCombat("combat_yell", L.Pull)
 
 mod:RegisterEvents(
 	"SPELL_CAST_SUCCESS 29213 54835 29212 29208",
@@ -24,7 +23,7 @@ local specWarnAdds		= mod:NewSpecialWarningAdds(29212, "-Healer", nil, nil, 1, 2
 
 local timerTeleport		= mod:NewTimer(90, "TimerTeleport", 46573, nil, nil, 6)
 local timerTeleportBack	= mod:NewTimer(70, "TimerTeleportBack", 46573, nil, nil, 6)
-local timerCurseCD		= mod:NewCDTimer(53.3, 29213, nil, nil, nil, 5, nil, DBM_CORE_L.CURSE_ICON)
+local timerCurseCD		= mod:NewCDTimer(53.3, 29213, nil, nil, nil, 5, nil, DBM_COMMON_L.CURSE_ICON)
 local timerAddsCD		= mod:NewAddsTimer(30, 29212, nil, "-Healer")
 local timerBlink		= mod:NewNextTimer(25, 29208)
 
@@ -58,17 +57,17 @@ function mod:Balcony()
 end
 
 -- function mod:BackInRoom(delay)
--- 	delay = delay or 0
--- 	self:SetStage(0)
--- 	local timer
--- 	if self.vb.phase == 1 then timer = 90 - delay
--- 	elseif self.vb.phase == 2 then timer = 110 - delay
--- 	elseif self.vb.phase == 3 then timer = 180 - delay
--- 	else return end
--- 	timerTeleport:Show(timer)
--- 	warnTeleportSoon:Schedule(timer - 20)
--- 	warnTeleportNow:Schedule(timer)
--- 	self:ScheduleMethod(timer, "Balcony")
+--	delay = delay or 0
+--	self:SetStage(0)
+--	local timer
+--	if self.vb.phase == 1 then timer = 90 - delay
+--	elseif self.vb.phase == 2 then timer = 110 - delay
+--	elseif self.vb.phase == 3 then timer = 180 - delay
+--	else return end
+--	timerTeleport:Show(timer)
+--	warnTeleportSoon:Schedule(timer - 20)
+--	warnTeleportNow:Schedule(timer)
+--	self:ScheduleMethod(timer, "Balcony")
 -- end
 
 function mod:OnCombatStart(delay)
@@ -107,7 +106,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, npc, _, _, target)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L.Adds or msg:find(L.Adds) then
 		self:SendSync("Adds")--Syncing to help unlocalized clients
 	elseif msg == L.AddsTwo or msg:find(L.AddsTwo) then
@@ -115,8 +114,8 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, npc, _, _, target)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if spellId == 29231 then--Teleport Return
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName)
+	if spellName == GetSpellInfo(29231) then--Teleport Return
 		self.vb.addsCount = 0
 		self.vb.curseCount = 0
 		timerAddsCD:Stop()
@@ -144,7 +143,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
 	end
 end
 
-function mod:OnSync(msg, targetname)
+function mod:OnSync(msg)
 	if not self:IsInCombat() then return end
 	if msg == "Adds" then--Boss Grounded
 		self.vb.addsCount = self.vb.addsCount + 1

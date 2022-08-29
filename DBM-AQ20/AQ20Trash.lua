@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("AQ20Trash", "DBM-AQ20", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetModelID(15324) -- Qiraji Gladiator
 
 mod.isTrashMod = true
@@ -17,12 +17,12 @@ mod:AddRangeFrameOption(10, 22997)
 --local eventsRegistered = false
 
 do-- Anubisath Plague/Explode - keep in sync - AQ40/AQ40Trash.lua AQ20/AQ20Trash.lua
-	local warnPlague                    = mod:NewTargetAnnounce(22997, 2)
-	local warnCauseInsanity             = mod:NewTargetNoFilterAnnounce(26079, 2)
+	local warnPlague					= mod:NewTargetAnnounce(22997, 2)
+	local warnCauseInsanity				= mod:NewTargetNoFilterAnnounce(26079, 2)
 
-	local specWarnPlague                = mod:NewSpecialWarningMoveAway(22997, nil, nil, nil, 1, 2)
-	local yellPlague                    = mod:NewYell(22997)
-	local specWarnExplode               = mod:NewSpecialWarningRun(25698, "Melee", nil, 3, 4, 2)
+	local specWarnPlague				= mod:NewSpecialWarningMoveAway(22997, nil, nil, nil, 1, 2)
+	local yellPlague					= mod:NewYell(22997)
+	local specWarnExplode				= mod:NewSpecialWarningRun(25698, "Melee", nil, 3, 4, 2)
 
 	-- aura applied didn't seem to catch the reflects and other buffs
 	function mod:SPELL_AURA_APPLIED(args)
@@ -55,13 +55,13 @@ do-- Anubisath Plague/Explode - keep in sync - AQ40/AQ40Trash.lua AQ20/AQ20Trash
 end
 
 do-- Anubisath Reflect - keep in sync - AQ40/AQ40Trash.lua AQ20/AQ20Trash.lua
-	local specWarnShadowFrostReflect    = mod:NewSpecialWarningReflect(19595, nil, nil, nil, 1, 2)
-	local specWarnFireArcaneReflect     = mod:NewSpecialWarningReflect(13022, nil, nil, nil, 1, 2)
+	local specWarnShadowFrostReflect	= mod:NewSpecialWarningReflect(19595, nil, nil, nil, 1, 2)
+	local specWarnFireArcaneReflect		= mod:NewSpecialWarningReflect(13022, nil, nil, nil, 1, 2)
 
 	-- todo: thorns, shadow storm
 
 	local playerGUID = UnitGUID("player")
-	function mod:SPELL_MISSED(sourceGUID, _, _, destGUID, destName, _, _, _, spellSchool, missType)
+	function mod:SPELL_MISSED(sourceGUID, _, _, _, destName, _, _, _, spellSchool, missType)
 		if (missType == "REFLECT" or missType == "DEFLECT") and sourceGUID == playerGUID then
 			if (spellSchool == 32 or spellSchool == 16) and self:AntiSpam(3, 1) then
 				specWarnShadowFrostReflect:Show(destName)

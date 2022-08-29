@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Akama", "DBM-BlackTemple")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(22841)
 
 mod:SetModelID(21357)
@@ -32,24 +32,24 @@ mod.vb.AddsWestCount = 0
 
 local function addsWestLoop(self)
 	self.vb.AddsWestCount = self.vb.AddsWestCount + 1
-	specWarnAdds:Show(DBM_CORE_L.WEST)
+	specWarnAdds:Show(DBM_COMMON_L.WEST)
 	specWarnAdds:Play("killmob")
 	specWarnAdds:ScheduleVoice(1, "west")
 	if self.vb.AddsWestCount == 2 then--Special
 		self:Schedule(51, addsWestLoop, self)
-		timerAddsCD:Start(51, DBM_CORE_L.WEST)
+		timerAddsCD:Start(51, DBM_COMMON_L.WEST)
 	else
 		self:Schedule(47, addsWestLoop, self)
-		timerAddsCD:Start(47, DBM_CORE_L.WEST)
+		timerAddsCD:Start(47, DBM_COMMON_L.WEST)
 	end
 end
 
 local function addsEastLoop(self)
-	specWarnAdds:Show(DBM_CORE_L.EAST)
+	specWarnAdds:Show(DBM_COMMON_L.EAST)
 	specWarnAdds:Play("killmob")
 	specWarnAdds:ScheduleVoice(1, "east")
 	self:Schedule(51, addsEastLoop, self)
-	timerAddsCD:Start(51, DBM_CORE_L.EAST)
+	timerAddsCD:Start(51, DBM_COMMON_L.EAST)
 end
 
 local function sorcLoop(self)
@@ -64,7 +64,7 @@ local function defenderLoop(self)
 	timerDefenderCD:Start(30)
 end
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart()
 	self:SetStage(1)
 	self.vb.AddsWestCount = 0
 	self:RegisterShortTermEvents(
@@ -76,7 +76,7 @@ function mod:OnCombatStart(delay)
 	self:Schedule(1, sorcLoop, self)
 	self:Schedule(1, addsWestLoop, self)
 	self:Schedule(18, addsEastLoop, self)
-	timerAddsCD:Start(18, DBM_CORE_L.EAST or "East")
+	timerAddsCD:Start(18, DBM_COMMON_L.EAST or "East")
 end
 
 function mod:OnCombatEnd()
@@ -107,8 +107,8 @@ function mod:SWING_DAMAGE(_, sourceName)
 end
 mod.SWING_MISSED = mod.SWING_DAMAGE
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, _, spellId)
-	if (spellId == 40607 or spellId == 40955) and self.vb.phase == 1 and self:AntiSpam(3, 1) then--Fixate/Summon Shade of Akama Trigger
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName)
+	if (spellName == GetSpellInfo(40607) or spellName == GetSpellInfo(40955)) and self.vb.phase == 1 and self:AntiSpam(3, 1) then--Fixate/Summon Shade of Akama Trigger
 		self:UnregisterShortTermEvents()
 		self:SetStage(2)
 		warnPhase2:Show()

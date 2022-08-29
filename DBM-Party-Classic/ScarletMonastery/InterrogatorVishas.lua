@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("InterrogatorVishas", "DBM-Party-Classic", 12)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(3983)
 
 mod:RegisterCombat("combat")
@@ -13,7 +13,7 @@ mod:RegisterEventsInCombat(
 
 local warningImmolate				= mod:NewTargetNoFilterAnnounce(9034, 2)
 
-local timerImmolateCD				= mod:NewAITimer(180, 9034, nil, nil, nil, 3, nil, DBM_CORE_L.MAGIC_ICON)
+local timerImmolateCD				= mod:NewAITimer(180, 9034, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 
 function mod:OnCombatStart(delay)
 	timerImmolateCD:Start(1-delay)

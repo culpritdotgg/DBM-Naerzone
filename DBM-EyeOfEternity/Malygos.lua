@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Malygos", "DBM-EyeOfEternity")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 3726 $"):sub(12, -3))
+mod:SetRevision("20220729225816")
 mod:SetCreatureID(28859)
 
 --mod:RegisterCombat("yell", L.YellPull)
@@ -25,25 +25,26 @@ local warnVortex				= mod:NewSpellAnnounce(56105, 3)
 local warnVortexSoon			= mod:NewSoonAnnounce(56105, 2)
 local warnBreathInc				= mod:NewSoonAnnounce(56505, 3)
 local warnSurge					= mod:NewTargetAnnounce(60936, 3)
-local warnStaticField			= mod:NewTargetAnnounce(57430, 3)
+local warnStaticField			= mod:NewTargetNoFilterAnnounce(57430, 3)
 local warnPhase2				= mod:NewPhaseAnnounce(2)
 local warnPhase3				= mod:NewPhaseAnnounce(3)
 
 local specWarnBreath			= mod:NewSpecialWarningSpell(56505, nil, nil, nil, 2, 2)
 local specWarnSurge				= mod:NewSpecialWarningDefensive(60936, nil, nil, nil, 1, 2)
+local specWarnP3SurgeOfPowerSoon= mod:NewSpecialWarningYou(60936, nil, nil, nil, 1, 2)
 local specWarnStaticField		= mod:NewSpecialWarningYou(57430, nil, nil, nil, 1, 2)
 local specWarnStaticFieldNear	= mod:NewSpecialWarningClose(57430, nil, nil, nil, 1, 2)
 local yellStaticField			= mod:NewYellMe(57430)
 
-local timerSpark				= mod:NewNextTimer(30, 56140, nil, nil, nil, 1, 59381)
-local timerVortex				= mod:NewCastTimer(11, 56105, nil, nil, nil, 2)
+local timerSpark				= mod:NewNextTimer(30, 56140, nil, nil, nil, 1, 59381, DBM_COMMON_L.DAMAGE_ICON)
+local timerVortex				= mod:NewCastTimer(11, 56105, nil, nil, nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
 local timerVortexCD				= mod:NewNextTimer(60, 56105, nil, nil, nil, 2)
-local timerBreath				= mod:NewBuffActiveTimer(8, 56505, nil, nil, nil, 2) --lasts 5 seconds plus 3 sec cast.
+local timerBreath				= mod:NewBuffActiveTimer(8, 56505, nil, nil, nil, 5) --lasts 5 seconds plus 3 sec cast.
 local timerBreathCD				= mod:NewCDTimer(59, 56505, nil, nil, nil, 2)
 local timerStaticFieldCD		= mod:NewCDTimer(12.5, 57430, nil, nil, nil, 3) --High 15-25 second variation
-local timerAchieve      		= mod:NewAchievementTimer(360, 1875)
-local timerIntermission 		= mod:NewPhaseTimer(22)
---local timerAttackable 			= mod:NewTimer(24, "Malygos Wipes Debuffs") -- Not enough info nor locales on the code from previous contributor to know what this is intended for. Disabled for now
+local timerAchieve				= mod:NewAchievementTimer(360, 1875)
+local timerIntermission		= mod:NewPhaseTimer(22)
+--local timerAttackable			= mod:NewTimer(24, "Malygos Wipes Debuffs") -- Not enough info nor locales on the code from previous contributor to know what this is intended for. Disabled for now
 
 local enrageTimer				= mod:NewBerserkTimer(615)
 
@@ -78,19 +79,11 @@ function mod:StaticFieldTarget()
 		specWarnStaticField:Show()
 		specWarnStaticField:Play("runaway")
 		yellStaticField:Yell()
+	elseif announcetarget and self:CheckNearby(13, announcetarget) then
+		specWarnStaticFieldNear:Show(announcetarget)
+		specWarnStaticFieldNear:Play("runaway")
 	else
-		local uId2 = DBM:GetRaidUnitId(announcetarget)
-		if uId2 then
-			local inRange = DBM.RangeCheck:GetDistance("player", GetPlayerMapPosition(uId2))
-			if inRange and inRange < 13 then
-				specWarnStaticFieldNear:Show(announcetarget)
-				specWarnStaticFieldNear:Play("runaway")
-			else
-				warnStaticField:Show(announcetarget)
-			end
-		else
-			warnStaticField:Show(announcetarget)
-		end
+		warnStaticField:Show(announcetarget)
 	end
 end
 
@@ -177,16 +170,17 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerStaticFieldCD:Start(24+15.5)
 	end
 end
---[[
+
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg == L.EmoteSpark or msg:find(L.EmoteSpark) then
-		self:SendSync("Spark")
+--	if msg == L.EmoteSpark or msg:find(L.EmoteSpark) then
+--		self:SendSync("Spark")
+	if msg == L.EmoteSurge or msg:find(L.EmoteSurge) then
+		self:SendSync("MalygosSurge", UnitName("player"))
 	end
 end
-]]
---local free triggers but not reliable in instances that didn't impliment bossN args so backup emote/yell triggers still in place.
---Anti spam will be handled by sync handler
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, spellName)
+
+--localization free triggers that's better but can only be used where boss1 UnitId available
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName)
 --	"<39.8> [UNIT_SPELLCAST_SUCCEEDED] Malygos:Possible Target<Omegal>:target:Summon Power Spark::0:56140", -- [998]
 	if spellName == GetSpellInfo(56140) then
 		warnSpark:Show()
@@ -195,6 +189,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(uId, spellName)
 end
 
 function mod:OnSync(event, arg)
+	if not self:IsInCombat() then return end
 --	if event == "Spark" then
 --		warnSpark:Show()
 --		timerSpark:Start()
@@ -214,5 +209,11 @@ function mod:OnSync(event, arg)
 		self:Schedule(6, buildGuidTable)
 		timerBreathCD:Cancel()
 --		timerStaticFieldCD:Start(49.5)--Consistent?
+	elseif event == "MalygosSurge" then
+		warnSurge:CombinedShow(0.2, arg)
+		if arg == UnitName("player") then
+			specWarnP3SurgeOfPowerSoon:Show()
+			specWarnP3SurgeOfPowerSoon:Play("findshield")
+		end
 	end
 end

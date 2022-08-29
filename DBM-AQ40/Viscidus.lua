@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Viscidus", "DBM-AQ40", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(15299)
 
 mod:SetModelID(15299)
@@ -20,11 +20,11 @@ local warnShatter				= mod:NewAnnounce("WarnShatter", 2, 12982)
 
 local specWarnGTFO				= mod:NewSpecialWarningGTFO(25989, nil, nil, nil, 1, 8)
 
-local timerPoisonBoltVolleyCD	= mod:NewCDCountTimer(11, 25991, nil, nil, nil, 2, nil, DBM_CORE_L.POISON_ICON)
+local timerPoisonBoltVolleyCD	= mod:NewCDCountTimer(11, 25991, nil, nil, nil, 2, nil, DBM_COMMON_L.POISON_ICON)
 
 mod.vb.volleyCount = 0
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart()
 	self.vb.volleyCount = 0
 	timerPoisonBoltVolleyCD:Start(12.9, 1)
 end

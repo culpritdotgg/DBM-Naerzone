@@ -110,9 +110,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	WarningSplitSoon	= "Show pre-warning for Split",
-	RangeFrame			= "Show range frame (12 yards)",
-	SetIconOnBrand		= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(74505)
+	WarningSplitSoon	= "Show pre-warning for Split"
 })
 
 -------------------------
@@ -122,11 +120,6 @@ L = DBM:GetModLocalization("Saviana")
 
 L:SetGeneralLocalization({
 	name = "Saviana Ragefire"
-})
-
-L:SetOptionLocalization({
-	RangeFrame				= "Show range frame (10 yards)",
-	beaconIcon				= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(74453)
 })
 
 --------------------------
@@ -181,6 +174,7 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	Halion					= "Halion",
+	PhysicalRealm			= "Physical Realm",
 	MeteorCast				= "The heavens burn!",
 	Phase2					= "You will find only suffering within the realm of twilight! Enter if you dare!",
 	Phase3					= "I am the light and the darkness! Cower, mortals, before the herald of Deathwing!",

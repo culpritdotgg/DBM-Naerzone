@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("MalGanis", "DBM-Party-WotLK", 3)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 2322 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(26533)
 
 mod:RegisterCombat("combat")
@@ -14,7 +14,7 @@ mod:RegisterEventsInCombat(
 
 local warningSleep	= mod:NewTargetNoFilterAnnounce(52721, 2)
 
-local timerSleep	= mod:NewTargetTimer(10, 52721, nil, nil, nil, 5, nil, DBM_CORE_L.MAGIC_ICON)
+local timerSleep	= mod:NewTargetTimer(10, 52721, nil, nil, nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerSleepCD	= mod:NewCDTimer(20, 52721, nil, nil, nil, 3)
 
 function mod:SPELL_AURA_APPLIED(args)

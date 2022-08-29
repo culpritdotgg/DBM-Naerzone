@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod(481, "DBM-Party-Classic", 19, 240)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(3654)
 
 mod:RegisterCombat("combat")
@@ -12,14 +12,14 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_APPLIED 7399"
 )
 
-local warningNaralexsNightmare		= mod:NewTargetNoFilterAnnounce(7967, 2)
+-- local warningNaralexsNightmare		= mod:NewTargetNoFilterAnnounce(7967, 2)
 local warningTerrify				= mod:NewTargetNoFilterAnnounce(7399, 2)
 
 local specWarnNaralexsNightmare		= mod:NewSpecialWarningInterrupt(7967, "HasInterrupt", nil, nil, 1, 2)
 
-local timerNaralexsNightmareCD		= mod:NewAITimer(180, 7967, nil, nil, nil, 4, nil, DBM_CORE_L.INTERRUPT_ICON..DBM_CORE_L.MAGIC_ICON)
-local timerTerrifyCD				= mod:NewAITimer(180, 7399, nil, nil, nil, 3, nil, DBM_CORE_L.MAGIC_ICON)
-local timerThundercrackCD			= mod:NewAITimer(180, 8150, nil, nil, nil, 2, nil, DBM_CORE_L.HEALER_ICON..DBM_CORE_L.MAGIC_ICON)
+local timerNaralexsNightmareCD		= mod:NewAITimer(180, 7967, nil, nil, nil, 4, nil, DBM_COMMON_L.INTERRUPT_ICON..DBM_COMMON_L.MAGIC_ICON)
+local timerTerrifyCD				= mod:NewAITimer(180, 7399, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerThundercrackCD			= mod:NewAITimer(180, 8150, nil, nil, nil, 2, nil, DBM_COMMON_L.HEALER_ICON..DBM_COMMON_L.MAGIC_ICON)
 
 function mod:OnCombatStart(delay)
 	timerNaralexsNightmareCD:Start(1-delay)

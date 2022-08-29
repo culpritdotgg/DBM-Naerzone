@@ -1,9 +1,9 @@
 local mod	= DBM:NewMod("Taldaram", "DBM-Party-WotLK", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic"
+mod.statTypes = "normal,heroic,mythic"
 
-mod:SetRevision(("$Revision: 2250 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(29308)
 
 mod:RegisterCombat("combat")
@@ -17,7 +17,7 @@ mod:RegisterEventsInCombat(
 local warningEmbrace	= mod:NewTargetAnnounce(55959, 2)
 local warningFlame		= mod:NewSpellAnnounce(55931, 3)
 
-local timerEmbrace		= mod:NewTargetTimer(20, 55959, nil, nil, nil, 3, nil, DBM_CORE_L.DAMAGE_ICON)
+local timerEmbrace		= mod:NewTargetTimer(20, 55959, nil, nil, nil, 3, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerFlameCD		= mod:NewCDTimer(15, 55931, nil, nil, nil, 3)
 
 

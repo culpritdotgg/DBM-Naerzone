@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Azgalor", "DBM-Hyjal")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision$"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(17842)
 mod:SetUsedIcons(8)
 
@@ -21,8 +21,8 @@ local specWarnDoom		= mod:NewSpecialWarningYou(31347)
 local yellDoom			= mod:NewShortFadesYell(31347)
 
 local timerDoom			= mod:NewTargetTimer(20, 31347, nil, nil, nil, 3)
-local timerSilence		= mod:NewBuffFadesTimer(5, 31344, nil, nil, nil, 2, nil, DBM_CORE_L.TANK_ICON..DBM_CORE_L.HEALER_ICON)
-local timerSilenceCD	= mod:NewCDTimer(18, 31344, nil, nil, nil, 2, nil, DBM_CORE_L.TANK_ICON..DBM_CORE_L.HEALER_ICON)
+local timerSilence		= mod:NewBuffFadesTimer(5, 31344, nil, nil, nil, 2, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.HEALER_ICON)
+local timerSilenceCD	= mod:NewCDTimer(18, 31344, nil, nil, nil, 2, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.HEALER_ICON)
 
 local berserkTimer		= mod:NewBerserkTimer(600)
 

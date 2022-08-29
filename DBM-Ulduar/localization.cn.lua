@@ -6,7 +6,7 @@ local L
 L = DBM:GetModLocalization("FlameLeviathan")
 
 L:SetGeneralLocalization({
-	name 				= "烈焰巨兽"
+	name				= "烈焰巨兽"
 })
 
 L:SetWarningLocalization({
@@ -35,6 +35,10 @@ L = DBM:GetModLocalization("Ignis")
 
 L:SetGeneralLocalization({
 	name = "掌炉者伊格尼斯"
+})
+
+L:SetOptionLocalization({
+	soundConcAuraMastery	= "播放$spell:31821的声音来否定$spell:63472的效果（只针对$spell:19746的主人|cFFF48CBA圣骑士|r"
 })
 
 ------------------
@@ -112,7 +116,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Algalon")
 
 L:SetGeneralLocalization({
-	name 				= "观察者奥尔加隆"
+	name				= "观察者奥尔加隆"
 })
 
 L:SetWarningLocalization({
@@ -134,7 +138,7 @@ L:SetMiscLocalization({
 --	YellPull			= "你们的行动不合逻辑。这场战斗所有可能产生的结果都已被计算在内。无论结果如何，万神殿都会收到观察者发出的信息。",
 	YellKill			= "我曾见证过无数个世界被造物者的烈焰吞噬，那些世界中的人们甚至来不及发出一声悲鸣就永远消逝了。整个星球从诞生到毁灭，不过是弹指一挥间。但是从始至终，我都没有为之动容……我，毫无，感觉。千亿的生命被毁灭。他们是否都像你们一样坚强？他们是否都像你们一样热爱生命？",
 	Emote_CollapsingStar= "%s开始召唤坍缩之星！",
---	Phase2				= "看吧，这创世的神器！!",
+	Phase2				= "看吧，这创世的神器！!",
 	CollapsingStar		= "坍缩之星"
 })
 
@@ -178,18 +182,18 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-	WarnCatDied 			= "野性防御者倒下(剩余%d只)",
-	WarnCatDiedOne 			= "野性防御者倒下(剩下最后一只)"
+	WarnCatDied			= "野性防御者倒下(剩余%d只)",
+	WarnCatDiedOne			= "野性防御者倒下(剩下最后一只)"
 })
 
-L:SetTimerLocalization({
-	timerDefender		= "野性防御者复活"
-})
+-- L:SetTimerLocalization({
+-- 	timerDefender		= "野性防御者复活"
+-- })
 
 L:SetOptionLocalization({
 	WarnCatDied				= "当野性防御者死亡时显示警报",
-	WarnCatDiedOne			= "当野性防御者剩下最后一只时显示警报",
-	timerDefender			= "当野性防御者准备复活时显示计时条"
+	WarnCatDiedOne			= "当野性防御者剩下最后一只时显示警报"
+--	timerDefender			= "当野性防御者准备复活时显示计时条"
 })
 
 L:SetMiscLocalization({
@@ -203,10 +207,11 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Hodir")
 
 L:SetGeneralLocalization({
-	name 				= "霍迪尔"
+	name				= "霍迪尔"
 })
 
 L:SetMiscLocalization({
+	Pull				= "你要为你的罪行受到惩罚！",
 	YellKill			= "我……我终于从他的魔掌中……解脱了。"
 })
 
@@ -216,7 +221,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Thorim")
 
 L:SetGeneralLocalization({
-	name 				= "托里姆"
+	name				= "托里姆"
 })
 
 L:SetTimerLocalization({
@@ -242,7 +247,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Freya")
 
 L:SetGeneralLocalization({
-	name 				= "弗蕾亚"
+	name				= "弗蕾亚"
 })
 
 L:SetWarningLocalization({
@@ -267,7 +272,9 @@ L:SetMiscLocalization({
 	YellAdds1			= "艾欧娜尔，您的仆人需要帮助！",
 	YellAdds2			= "元素之潮会击垮你们！",
 	EmoteLGift			= "开始生长！", -- |cFF00FFFF生命缚誓者的礼物|r开始生长！
-	TrashRespawnTimer	= "弗蕾亚的小怪重生"
+	TrashRespawnTimer	= "弗蕾亚的小怪重生",
+	YellPullNormal		= "必须保卫温室！",
+	YellPullHard		= "长老们，将你们的力量赐予我！"
 })
 
 ----------------------
@@ -322,6 +329,7 @@ L:SetMiscLocalization({
 	MobPhase1			= "巨兽二型",
 	MobPhase2			= "VX-001",
 	MobPhase3			= "空中指挥单位",
+	MobPhase4			= "V-07-TR-0N", -- don't localize
 	YellPull			= "我们时间不多了，朋友们！来帮忙测试一下我所发明的最新型、最强大的机体吧。在你们改变主意之前，请允许我提醒一下，你们把XT-002搞得一团糟，应该算是欠我个人情吧。",
 	YellHardPull		= "自毁程序已经启动。",
 	YellPhase2			= "太棒了！测试结果非常好！外壳完整率百分之九十八点九！几乎没有划伤！继续。",
@@ -359,7 +367,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("YoggSaron")
 
 L:SetGeneralLocalization({
-	name 				= "尤格萨隆"
+	name				= "尤格萨隆"
 })
 
 L:SetWarningLocalization({
@@ -392,6 +400,19 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	YellPull	= "攻击这头野兽要害的时刻即将来临！将你们的愤怒和仇恨倾泻到它的爪牙身上！",
-	Sara		= "萨拉"
+	YellPull			= "攻击这头野兽要害的时刻即将来临！将你们的愤怒和仇恨倾泻到它的爪牙身上！",
+	S1TheLucidDream		= "第一阶段：清醒的梦境",
+	Sara				= "萨拉",
+	GuardianofYoggSaron	= "尤格-萨隆的卫士",
+	S2DescentIntoMadness= "第二阶段：坠入疯狂",
+	CrusherTentacle		= "重压触须",
+	CorruptorTentacle	= "腐蚀触须",
+	ConstrictorTentacle	= "缠绕触须",
+	DescentIntoMadness	= "疯狂阶梯",
+	InfluenceTentacle	= "感应触须",
+	LaughingSkull		= "嘲笑之颅",
+	BrainofYoggSaron	= "尤格-萨隆的大脑",
+	S3TrueFaceofDeath	= "第三阶段：死亡的真正面貌",
+	YoggSaron			= "尤格-萨隆",
+	ImmortalGuardian	= "不朽守护者"
 })

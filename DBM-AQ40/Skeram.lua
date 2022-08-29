@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Skeram", "DBM-AQ40", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(15263)
 
 mod:SetModelID(15263)
@@ -32,7 +32,7 @@ local MCTargets = {}
 mod.vb.splitCount = 0
 mod.vb.MCIcon = 8
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart()
 	self.vb.splitCount = 0
 	table.wipe(MCTargets)
 	self.vb.MCIcon = 8

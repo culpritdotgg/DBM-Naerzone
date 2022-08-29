@@ -16,7 +16,9 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	ArachnophobiaTimer	= "Arachnophobie"
+	ArachnophobiaTimer	= "Arachnophobie",
+	Pull1				= "Oui, courez ! Faites circuler le sang !",
+	Pull2				= "Rien qu'une petite bouchée…"
 })
 
 ----------------------------
@@ -34,6 +36,10 @@ L:SetWarningLocalization({
 
 L:SetOptionLocalization({
 	WarningEmbraceExpire	= "Activer l'avertissement de fin du baisé de la veuve"
+})
+
+L:SetMiscLocalization({
+	Pull					= "À genoux, vermisseau !"--Not actually pull trigger, but often said on pull
 })
 
 ---------------
@@ -91,7 +97,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
---	Pull				= "Die, trespasser!",
+	Pull				= "Mourez, intrus !",
 	Adds				= "invoque des guerriers squelettes !",
 	AddsTwo				= "lève encore d'autres squelettes !"
 })
@@ -120,6 +126,10 @@ L:SetOptionLocalization({
 	TimerTeleport			= "Activer le timer pour la Téléporation"
 })
 
+L:SetMiscLocalization({
+	Pull					= "Vous êtes à moi, maintenant."
+})
+
 ---------------
 --  Loatheb  --
 ---------------
@@ -137,7 +147,10 @@ L:SetWarningLocalization({
 L:SetOptionLocalization({
 	WarningHealSoon		= "Activer l'avertissement \"Soins dans 3 sec\" ",
 	WarningHealNow		= "Activer l'avertissement \"SOIGNEZ MAINTENANT\" ",
-	SporeDamageAlert	= "Envoyer un murmure et annoncer aux joueurs de raid qui endommagent les spores\n(nécessite que l'annonce soit activée et le statut de leader/promu)"
+	SporeDamageAlert	= "Envoyer un murmure et annoncer aux joueurs de raid qui endommagent les spores\n(nécessite que l'annonce soit activée et le statut de leader/promu)",
+	CorruptedSorting	= "Set infoframe sorting behaviour for $spell:55593", -- translation missing
+	Alphabetical		= "Sort in alphabetical order", -- translation missing
+	Duration			= "Sort by duration" -- translation missing
 })
 
 -----------------
@@ -314,28 +327,30 @@ L:SetGeneralLocalization({
 L:SetWarningLocalization({
 	WarningAirPhaseSoon	= "Envol dans 10 sec",
 	WarningAirPhaseNow	= "Dans les airs",
-	WarningLanded		    = "Atterrissage de Sapphiron",
-	WarningDeepBreath	  = "Souffle de givre !"
+	WarningLanded		= "Atterrissage de Sapphiron",
+	WarningDeepBreath	= "Souffle de givre !",
+	SpecWarnSapphLow	= "Sapphiron ne peut pas voler !"
 })
 
 L:SetTimerLocalization({
-	TimerAir		   		  = "Envol",
-	TimerLanding			  = "Atterrissage dans",
-	TimerIceBlast			  = "Souffle de givre"
+	TimerAir			= "Envol",
+	TimerLanding		= "Atterrissage dans",
+	TimerIceBlast		= "Souffle de givre"
 })
 
 L:SetOptionLocalization({
 	WarningAirPhaseSoon	= "Activer le pré-avertissement de la phase en vol",
 	WarningAirPhaseNow	= "Activer l'avertissement de la phase en vol",
-	WarningLanded		    = "Activer l'avertissement pour la phase au sol",
-	TimerAir			    	= "Afficher le timer de la phase en vol",
-	TimerLanding		   	= "Afficher le timer de l'atterrissage",
-	TimerIceBlast		   	= "Afficher le timer du Souffle de givre",
-	WarningDeepBreath		= "Activer l'avertissement spécial pour le Souffle de givre"
+	WarningLanded		= "Activer l'avertissement pour la phase au sol",
+	TimerAir			= "Afficher le timer de la phase en vol",
+	TimerLanding		= "Afficher le timer de l'atterrissage",
+	TimerIceBlast		= "Afficher le timer du Souffle de givre",
+	WarningDeepBreath	= "Activer l'avertissement spécial pour le Souffle de givre",
+	SpecWarnSapphLow	= "Avertissement spécial pour la phase d'exécution à 10 % (annulation de la phase d'air)"
 })
 
 L:SetMiscLocalization({
-	EmoteBreath			    = "prend une grande inspiration"
+	EmoteBreath			= "prend une grande inspiration"
 })
 
 ------------------

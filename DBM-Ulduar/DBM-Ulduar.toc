@@ -11,7 +11,7 @@
 ## X-DBM-Mod: 1
 ## X-DBM-Mod-Type: RAID
 ## X-DBM-Mod-Category: WOTLK
-## X-DBM-Mod-Has-Heroic-Mode: 0
+## X-DBM-StatTypes: normal,normal25
 ## X-DBM-Mod-Name: Ulduar
 ## X-DBM-Mod-Name-ruRU: Ульдуар
 ## X-DBM-Mod-Name-koKR: 울두아르
@@ -39,6 +39,7 @@ localization.kr.lua
 localization.tw.lua
 localization.es.lua
 localization.cn.lua
+
 FlameLeviathan.lua
 Ignis.lua
 Razorscale.lua
@@ -46,11 +47,11 @@ XT002.lua
 IronCouncil.lua
 Kologarn.lua
 Auriaya.lua
-Mimiron.lua
+Hodir.lua
+Thorim.lua
 Freya.lua
 Freya_Elders.lua
-Thorim.lua
-Hodir.lua
+Mimiron.lua
 GeneralVezax.lua
 YoggSaron.lua
 Algalon.lua

@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Halazzi", "DBM-ZulAman")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(23577)
 
 mod:SetZone()
@@ -24,7 +24,7 @@ local warnNormal		= mod:NewAnnounce("WarnNormal", 4, 39414)
 local specWarnTotem		= mod:NewSpecialWarningSpell(43302, "Dps", nil, nil, 1, 2)
 local specWarnEnrage	= mod:NewSpecialWarningDispel(43139, "RemoveEnrage", nil, nil, 1, 6)
 
-local timerShock		= mod:NewTargetTimer(12, 43303, nil, "RemoveMagic", nil, 5, nil, DBM_CORE_L.MAGIC_ICON)
+local timerShock		= mod:NewTargetTimer(12, 43303, nil, "RemoveMagic", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 
 local berserkTimer		= mod:NewBerserkTimer(600)
 

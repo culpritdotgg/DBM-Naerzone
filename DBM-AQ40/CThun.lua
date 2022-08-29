@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("CThun", "DBM-AQ40", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(15589, 15727)
 
 mod:SetUsedIcons(1)
@@ -47,7 +47,7 @@ local fleshTentacles, diedTentacles = {}, {}
 
 local updateInfoFrame
 do
-	local twipe, tsort = table.wipe, table.sort
+	local twipe = table.wipe
 	local lines = {}
 	local sortedLines = {}
 	local function addLine(key, value)
@@ -128,7 +128,7 @@ function mod:DarkGlare()
 	self:ScheduleMethod(86, "DarkGlare")
 end
 
-function mod:EyeBeamTarget(targetname, uId)
+function mod:EyeBeamTarget(targetname)
 	if not targetname then return end
 	if self.Options.SetIconOnEyeBeam then
 		self:SetIcon(targetname, 1, 3)
@@ -216,7 +216,7 @@ function mod:UNIT_DIED(args)
 	end
 end
 
-function mod:OnSync(msg, spawnUid, pct)
+function mod:OnSync(msg)
 	if not self:IsInCombat() then return end
 	if msg == "Weakened" then
 		table.wipe(fleshTentacles)

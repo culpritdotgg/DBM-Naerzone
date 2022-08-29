@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod(455, "DBM-Party-Classic", 16, 236)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(10439)
 
 mod:RegisterCombat("combat")
@@ -13,7 +13,7 @@ mod:RegisterEventsInCombat(
 local warningKnockout			= mod:NewSpellAnnounce(17307, 2)
 local warningTrample			= mod:NewSpellAnnounce(5568, 2)
 
-local timerKnockoutCD			= mod:NewAITimer(180, 17307, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerKnockoutCD			= mod:NewAITimer(180, 17307, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerTrampleCD			= mod:NewAITimer(180, 5568, nil, nil, nil, 2)
 
 mod:AddBoolOption("TimerGuards", true, "timer", nil, 1)
@@ -26,7 +26,7 @@ end
 function mod:OnCombatEnd(wipe, isSecondRun)
 	if not wipe and not isSecondRun and self.Options.TimerGuards then
 		-- Custom bar that's bound to core so timer doesn't stop when mod stops its own timers
-		DBM.Bars:CreateBar(91, self.localization.timers.TimerGuards, 818, nil, nil, nil, nil, self.Options.TimerGuardsTColor, nil, nil, nil, self.Options.TimerGuardsCVoice)
+		DBT:CreateBar(91, self.localization.timers.TimerGuards, "Interface\\Icons\\Spell_Fire_Fire", nil, nil, nil, nil, self.Options.TimerGuardsTColor, nil, nil, nil, self.Options.TimerGuardsCVoice)
 	end
 end
 

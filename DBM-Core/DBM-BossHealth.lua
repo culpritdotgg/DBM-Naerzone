@@ -33,7 +33,7 @@ end
 -- checks if a given value is in an array
 -- returns true if it finds the value, false otherwise
 local function checkEntry(t, val)
-	for i, v in ipairs(t) do
+	for _, v in ipairs(t) do
 		if v == val then
 			return true
 		end
@@ -144,7 +144,7 @@ local function createBar(self, name, ...) -- the vararg will also contain the na
 	bar:Show()
 	local bartext = _G[bar:GetName().."BarName"]
 	local barborder = _G[bar:GetName().."BarBorder"]
-	local barbar = _G[bar:GetName().."Bar"]
+--	local barbar = _G[bar:GetName().."Bar"]
 	barborder:SetScript("OnMouseDown", onMouseDown)
 	barborder:SetScript("OnMouseUp", onMouseUp)
 	barborder:SetScript("OnHide", onHide)
@@ -195,7 +195,7 @@ function updateBar(bar, percent, icon, dontShowDead, name)
 		bar.value = 0
 	else--can't detect health. show unknown
 		if not bar.value or bar.value >= 1 then
-			-- bartimer:SetText(L.UNKNOWN)
+			-- bartimer:SetText(DBM_COMMON_L.UNKNOWN)
 			-- don't update when no target
 		else
 			bartimer:SetText(dontShowDead and "0%" or DEAD)
@@ -220,7 +220,7 @@ do
 --		if sortingEnabled then
 --			table.sort(bars, compareBars)
 --		end
-		for i, v in ipairs(bars) do
+		for _, v in ipairs(bars) do
 --			if i > DBM.Options.HPFrameMaxEntries then
 --				v:Hide()
 --			else
@@ -248,7 +248,7 @@ do
 			elseif type(v.id) == "table" then -- multi boss
 				-- TODO: it would be more efficient to scan all party/raid members for all IDs instead of going over all raid members n times
 				-- this is especially important for the cache
-				for j, id in ipairs(v.id) do
+				for _, id in ipairs(v.id) do
 					local health = DBM:GetBossHP(id)
 					if health then
 						updateBar(v, health)
@@ -388,7 +388,7 @@ end
 -- any ID for shared health bosses
 function bossHealth:HasBoss(id)
 	if not anchor or not anchor:IsShown() then return end
-	for i, bar in ipairs(bars) do
+	for _, bar in ipairs(bars) do
 		if bar.id == id or type(bar.id) == "table" and checkEntry(bar.id, id) then
 			return true
 		end

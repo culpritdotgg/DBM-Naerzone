@@ -1,16 +1,16 @@
 local mod	= DBM:NewMod("Anomalus", "DBM-Party-WotLK", 8)
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic"
+mod.statTypes = "normal,heroic,mythic"
 
-mod:SetRevision(("$Revision: 3962 $"):sub(12, -3))
+mod:SetRevision("20220806222721")
 mod:SetCreatureID(26763)
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
 	"SPELL_SUMMON 47743",
-	"UNIT_HEALTH boss1"
+	"UNIT_HEALTH"
 )
 
 local warningRiftSoon	= mod:NewSoonAnnounce(47743, 2)

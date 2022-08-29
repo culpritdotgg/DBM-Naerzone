@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Ragnaros-Classic", "DBM-MC", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(11502)
 
 mod:SetModelID(11121)
@@ -25,7 +25,7 @@ local warnWrathRag		= mod:NewSpellAnnounce(20566, 3)
 local warnSubmerge		= mod:NewAnnounce("WarnSubmerge", 2, "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp")
 local warnEmerge		= mod:NewAnnounce("WarnEmerge", 2, "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendUnBurrow.blp")
 
-local timerWrathRag		= mod:NewCDTimer(25, 20566, nil, nil, nil, 2, nil, DBM_CORE_L.IMPORTANT_ICON, nil, mod:IsMelee() and 1, 4)--25-31.6
+local timerWrathRag		= mod:NewCDTimer(25, 20566, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON, nil, mod:IsMelee() and 1, 4)--25-31.6
 local timerSubmerge		= mod:NewTimer(180, "TimerSubmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendBurrow.blp", nil, nil, 6, nil, nil, 1, 5)
 local timerEmerge		= mod:NewTimer(90, "TimerEmerge", "Interface\\AddOns\\DBM-Core\\textures\\CryptFiendUnBurrow.blp", nil, nil, 6, nil, nil, 1, 5)
 local timerCombatStart	= mod:NewTimer(78, "timerCombatStart", "Interface\\Icons\\Ability_Warrior_OffensiveStance", nil, nil, nil, nil, nil, 1, 3)
@@ -53,7 +53,7 @@ function mod:OnCombatEnd(wipe)
 		DBM.RangeCheck:Hide()
 	end
 	if not wipe then
-		DBM.Bars:CancelBar(DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT)
+		DBT:CancelBar(DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT)
 		if firstBossMod.vb.firstEngageTime then
 			local thisTime = time() - firstBossMod.vb.firstEngageTime
 			if thisTime and thisTime > 0 then
@@ -124,7 +124,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:OnSync(msg, guid)
+function mod:OnSync(msg--[[, guid]])
 	if msg == "SummonRag" and self:AntiSpam(5, 2) then
 		timerCombatStart:Start()
 	elseif msg == "Submerge" and self:IsInCombat() then

@@ -114,8 +114,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	WarningSplitSoon	= "Mostrar aviso previo para la separación de banda",
-	RangeFrame			= "Mostrar marco de distancia (12 yardas)"
+	WarningSplitSoon	= "Mostrar aviso previo para la separación de banda"
 })
 
 -------------------------
@@ -125,10 +124,6 @@ L = DBM:GetModLocalization("Saviana")
 
 L:SetGeneralLocalization({
 	name = "Saviana Furia Ardiente"
-})
-
-L:SetOptionLocalization({
-	RangeFrame				= "Mostrar marco de distancia (10 yardas)"
 })
 
 ------------------------
@@ -182,6 +177,7 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	Halion					= "Halion",
+	PhysicalRealm			= "Reino físico",
 	MeteorCast				= "¡Los cielos arden!",
 	Phase2					= "En el reino del crepúsculo solo encontraréis sufrimiento. ¡Entrad si os atrevéis!",
 	Phase3					= "¡Yo soy la luz y la oscuridad! ¡Temed, mortales, la llegada de Alamuerte!",

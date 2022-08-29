@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod(402, "DBM-Party-Classic", 6, 230)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(11490)
 --
 mod:RegisterCombat("combat")
@@ -15,7 +15,7 @@ local warnSacrifice				= mod:NewTargetNoFilterAnnounce(22651, 4)
 
 local yellSacrifice				= mod:NewYell(22651)
 
-function mod:SacTarget(targetname, uId)
+function mod:SacTarget(targetname)
 	if not targetname then return end
 	warnSacrifice:Show(targetname)
 	if targetname == UnitName("player") then

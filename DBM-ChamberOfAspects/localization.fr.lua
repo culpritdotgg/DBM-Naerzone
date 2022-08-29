@@ -112,8 +112,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	WarningSplitSoon	= "Show pre-warning for Split",
-	RangeFrame			= "Show range frame (12 yards)"
+	WarningSplitSoon	= "Show pre-warning for Split"
 })
 
 -------------------------
@@ -123,10 +122,6 @@ L = DBM:GetModLocalization("Saviana")
 
 L:SetGeneralLocalization({
 	name = "Saviana Ragefeu"
-})
-
-L:SetOptionLocalization({
-	RangeFrame				= "Show range frame (10 yards)"
 })
 
 --------------------------
@@ -181,6 +176,7 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	Halion					= "Halion",
+	PhysicalRealm			= "Royaume matériel",
 	MeteorCast				= "Les cieux s'embrasent !",
 	Phase2					= "Vous ne trouverez que souffrance au royaume du crépuscule ! Entrez si vous l'osez !",
 	Phase3					= "Je suis la lumière et l'ombre ! Tremblez, mortels, devant le héraut d'Aile-de-mort !",

@@ -68,18 +68,18 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	AnnounceFails           = "公布踩中暗影裂隙和撞上烈焰之啸的玩家到团队频道 (需要团长或助理权限)",
-	TimerTenebron           = "为塔尼布隆到来显示计时条",
-	TimerShadron            = "为沙德隆到来显示计时条",
-	TimerVesperon           = "为维斯匹隆到来显示计时条",
+	AnnounceFails			= "公布踩中暗影裂隙和撞上烈焰之啸的玩家到团队频道 (需要团长或助理权限)",
+	TimerTenebron			= "为塔尼布隆到来显示计时条",
+	TimerShadron			= "为沙德隆到来显示计时条",
+	TimerVesperon			= "为维斯匹隆到来显示计时条",
 	TimerTenebronWhelps		= "显示铁粉幼崽的计时器",
 	TimerShadronPortal		= "显示沙龙传送门的计时器",
 	TimerVesperonPortal		= "显示维斯匹隆传送门的计时器",
 	TimerVesperonPortal2	= "显示维斯匹隆传送门的计时器 2",
-	WarningFireWall         = "为烈焰之啸显示特别警报",
-	WarningTenebron         = "提示塔尼布隆到来",
-	WarningShadron          = "提示沙德隆到来",
-	WarningVesperon         = "提示维斯匹隆到来",
+	WarningFireWall			= "为烈焰之啸显示特别警报",
+	WarningTenebron			= "提示塔尼布隆到来",
+	WarningShadron			= "提示沙德隆到来",
+	WarningVesperon			= "提示维斯匹隆到来",
 	WarningWhelpsSoon		= "很快宣布铁粉幼崽",
 	WarningPortalSoon		= "很快宣布沙龙传送门",
 	WarningReflectSoon		= "宣布维斯匹隆反映很快",
@@ -112,12 +112,11 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-	WarningSplitSoon 	= "分裂 即将到来"
+	WarningSplitSoon	= "分裂 即将到来"
 })
 
 L:SetOptionLocalization({
-	WarningSplitSoon	= "预警：分裂",
-	RangeFrame			= "范围监测器：12码"
+	WarningSplitSoon	= "预警：分裂"
 })
 
 -------------------------
@@ -127,10 +126,6 @@ L = DBM:GetModLocalization("Saviana")
 
 L:SetGeneralLocalization({
 	name = "塞维娅娜·怒火"
-})
-
-L:SetOptionLocalization({
-	RangeFrame			= "范围监测器：10码"
 })
 
 --------------------------
@@ -184,6 +179,7 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	Halion					= "海里昂",
+	PhysicalRealm			= "物质世界",
 	MeteorCast				= "天空在燃烧！",
 	Phase2					= "暮光的世界将会让你痛不欲生！够胆量的就进来吧！",
 	Phase3					= "我就是交织的光影！凡人，在死亡之翼的使者面前颤抖吧！",

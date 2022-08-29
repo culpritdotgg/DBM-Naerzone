@@ -1,22 +1,24 @@
 local mod	= DBM:NewMod("Festergut", "DBM-Icecrown", 2)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4404 $"):sub(12, -3))
+mod:SetRevision("20220624005857")
 mod:SetCreatureID(36626)
 mod:RegisterCombat("combat")
-mod:SetUsedIcons(6, 7, 8)
+mod:SetUsedIcons(1, 2, 3)
+mod:SetMinSyncRevision(20220623000000)
 
-mod:RegisterEvents(
-	"SPELL_CAST_START",
-	"SPELL_AURA_APPLIED",
-	"SPELL_AURA_APPLIED_DOSE",
-	"SPELL_AURA_REMOVED",
+mod:RegisterEventsInCombat(
+	"SPELL_CAST_START 69195 71219 73031 73032",
+	"SPELL_AURA_APPLIED 69279 69166 71912 72219 72551 72552 72553 69240 71218 73019 73020 69291 72101 72102 72103",
+	"SPELL_AURA_APPLIED_DOSE 69166 71912 72219 72551 72552 72553 69291 72101 72102 72103",
+	"SPELL_AURA_REMOVED 69279",
 	"UNIT_SPELLCAST_SUCCEEDED boss1"
 )
 
+--TODO, use actual cast event for handling gasSporeCast to make it robust against under sized groups/retail soloing. Should be counting actual casts not debuff counts
 local warnInhaledBlight		= mod:NewStackAnnounce(69166, 3)
 local warnGastricBloat		= mod:NewStackAnnounce(72219, 2, nil, "Tank|Healer")
-local warnGasSpore			= mod:NewTargetAnnounce(69279, 4)
+local warnGasSpore			= mod:NewTargetNoFilterAnnounce(69279, 4)
 local warnVileGas			= mod:NewTargetAnnounce(69240, 3)
 
 local specWarnPungentBlight	= mod:NewSpecialWarningSpell(69195, nil, nil, nil, 2, 2)
@@ -33,42 +35,25 @@ local timerVileGas			= mod:NewBuffFadesTimer(6, 69240, nil, "Ranged", nil, 3)
 local timerGasSporeCD		= mod:NewNextTimer(40, 69279, nil, nil, nil, 3)		-- Every 40 seconds except after 3rd and 6th cast, then it's 50sec CD
 local timerPungentBlight	= mod:NewNextTimer(34, 69195, nil, nil, nil, 2)		-- Edited. ~34 seconds after 3rd stack of inhaled
 local timerInhaledBlight	= mod:NewNextTimer(34, 69166, nil, nil, nil, 6)		-- 34 seconds'ish
-local timerGastricBloat		= mod:NewTargetTimer(100, 72219, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_L.TANK_ICON)	-- 100 Seconds until expired
-local timerGastricBloatCD	= mod:NewCDTimer(12, 72219, nil, "Tank|Healer", nil, 5, nil, DBM_CORE_L.TANK_ICON) 		-- 10 to 14 seconds
+local timerGastricBloat		= mod:NewTargetTimer(100, 72219, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)	-- 100 Seconds until expired
+local timerGastricBloatCD	= mod:NewCDTimer(12, 72219, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)		-- 10 to 14 seconds
 local timerGooCD			= mod:NewCDTimer(10, 72297, nil, nil, nil, 3)
 
 local berserkTimer			= mod:NewBerserkTimer(300)
 
-mod:AddBoolOption("RangeFrame", "Ranged")
-mod:AddBoolOption("SetIconOnGasSpore", true)
-mod:AddBoolOption("AnnounceSporeIcons", false)
-mod:AddBoolOption("AchievementCheck", false, "announce")
+mod:AddRangeFrameOption(8, 69240, "Ranged")
+mod:AddSetIconOption("SetIconOnGasSpore", 69279, true, 7, {1, 2, 3})
+mod:AddBoolOption("AnnounceSporeIcons", false, nil, nil, nil, nil, 69279)
+mod:AddBoolOption("AchievementCheck", false, "announce", nil, nil, nil, 4615, "achievement")
 
-local gasSporeTargets	= {}
-local gasSporeIconTargets	= {}
-local vileGasTargets	= {}
-mod.vb.gasSporeCast 	= 0
+local gasSporeTargets = {}
+local vileGasTargets = {}
+mod.vb.gasSporeCast = 0
 mod.vb.warnedfailed = false
 
-local function ClearSporeTargets()
-	table.wipe(gasSporeIconTargets)
-end
-
-do
-	local function sort_by_group(v1, v2)
-		return DBM:GetRaidSubgroup(DBM:GetUnitFullName(v1)) < DBM:GetRaidSubgroup(DBM:GetUnitFullName(v2))
-	end
-	function mod:SetSporeIcons()
-		table.sort(gasSporeIconTargets, sort_by_group)
-		local gasSporeIcon = 8
-		for i, v in ipairs(gasSporeIconTargets) do
-			if self.Options.AnnounceSporeIcons and DBM:GetRaidRank() > 0 then
-				SendChatMessage(L.SporeSet:format(gasSporeIcon, DBM:GetUnitFullName(v)), "RAID")
-			end
-			self:SetIcon(v, gasSporeIcon)
-			gasSporeIcon = gasSporeIcon - 1
-		end
-		self:Schedule(5, ClearSporeTargets)
+function mod:AnnounceSporeIcons(uId, icon)
+	if self.Options.AnnounceSporeIcons and IsInGroup() and DBM:GetRaidRank() > 1 then
+		SendChatMessage(L.SporeSet:format(icon, DBM:GetUnitFullName(uId)), IsInRaid() and "RAID" or "PARTY")
 	end
 end
 
@@ -90,7 +75,6 @@ function mod:OnCombatStart(delay)
 	timerGasSporeCD:Start(20-delay)--This may need tweaking
 	table.wipe(gasSporeTargets)
 	table.wipe(vileGasTargets)
-	table.wipe(gasSporeIconTargets)
 	self.vb.gasSporeCast = 0
 	self.vb.warnedfailed = false
 	if self.Options.RangeFrame then
@@ -119,6 +103,7 @@ function mod:SPELL_AURA_APPLIED(args)
 	if args.spellId == 69279 then	-- Gas Spore
 		gasSporeTargets[#gasSporeTargets + 1] = args.destName
 		self.vb.gasSporeCast = self.vb.gasSporeCast + 1
+		--25 man is 3 sets of 3 and 10 man is 3 sets of 2, totallying 9 and 6 respectively
 		if (self.vb.gasSporeCast < 9 and self:IsDifficulty("normal25", "heroic25")) or (self.vb.gasSporeCast < 6 and self:IsDifficulty("normal10", "heroic10")) then
 			timerGasSporeCD:Start()
 		elseif (self.vb.gasSporeCast >= 9 and self:IsDifficulty("normal25", "heroic25")) or (self.vb.gasSporeCast >= 6 and self:IsDifficulty("normal10", "heroic10")) then
@@ -131,15 +116,8 @@ function mod:SPELL_AURA_APPLIED(args)
 			yellGasSpore:Yell()
 		end
 		if self.Options.SetIconOnGasSpore then
-			table.insert(gasSporeIconTargets, DBM:GetRaidUnitId(args.destName))
-			self:UnscheduleMethod("SetSporeIcons")
-			if (self:IsDifficulty("normal25", "heroic25") and #gasSporeIconTargets >= 3) or (self:IsDifficulty("normal10", "heroic10") and #gasSporeIconTargets >= 2) then
-				self:SetSporeIcons()--Sort and fire as early as possible once we have all targets.
-			else
-				if self:LatencyCheck() then--Icon sorting is still sensitive and should not be done by laggy members that don't have all targets.
-					self:ScheduleMethod(0.3, "SetSporeIcons")
-				end
-			end
+			local maxIcon = self:IsDifficulty("normal25", "heroic25") and 3 or 2
+			self:SetSortedIcon("roster", 0.3, args.destName, 1, maxIcon, false, "AnnounceSporeIcons")
 		end
 		self:Unschedule(warnGasSporeTargets)
 		if #gasSporeTargets >= 3 then
@@ -195,7 +173,7 @@ function mod:SPELL_AURA_REMOVED(args)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, spellName)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName)
 	if spellName == GetSpellInfo(72299) then -- Malleable Goo Summon Trigger (10 player normal) (the other 3 spell ids are not needed here since all spells have the same name)
 		specWarnGoo:Show()
 		specWarnGoo:Play("watchstep")

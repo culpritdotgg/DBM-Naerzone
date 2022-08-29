@@ -1,9 +1,7 @@
 local mod	= DBM:NewMod("Bjarngrin", "DBM-Party-WotLK", 6)
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic"
-
-mod:SetRevision(("$Revision: 2250 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(28586)
 
 mod:RegisterCombat("combat")

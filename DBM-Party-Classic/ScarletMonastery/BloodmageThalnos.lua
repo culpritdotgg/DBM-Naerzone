@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("BloodmageThalnos", "DBM-Party-Classic", 12)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(4543)
 
 mod:RegisterCombat("combat")
@@ -17,7 +17,7 @@ local warningFireNova				= mod:NewSpellAnnounce(12470, 2)
 
 local timerFlameSpikeCD				= mod:NewAITimer(180, 8814, nil, nil, nil, 3)
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart(--[[delay]])
 	--timerFlameSpikeCD:Start(15.8-delay)
 end
 

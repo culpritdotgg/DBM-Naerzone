@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Fankriss", "DBM-AQ40", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(15510)
 
 mod:SetModelID(15510)
@@ -11,18 +11,18 @@ mod:RegisterEventsInCombat(
 	"SPELL_SUMMON 518 25832 25831"
 )
 
-local warnEntangle 		= mod:NewTargetAnnounce(1121, 2)
+local warnEntangle		= mod:NewTargetAnnounce(1121, 2)
 local warnWound			= mod:NewStackAnnounce(25646, 3, nil, "Tank", 3)
 local warnWorm			= mod:NewSpellAnnounce(25831, 3)
 
 local specWarnWound		= mod:NewSpecialWarningStack(25646, nil, 5, nil, nil, 1, 6)
 local specWarnWoundTaunt= mod:NewSpecialWarningTaunt(25646, nil, nil, nil, 1, 2)
 
-local timerWound		= mod:NewTargetTimer(20, 25646, nil, "Tank", 3, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerWound		= mod:NewTargetTimer(20, 25646, nil, "Tank", 3, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 local yellEntangle		= mod:NewYell(1121)
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart()
 	if not self:IsTrivial(85) then
 		self:RegisterShortTermEvents(
 			"SPELL_AURA_APPLIED 25646 1121",

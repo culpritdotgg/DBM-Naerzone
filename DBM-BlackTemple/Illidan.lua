@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Illidan", "DBM-BlackTemple")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(22917)
 
 mod:SetModelID(21135)
@@ -49,16 +49,16 @@ local specWarnBarrage		= mod:NewSpecialWarningMoveAway(40585, nil, nil, nil, 1, 
 local specWarnShadowDemon	= mod:NewSpecialWarningSwitch(41117, "Dps", nil, nil, 3, 2)
 local specWarnGTFO			= mod:NewSpecialWarningGTFO(40841, nil, nil, nil, 1, 2)
 
-local timerParasite			= mod:NewTargetTimer(10, 41917, nil, false, nil, 1, nil, DBM_CORE_L.DAMAGE_ICON)
+local timerParasite			= mod:NewTargetTimer(10, 41917, nil, false, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerBarrage			= mod:NewTargetTimer(10, 40585, nil, false, nil, 3)
 local timerNextBarrage		= mod:NewCDTimer(44, 40585, nil, nil, nil, 3)
 --local timerFlame			= mod:NewTargetTimer(60, 40932)
 local timerNextFlameBurst	= mod:NewCDTimer(20, 41131, nil, nil, nil, 3)
-local timerShadowDemon		= mod:NewCDTimer(34, 41117, nil, nil, nil, 1, nil, DBM_CORE_L.DAMAGE_ICON)
+local timerShadowDemon		= mod:NewCDTimer(34, 41117, nil, nil, nil, 1, nil, DBM_COMMON_L.DAMAGE_ICON)
 local timerNextHuman		= mod:NewTimer(74, "TimerNextHuman", 97061, nil, nil, 6)
 local timerNextDemon		= mod:NewTimer(60, "TimerNextDemon", 40506, nil, nil, 6)
 local timerEnrage			= mod:NewBuffActiveTimer(10, 40683)
-local timerNextEnrage		= mod:NewCDTimer(40, 40683)
+--local timerNextEnrage		= mod:NewCDTimer(40, 40683)
 local timerCaged			= mod:NewBuffActiveTimer(15, 40695, nil, nil, nil, 6)
 local timerPhase4			= mod:NewPhaseTimer(30)
 

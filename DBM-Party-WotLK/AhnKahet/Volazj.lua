@@ -1,9 +1,9 @@
 local mod	= DBM:NewMod("Volazj", "DBM-Party-WotLK", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic"
+mod.statTypes = "normal,heroic,mythic"
 
-mod:SetRevision(("$Revision: 3821 $"):sub(12, -3))
+mod:SetRevision("20220806222721")
 mod:SetCreatureID(29311)
 
 mod:RegisterCombat("combat")
@@ -13,7 +13,7 @@ mod:RegisterEvents(
 )
 
 mod:RegisterEventsInCombat(
-	"UNIT_SPELLCAST_START boss1"
+	"UNIT_SPELLCAST_START"
 )
 
 local warnShadowCrash			= mod:NewTargetAnnounce(60848, 4)
@@ -32,10 +32,10 @@ function mod:OnCombatStart(delay)
 	end
 end
 
-function mod:ShadowCrashTarget(targetname, uId)
+function mod:ShadowCrashTarget(targetname)
 	if not targetname then
 		if DBM.Options.DebugMode then
-			warnShadowCrash:Show(DBM_CORE_L.UNKNOWN)
+			warnShadowCrash:Show(DBM_COMMON_L.UNKNOWN)
 		end
 		return
 	end
@@ -59,7 +59,7 @@ function mod:SPELL_CAST_START(args)
 	end
 end
 
-function mod:UNIT_SPELLCAST_START(uId, spellName)
+function mod:UNIT_SPELLCAST_START(_, spellName)
 	if spellName == GetSpellInfo(57496) then -- Insanity
 		warningInsanity:Show()
 		timerInsanity:Start()

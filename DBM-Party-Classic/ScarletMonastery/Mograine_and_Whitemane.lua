@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Mograine_and_Whitemane", "DBM-Party-Classic", 12)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(3977, 3976, 99999)--Whitemane, Mograine
 
 mod:RegisterCombat("combat")
@@ -18,7 +18,7 @@ local specWarnHeal				= mod:NewSpecialWarningInterrupt(12039, "HasInterrupt", ni
 
 local timerDeepSleep			= mod:NewBuffFadesTimer(10, 9256, nil, nil, nil, 6)
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart()
 	self:SetStage(1)
 end
 

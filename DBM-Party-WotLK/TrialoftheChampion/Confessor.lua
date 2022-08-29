@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Confessor", "DBM-Party-WotLK", 13)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4422 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(34928)
 
 mod:RegisterCombat("combat")
@@ -20,12 +20,12 @@ local specwarnHolyFire		= mod:NewSpecialWarningDispel(66538, "Healer", nil, nil,
 local specwarnShadows		= mod:NewSpecialWarningDispel(66619, "Healer", nil, nil, 1, 2)
 
 local timerOldWounds		= mod:NewTargetTimer(12, 67679)
-local timerHolyFire			= mod:NewTargetTimer(8, 66538, nil, "Healer", 2, 5, nil, DBM_CORE_L.MAGIC_ICON)
-local timerShadows			= mod:NewTargetTimer(5, 66619, nil, "Healer", 2, 5, nil, DBM_CORE_L.MAGIC_ICON)
+local timerHolyFire			= mod:NewTargetTimer(8, 66538, nil, "Healer", 2, 5, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerShadows			= mod:NewTargetTimer(5, 66619, nil, "Healer", 2, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 
 mod.vb.shielded = false
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart()
 	self.vb.shielded = false
 end
 

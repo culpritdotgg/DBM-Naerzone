@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("RhahkZor", "DBM-Party-Classic", 5)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(644)
 
 mod:RegisterCombat("combat")
@@ -13,7 +13,7 @@ mod:RegisterEventsInCombat(
 
 local warningSlam			= mod:NewTargetNoFilterAnnounce(6304, 2)
 
-local timerSlamCD			= mod:NewAITimer(180, 6304, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerSlamCD			= mod:NewAITimer(180, 6304, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 
 function mod:OnCombatStart(delay)
 	timerSlamCD:Start(1-delay)

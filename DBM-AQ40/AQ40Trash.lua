@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("AQ40Trash", "DBM-AQ40", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetModelID(15264) -- Anubisath Sentinel
 
 mod.isTrashMod = true
@@ -37,12 +37,12 @@ mod:RegisterShortTermEvents(
 mod:SendSync("IsAQ40Started")
 
 do-- Anubisath Plague/Explode - keep in sync - AQ40/AQ40Trash.lua AQ20/AQ20Trash.lua
-	local warnPlague                    = mod:NewTargetNoFilterAnnounce(22997, 2)
-	local warnCauseInsanity             = mod:NewTargetNoFilterAnnounce(26079, 2)
+	local warnPlague					= mod:NewTargetNoFilterAnnounce(22997, 2)
+	local warnCauseInsanity				= mod:NewTargetNoFilterAnnounce(26079, 2)
 
-	local specWarnPlague                = mod:NewSpecialWarningMoveAway(22997, nil, nil, nil, 1, 2)
-	local yellPlague                    = mod:NewYell(22997)
-	local specWarnExplode               = mod:NewSpecialWarningRun(25698, "Melee", nil, 3, 4, 2)
+	local specWarnPlague				= mod:NewSpecialWarningMoveAway(22997, nil, nil, nil, 1, 2)
+	local yellPlague					= mod:NewYell(22997)
+	local specWarnExplode				= mod:NewSpecialWarningRun(25698, "Melee", nil, 3, 4, 2)
 
 	-- aura applied didn't seem to catch the reflects and other buffs
 	function mod:SPELL_AURA_APPLIED(args)
@@ -86,7 +86,7 @@ do
 				self.vb.firstEngageTime = time()
 				if self.Options.FastestClear3 and self.Options.SpeedClearTimer then
 					--Custom bar creation that's bound to core, not mod, so timer doesn't stop when mod stops it's own timers
-					DBM.Bars:CreateBar(self.Options.FastestClear3, DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT, "Interface\\Icons\\Spell_Nature_TimeStop")
+					DBT:CreateBar(self.Options.FastestClear3, DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT, "Interface\\Icons\\Spell_Nature_TimeStop")
 				end
 				self:SendSync("AQ40Started", self.vb.firstEngageTime)--Also sync engage time
 			end
@@ -137,12 +137,12 @@ do
 	end
 	mod.SWING_MISSED = mod.SWING_DAMAGE
 
---[[ 	local function updateDefeatedBosses(self, encounterId)
+--[[	local function updateDefeatedBosses(self, encounterId)
 		if self:AntiSpam(10, encounterId) then
 			if encounterId == 710 or encounterId == 713 or encounterId == 716 or encounterId == 717 or encounterId == 714 then
 				self.vb.requiredBosses = self.vb.requiredBosses + 1
 				if self.vb.requiredBosses == 5 then
-					DBM.Bars:CancelBar(DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT)
+					DBT:CancelBar(DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT)
 					if self.vb.firstEngageTime then
 						local thisTime = time() - self.vb.firstEngageTime
 						if thisTime and thisTime > 0 then
@@ -169,14 +169,14 @@ do
 	function mod:OnSync(msg, timeOrEncounter, sender)
 		--Sync recieved with start time and ours is currently not started
 		--The reason this doesn't just check self.vb.firstEngageTime is nil, because it might not be if SendVariableInfo send it first
-		if msg == "AQ40Started" and timeOrEncounter --[[ and not DBM.Bars:GetBar(DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT) ]] then
+		if msg == "AQ40Started" and timeOrEncounter --[[ and not DBT:GetBar(DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT) ]] then
 			if not self.vb.firstEngageTime then
 				self.vb.firstEngageTime = tonumber(timeOrEncounter)
 			end
 			if self.Options.FastestClear3 and self.Options.SpeedClearTimer then
 				--Custom bar creation that's bound to core, not mod, so timer doesn't stop when mod stops it's own timers
 				local adjustment = time() - self.vb.firstEngageTime
-				DBM.Bars:CreateBar(self.Options.FastestClear3 - adjustment, DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT, "Interface\\Icons\\Spell_Nature_TimeStop")
+				DBT:CreateBar(self.Options.FastestClear3 - adjustment, DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT, "Interface\\Icons\\Spell_Nature_TimeStop")
 			end
 			--Unregister high CPU combat log events
 			self:UnregisterShortTermEvents()

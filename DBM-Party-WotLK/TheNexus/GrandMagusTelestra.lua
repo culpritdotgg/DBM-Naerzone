@@ -1,13 +1,15 @@
 local mod	= DBM:NewMod("GrandMagusTelestra", "DBM-Party-WotLK", 8)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 3369 $"):sub(12, -3))
+mod.statTypes = "normal,heroic,mythic"
+
+mod:SetRevision("20220806222721")
 mod:SetCreatureID(26731)
 
 mod:RegisterCombat("combat")
 
 mod:RegisterEventsInCombat(
-	"UNIT_HEALTH boss1",
+	"UNIT_HEALTH",
 	"CHAT_MSG_MONSTER_YELL"
 )
 

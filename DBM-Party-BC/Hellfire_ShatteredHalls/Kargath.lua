@@ -1,7 +1,9 @@
 local mod	= DBM:NewMod(569, "DBM-Party-BC", 3, 259)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod.statTypes = "normal,heroic,mythic"
+
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(16808)
 
 mod:SetModelID(19799)
@@ -53,8 +55,8 @@ function mod:OnCombatStart(delay)
 end
 
 --Change to no sync if blizz adds IEEU(boss1)
-function mod:UNIT_SPELLCAST_START(uId, _, spellId)
-   if spellId == 30738 then -- Blade Dance Targeting
+function mod:UNIT_SPELLCAST_START(_, spellName)
+   if spellName == GetSpellInfo(30738) then -- Blade Dance Targeting
 		self:SendSync("BladeDance")
 	end
 end

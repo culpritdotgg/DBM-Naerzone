@@ -1,5 +1,8 @@
 ﻿-- author: callmejames @《凤凰之翼》 一区藏宝海湾
 -- commit by: yaroot <yaroot AT gmail.com>
+-- Mini Dragon(projecteurs AT gmail.com) Brilla@金色平原
+-- Last update: 2019/08/22
+
 if GetLocale() ~= "zhCN" then return end
 
 local L
@@ -10,7 +13,7 @@ local L
 L = DBM:GetModLocalization("Anub'Rekhan")
 
 L:SetGeneralLocalization({
-	name 				= "阿努布雷坎"
+	name				= "阿努布雷坎"
 })
 
 L:SetOptionLocalization({
@@ -19,8 +22,8 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	ArachnophobiaTimer		= "蜘蛛克星",
---	Pull1					= "对，跑吧！那样伤口出血就更多了！",
---	Pull2					= "一些小点心……",
+	Pull1					= "对，跑吧！那样伤口出血就更多了！",
+	Pull2					= "一些小点心……",
 --	Pull3					= "你们逃不掉的。"
 })
 
@@ -30,7 +33,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Faerlina")
 
 L:SetGeneralLocalization({
-	name = "黑女巫法琳娜"
+	name				= "黑女巫法琳娜"
 })
 
 L:SetWarningLocalization({
@@ -41,9 +44,9 @@ L:SetOptionLocalization({
 	WarningEmbraceExpire		= "为黑女巫的拥抱结束显示提前警报"
 })
 
---L:SetMiscLocalization({
---	Pull					= "跪下求饶吧，诺夫！"--Not actually pull trigger, but often said on pull
---})
+L:SetMiscLocalization({
+	Pull					= "跪下求饶吧，诺夫！"--Not actually pull trigger, but often said on pull
+})
 
 ---------------
 --  Maexxna  --
@@ -51,7 +54,7 @@ L:SetOptionLocalization({
 L = DBM:GetModLocalization("Maexxna")
 
 L:SetGeneralLocalization({
-	name 					= "迈克斯纳"
+	name					= "迈克斯纳"
 })
 
 L:SetWarningLocalization({
@@ -79,7 +82,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Noth")
 
 L:SetGeneralLocalization({
-	name 					= "药剂师诺斯"
+	name					= "药剂师诺斯"
 })
 
 L:SetWarningLocalization({
@@ -100,7 +103,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
---	Pull				= "死吧，入侵者！",
+	Pull				= "死吧，入侵者！",
 	Adds				= "召唤出骷髅战士！",
 	AddsTwo				= "召唤出更多的骷髅！"
 })
@@ -111,7 +114,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Heigan")
 
 L:SetGeneralLocalization({
-	name 				= "肮脏的希尔盖"
+	name				= "肮脏的希尔盖"
 })
 
 L:SetWarningLocalization({
@@ -129,9 +132,9 @@ L:SetOptionLocalization({
 	TimerTeleport			= "为传送显示计时条"
 })
 
---L:SetMiscLocalization({
---	Pull				= "你是我的了。"
---})
+L:SetMiscLocalization({
+	Pull				= "你是我的了。"
+})
 
 ---------------
 --  Loatheb  --
@@ -139,7 +142,7 @@ L:SetOptionLocalization({
 L = DBM:GetModLocalization("Loatheb")
 
 L:SetGeneralLocalization({
-	name 				= "洛欧塞布"
+	name				= "洛欧塞布"
 })
 
 L:SetWarningLocalization({
@@ -150,7 +153,10 @@ L:SetWarningLocalization({
 L:SetOptionLocalization({
 	WarningHealSoon			= "为3秒后可以治疗显示提前警报",
 	WarningHealNow			= "为现在治疗显示警报",
-	SporeDamageAlert		= "在团队中提示谁杀死了孢子并发送悄悄话给该玩家\n(需要团长或助理权限)"
+	SporeDamageAlert		= "在团队中提示谁杀死了孢子并发送悄悄话给该玩家\n(需要团长或助理权限)",
+	CorruptedSorting		= "Set infoframe sorting behaviour for $spell:55593", -- translation missing
+	Alphabetical			= "Sort in alphabetical order", -- translation missing
+	Duration				= "Sort by duration" -- translation missing
 })
 
 -----------------
@@ -196,7 +202,7 @@ L:SetGeneralLocalization({
 L = DBM:GetModLocalization("Thaddius")
 
 L:SetGeneralLocalization({
-	name 				= "塔迪乌斯"
+	name				= "塔迪乌斯"
 })
 
 L:SetWarningLocalization({
@@ -252,7 +258,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Gothik")
 
 L:SetGeneralLocalization({
-	name 				= "收割者戈提克"
+	name				= "收割者戈提克"
 })
 
 L:SetWarningLocalization({
@@ -293,7 +299,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Horsemen")
 
 L:SetGeneralLocalization({
-	name 				= "四骑士"
+	name				= "四骑士"
 })
 
 L:SetOptionLocalization({
@@ -319,18 +325,19 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Sapphiron")
 
 L:SetGeneralLocalization({
-	name 				= "萨菲隆"
+	name				= "萨菲隆"
 })
 
 L:SetWarningLocalization({
 	WarningAirPhaseSoon		= "10秒后 空中阶段",
 	WarningAirPhaseNow		= "空中阶段",
 	WarningLanded			= "萨菲隆降落了",
-	WarningDeepBreath		= "冰霜吐息"
+	WarningDeepBreath		= "冰霜吐息",
+	SpecWarnSapphLow		= "萨菲隆不能飞！"
 })
 
 L:SetTimerLocalization({
-	TimerAir			= "空中阶段",
+	TimerAir				= "空中阶段",
 	TimerLanding			= "降落",
 	TimerIceBlast			= "冰霜吐息"
 })
@@ -339,10 +346,11 @@ L:SetOptionLocalization({
 	WarningAirPhaseSoon		= "为空中阶段显示提前警报",
 	WarningAirPhaseNow		= "提示空中阶段",
 	WarningLanded			= "提示地上阶段",
-	TimerAir			= "为空中阶段显示计时条",
+	TimerAir				= "为空中阶段显示计时条",
 	TimerLanding			= "为降落显示计时条",
 	TimerIceBlast			= "为冰霜吐息显示计时条",
-	WarningDeepBreath		= "为冰霜吐息显示特别警报"
+	WarningDeepBreath		= "为冰霜吐息显示特别警报",
+	SpecWarnSapphLow		= "10%执行阶段特别警告（取消空中阶段）"
 })
 
 L:SetMiscLocalization({
@@ -355,7 +363,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Kel'Thuzad")
 
 L:SetGeneralLocalization({
-	name 				= "克尔苏加德"
+	name				= "克尔苏加德"
 })
 
 L:SetWarningLocalization({
@@ -378,5 +386,5 @@ L:SetOptionLocalization({
 L:SetMiscLocalization({
 	Yell				= "仆从们，侍卫们，隶属于黑暗与寒冷的战士们！听从克尔苏加德的召唤！",
 	setMissing			= "注意力！ 在您创建名为 pve 的装备集之前，DBM 自动武器卸载/装备将不起作用",
-    EqUneqLineDescription	= "自动装备/取消装备"
+	EqUneqLineDescription	= "自动装备/取消装备"
 })

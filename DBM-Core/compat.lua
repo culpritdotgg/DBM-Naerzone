@@ -1,8 +1,5 @@
 local ipairs = ipairs
-local pairs = pairs
-local ceil, floor = math.ceil, math.floor
 
-local GetInstanceInfo = GetInstanceInfo
 local GetNumPartyMembers = GetNumPartyMembers
 local GetNumRaidMembers = GetNumRaidMembers
 
@@ -22,9 +19,9 @@ function IsInRaid()
 	return GetNumRaidMembers() > 0
 end
 
---function GetNumSubgroupMembers()
---	return GetNumPartyMembers()
---end
+function GetNumSubgroupMembers()
+	return GetNumPartyMembers()
+end
 
 function GetNumGroupMembers()
 	return IsInRaid() and GetNumRaidMembers() or GetNumPartyMembers()

@@ -1,12 +1,10 @@
 local mod	= DBM:NewMod("Algalon", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal"
-
-mod:SetRevision(("$Revision: 3804 $"):sub(12, -3))
+mod:SetRevision("20220809231440")
 mod:SetCreatureID(32871)
 mod:RegisterCombat("combat")
-mod:RegisterKill("yell", L.YellKill)
+--mod:RegisterKill("yell", L.YellKill) -- fires 24 seconds after fight ends, not accurate enough. Workaround it by using Self Stun UNIT_SPELLCAST_SUCCEEDED, which is fired when he turns friendly and fight is won.
 mod:SetWipeTime(20)
 
 mod:RegisterEventsInCombat(
@@ -18,29 +16,29 @@ mod:RegisterEventsInCombat(
 	"SPELL_DAMAGE 65108 64122",
 	"SPELL_MISSED 65108 64122",
 	"CHAT_MSG_RAID_BOSS_EMOTE",
---	"CHAT_MSG_MONSTER_YELL",
+	"CHAT_MSG_MONSTER_YELL",
 	"UNIT_SPELLCAST_SUCCEEDED boss1",
 	"UNIT_HEALTH boss1"
 )
 
-local warnPhase2				= mod:NewPhaseAnnounce(2, 2)
+local warnPhase2				= mod:NewPhaseAnnounce(2, 2, nil, nil, nil, nil, nil, 2)
 local warnPhase2Soon			= mod:NewPrePhaseAnnounce(2, 2)
 local announcePreBigBang		= mod:NewPreWarnAnnounce(64584, 10, 3)
 local announceBlackHole			= mod:NewSpellAnnounce(65108, 2)
-local announcePhasePunch		= mod:NewStackAnnounce(65108, 4, nil, "Tank|Healer")
+local announcePhasePunch		= mod:NewStackAnnounce(64412, 4, nil, "Tank|Healer")
 
 local specwarnStarLow			= mod:NewSpecialWarning("warnStarLow", "Tank|Healer", nil, nil, 1, 2)
 local specWarnPhasePunch		= mod:NewSpecialWarningStack(64412, nil, 4, nil, nil, 1, 6)
 local specWarnBigBang			= mod:NewSpecialWarningSpell(64584, nil, nil, nil, 3, 2)
 local specWarnCosmicSmash		= mod:NewSpecialWarningDodge(64596, nil, nil, nil, 2, 2)
 
-local timerNextBigBang			= mod:NewNextTimer(90.5, 64584, nil, nil, nil, 2)
-local timerBigBangCast			= mod:NewCastTimer(8, 64584, nil, nil, nil, 2, nil, DBM_CORE_L.DEADLY_ICON)
-local timerNextCollapsingStar	= mod:NewTimer(15, "NextCollapsingStar", "Interface\\Icons\\INV_Enchant_EssenceCosmicGreater", nil, nil, 2, DBM_CORE_L.HEALER_ICON)
-local timerCDCosmicSmash		= mod:NewCDTimer(24.6, 64596, nil, nil, nil, 3)
+local timerNextBigBang			= mod:NewNextTimer(91.0, 64584, nil, nil, nil, 2) -- one log review (2022/07/05)
+local timerBigBangCast			= mod:NewCastTimer(8, 64584, nil, nil, nil, 2, nil, DBM_COMMON_L.DEADLY_ICON)
+local timerNextCollapsingStar	= mod:NewTimer(91, "NextCollapsingStar", "Interface\\Icons\\INV_Enchant_EssenceCosmicGreater", nil, nil, 2, DBM_COMMON_L.HEALER_ICON) -- REVIEW! From log review (2022/07/05), instead of 15s, this event fired with ~91s difference, with 6s variance - 91, 97. Consider running this from big bang event to reduce overhead if logs validate it.
+local timerCDCosmicSmash		= mod:NewCDTimer(25.5, 64596, nil, nil, nil, 3) -- one log review (2022/07/05) - 25.5, 25.5, 25.5, 25.5, 25.5, 25.5, 25.6, 25.5
 local timerCastCosmicSmash		= mod:NewCastTimer(4.5, 64596)
-local timerPhasePunch			= mod:NewTargetTimer(45, 64412, nil, "Tank", 2, 5, nil, DBM_CORE_L.TANK_ICON)
-local timerNextPhasePunch		= mod:NewNextTimer(15.5, 64412, nil, "Tank", 2, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerPhasePunch			= mod:NewTargetTimer(45, 64412, nil, "Tank", 2, 5, nil, DBM_COMMON_L.TANK_ICON)
+local timerNextPhasePunch		= mod:NewNextTimer(15.5, 64412, nil, "Tank", 2, 5, nil, DBM_COMMON_L.TANK_ICON)
 local enrageTimer				= mod:NewBerserkTimer(360)
 
 local warned_star = {}
@@ -56,6 +54,11 @@ function mod:OnCombatStart(delay)
 	stars_hp = {}
 	star_num = 1
 	self.vb.warned_preP2 = false
+	timerNextCollapsingStar:Start(22-delay) -- one log review (2022/07/05)
+	timerCDCosmicSmash:Start(35-delay) -- one log review (2022/07/05)
+	announcePreBigBang:Schedule(90-delay)
+	timerNextBigBang:Start(100-delay) -- Log review (2022/07/05 || 2022/07/10) - 100 || 100
+	enrageTimer:Start(360-delay)
 end
 
 function mod:OnCombatEnd()
@@ -63,7 +66,7 @@ function mod:OnCombatEnd()
 end
 
 function mod:SPELL_CAST_START(args)
-	if args:IsSpellID(64584, 64443) then 	-- Big Bang
+	if args:IsSpellID(64584, 64443) then	-- Big Bang
 		timerBigBangCast:Start()
 		timerNextBigBang:Start()
 		announcePreBigBang:Schedule(80)
@@ -77,7 +80,7 @@ function mod:SPELL_CAST_START(args)
 end
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(65108, 64122) then 	-- Black Hole Explosion
+	if args:IsSpellID(65108, 64122) then	-- Black Hole Explosion
 		announceBlackHole:Show()
 	elseif args:IsSpellID(64598, 62301) then	-- Cosmic Smash
 		timerCastCosmicSmash:Start()
@@ -108,8 +111,7 @@ function mod:SPELL_AURA_REMOVED(args)
 end
 
 function mod:SPELL_DAMAGE(sourceGUID, _, _, _, _, _, spellId)
-	if (spellId == 65108 or spellId == 64122) and self:AntiSpam(2, spellId .. sourceGUID) then 	-- Black Hole Explosion
-		announceBlackHole:Show()
+	if (spellId == 65108 or spellId == 64122) and self:AntiSpam(2, spellId .. sourceGUID) then	-- Black Hole Explosion
 		if stars[sourceGUID] then
 			local id = stars[sourceGUID]
 			DBM.BossHealth:RemoveBoss(id)
@@ -126,17 +128,19 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	end
 end
 
---[[
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L.Phase2 or msg:find(L.Phase2) then
-		timerNextCollapsingStar:Cancel()
-		warnPhase2:Show()
 		self:SetStage(2)
+		self.vb.warned_preP2 = true
+		timerNextCollapsingStar:Stop()
+		warnPhase2:Show()
+		warnPhase2:Play("ptwo")
 		DBM.BossHealth:Clear()
 		DBM.BossHealth:AddBoss(32871)
 	end
 end
---]]
+
 
 function mod:UNIT_HEALTH(uId)
 	local cid = self:GetUnitCreatureId(uId)
@@ -150,24 +154,20 @@ function mod:UNIT_HEALTH(uId)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(uId, spellName)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName)
+--[[not fired on combat start - log review (2022/07/05). Default to IEEU instead.
 	if spellName == GetSpellInfo(65311) then--Supermassive Fail (fires when he becomes actually active)
 		timerNextCollapsingStar:Start(16)
 		timerCDCosmicSmash:Start(26)
 		announcePreBigBang:Schedule(80)
 		timerNextBigBang:Start(90)
 		enrageTimer:Start(360)
-	elseif spellName == GetSpellInfo(65256) then--Self Stun (phase 2)
-		self:SetStage(2)
-		self.vb.warned_preP2 = true
-		timerNextCollapsingStar:Stop()
-		warnPhase2:Show()
-		DBM.BossHealth:Clear()
-		DBM.BossHealth:AddBoss(32871)
+	else]]if spellName == GetSpellInfo(65256) then -- Self Stun (Combat End)
+		DBM:EndCombat(self)
 	end
 end
 
-mod:RegisterOnUpdateHandler(function(self, elapsed)
+mod:RegisterOnUpdateHandler(function(self)
 	if not self:IsInCombat() then return end
 		for uId in DBM:GetGroupMembers() do
 			local target = uId .."target"
@@ -178,8 +178,8 @@ mod:RegisterOnUpdateHandler(function(self, elapsed)
 				if not stars[targetGUID] then
 					stars[targetGUID] = L.CollapsingStar .. " №" .. star_num
 					do
+						local last = 100
 						local function getStarPercent()
-							local last = 100
 							local trackingGUID = targetGUID
 
 							for uId in DBM:GetGroupMembers() do

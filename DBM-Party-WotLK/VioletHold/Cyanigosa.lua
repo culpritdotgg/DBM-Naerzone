@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Cyanigosa", "DBM-Party-WotLK", 12)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 3389 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(31134)
 
 mod:RegisterCombat("combat")
@@ -22,7 +22,7 @@ local warningBlizzard	= mod:NewSpellAnnounce(58693, 3)
 local specwarnMana		= mod:NewSpecialWarningDispel(59374, "Healer", nil, nil, 1, 2)
 
 local timerVacuumCD		= mod:NewCDTimer(35, 58694, nil, nil, nil, 2)
-local timerMana			= mod:NewTargetTimer(8, 59374, nil, "Healer", nil, 5, nil, DBM_CORE_L.MAGIC_ICON)
+local timerMana			= mod:NewTargetTimer(8, 59374, nil, "Healer", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 local timerCombat		= mod:NewCombatTimer(14)
 
 function mod:OnCombatStart(delay)
@@ -61,7 +61,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:OnSync(msg, arg)
+function mod:OnSync(msg)
 	if msg == "CyanArrived" then
 		timerCombat:Start()
 	end

@@ -112,8 +112,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	WarningSplitSoon	= "為分裂顯示預先警告",
-	RangeFrame			= "顯示距離框 (12碼)"
+	WarningSplitSoon	= "為分裂顯示預先警告"
 })
 
 -------------------------
@@ -123,10 +122,6 @@ L = DBM:GetModLocalization("Saviana")
 
 L:SetGeneralLocalization({
 	name = "薩薇安娜‧怒焰"
-})
-
-L:SetOptionLocalization({
-	RangeFrame			= "顯示距離框 (10碼)"
 })
 
 --------------------------
@@ -179,6 +174,7 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	Halion					= "物理 海萊恩",
+	PhysicalRealm			= "現實之域",
 	MeteorCast				= "天堂也將燃燒!",
 	Phase2					= "在暮光的國度只有磨難在等著你!有膽量的話就進去吧!",
 	Phase3					= "我是光明亦是黑暗!凡人，匍匐在死亡之翼的信使面前吧!",

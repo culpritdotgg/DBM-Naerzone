@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("HyjalWaveTimers", "DBM-Hyjal")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision$"):sub(12, -3))
+mod:SetRevision("20220518110528")
 
 mod:RegisterEvents(
 	"GOSSIP_SHOW",
@@ -31,7 +31,7 @@ local bossNames = {
 }
 
 function mod:GOSSIP_SHOW()
-	if not GetRealZoneText() == L.HyjalZoneName then return end
+	if GetRealZoneText() ~= L.HyjalZoneName then return end
 	local target = UnitName("target")
 	if target == L.Thrall or target == L.Jaina then
 		local selection = GetGossipOptions()

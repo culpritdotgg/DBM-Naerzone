@@ -8,7 +8,7 @@ local L
 L = DBM:GetModLocalization("CorenDirebrew")
 
 L:SetGeneralLocalization({
-	name 			= "科林·烈酒"
+	name			= "科林·烈酒"
 })
 
 L:SetWarningLocalization({
@@ -32,7 +32,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("HeadlessHorseman")
 
 L:SetGeneralLocalization({
-	name 			= "无头骑士"
+	name			= "无头骑士"
 })
 
 L:SetWarningLocalization({
@@ -57,7 +57,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("ApothecaryTrio")
 
 L:SetGeneralLocalization({
-	name 			= "药剂师三人组"
+	name			= "药剂师三人组"
 })
 
 L:SetWarningLocalization({
@@ -83,7 +83,7 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Ahune")
 
 L:SetGeneralLocalization({
-	name 			= "埃霍恩"
+	name			= "埃霍恩"
 })
 
 L:SetWarningLocalization({
@@ -93,7 +93,7 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	SubmergTimer		= "隐没",
+	SubmergeTimer		= "隐没",
 	EmergeTimer		= "现身",
 	TimerCombat		= "战斗开始"
 })
@@ -102,7 +102,7 @@ L:SetOptionLocalization({
 	Submerged		= "当埃霍恩隐没时显示警报",
 	Emerged			= "当埃霍恩现身时显示警报",
 	specWarnAttack		= "当埃霍恩拥有易伤时显示特别警报",
-	SubmergTimer		= "为隐没显示计时条",
+	SubmergeTimer		= "为隐没显示计时条",
 	EmergeTimer		= "为现身显示计时条",
 	TimerCombat		= "为战斗开始显示计时条"
 })

@@ -1,9 +1,9 @@
 local mod	= DBM:NewMod("WarsongGulch", "DBM-PvP")
 local L		= mod:GetLocalizedStrings()
 
-local GetCurrentMapAreaID, SetMapToCurrentZone = GetCurrentMapAreaID, SetMapToCurrentZone
+local GetCurrentMapAreaID = GetCurrentMapAreaID
 
-mod:SetRevision("20210519214524")
+mod:SetRevision("20220518110528")
 mod:SetZone(DBM_DISABLE_ZONE_DETECTION)
 
 mod:RegisterEvents(

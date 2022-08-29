@@ -16,17 +16,17 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerNextBoss				= "Prochain boss dans",
-	TimerEmerge					= "Sort du sol",
-	TimerSubmerge				= "Rentre dans le sol"
+	TimerNextBoss				= "Prochain boss dans"
+--	TimerEmerge					= "Sort du sol",
+--	TimerSubmerge				= "Rentre dans le sol"
 })
 
 L:SetOptionLocalization({
 	WarningSnobold				= "Montre une alerte quand les Vassal arrivent",
 	PingCharge					= "Ping sur la minimap quand Glace-hurlante va vous charger",
 	ClearIconsOnIceHowl			= "Enlève toutes les icônes avant la prochaine charge",
-	TimerNextBoss				= "Montre le timer pour l'arrivée du prochain boss",
-	TimerEmerge					= "Montre le timer avant que les vers rentre dans le sol",
+--	TimerNextBoss				= "Montre le timer pour l'arrivée du prochain boss",
+--	TimerEmerge					= "Montre le timer avant que les vers rentre dans le sol",
 	TimerSubmerge				= "Montre le timer avant que les vers sortent du sol"
 })
 
@@ -88,7 +88,7 @@ L:SetMiscLocalization({
 	Tyrius				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:32:64:64:96|t Tyrius Lamebrune",			-- 34461
 	Kavina				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:95:126.5:0:32|t Kavina Chantebosquet",		-- 34460
 	Melador				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:95:126.5:0:32|t Melador Arpenteval",		-- 34469
-	Alyssia             = "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:0:32:32:64|t Alyssia Traquelune",			-- 34467
+	Alyssia				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:0:32:32:64|t Alyssia Traquelune",			-- 34467
 	Noozle				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:32:63.5:0:32|t Touillert Vizitige",		-- 34468
 	Baelnor				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:0:32:64:96|t Baelnor Portelumière",		-- 34471
 	Velanaa				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:0:32:64:96|t Velanaa",						-- 34465
@@ -129,7 +129,7 @@ L:SetWarningLocalization({
 })
 
 L:SetMiscLocalization({
---	YellPull 	= "Au nom de notre ténébreux maître. Pour le roi-liche. Vous. Allez. Mourir.",
+--	YellPull	= "Au nom de notre ténébreux maître. Pour le roi-liche. Vous. Allez. Mourir.",
 --	CombatStart	= "Ce n'est qu'en travaillant côte à côte que vous pourrez triompher de l'ultime défi. Venus des profondeurs de la Couronne de glace, voici deux des lieutenants les plus puissants du Fléau : de redoutables val'kyrs, messagères ailées du roi-liche !",
 	Fjola		= "Fjola Plaie-lumineuse",
 	Eydis		= "Eydis Plaie-sombre",
@@ -155,7 +155,7 @@ L:SetOptionLocalization({
 L = DBM:GetModLocalization("Anub'arak_Coliseum")
 
 L:SetGeneralLocalization({
-	name 					= "Anub'arak"
+	name					= "Anub'arak"
 })
 
 L:SetTimerLocalization({
@@ -190,7 +190,7 @@ L:SetOptionLocalization({
 	timerAdds				= "Montre le timer avant l'arrivée des nouveaux add",
 	TimerEmerge				= "Montre le timer pour la sortie du boss",
 	TimerSubmerge			= "Montre le timer pour la rentrée du boss dans la terre",
-	AnnouncePColdIcons		= "Marque les icones des cible du Froid pénétrant dans le chatt<br/>(Requiert les annonces activer et être le leader ou avoir une promot)",
-	AnnouncePColdIconsRemoved	= "Annoncez également lorsque les icônes sont supprimées pour $spell:66013<br/>(nécessite l'option ci-dessus)",
+	AnnouncePColdIcons		= "Marque les icones des cible du Froid pénétrant dans le chatt (Requiert les annonces activer et être le leader ou avoir une promot)",
+	AnnouncePColdIconsRemoved	= "Annoncez également lorsque les icônes sont supprimées pour $spell:66013 (nécessite l'option ci-dessus)",
 	RemoveHealthBuffsInP3	= "Enlève les buffs de soins au début de la phase 3"
 })

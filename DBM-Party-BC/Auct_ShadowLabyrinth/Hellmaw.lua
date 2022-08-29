@@ -1,7 +1,7 @@
 local mod = DBM:NewMod(544, "DBM-Party-BC", 10, 253)
 local L = mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 
 mod:SetCreatureID(18731)
 
@@ -13,16 +13,16 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_SUCCESS 33547"
 )
 
-local warnFear      = mod:NewSpellAnnounce(33547, 3)
+local warnFear		= mod:NewSpellAnnounce(33547, 3)
 
-local timerFear     = mod:NewNextTimer(25, 33547, nil, nil, nil, 2)
+local timerFear		= mod:NewNextTimer(25, 33547, nil, nil, nil, 2)
 
 local enrageTimer	= mod:NewBerserkTimer(180)
 
 function mod:OnCombatStart(delay)
 	if self:IsDifficulty("heroic5", "timewalker") then
-        enrageTimer:Start(-delay)
-    end
+		enrageTimer:Start(-delay)
+	end
 end
 
 function mod:SPELL_CAST_SUCCESS(args)

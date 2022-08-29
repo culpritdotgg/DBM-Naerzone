@@ -112,8 +112,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	WarningSplitSoon	= "Zeige Vorwarnung für Aufspaltung",
-	RangeFrame			= "Zeige Abstandsfenster (12m)"
+	WarningSplitSoon	= "Zeige Vorwarnung für Aufspaltung"
 })
 
 -------------------------
@@ -123,10 +122,6 @@ L = DBM:GetModLocalization("Saviana")
 
 L:SetGeneralLocalization({
 	name = "Saviana Flammenschlund"
-})
-
-L:SetOptionLocalization({
-	RangeFrame				= "Zeige Abstandsfenster (10m)"
 })
 
 --------------------------
@@ -180,6 +175,7 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	Halion					= "Halion",
+	PhysicalRealm			= "Körperliches Reich",
 	MeteorCast				= "Die Himmel brennen!",
 	Phase2					= "Ihr werdet im Reich des Zwielichts nur Leid finden! Tretet ein, wenn ihr es wagt!",
 	Phase3					= "Ich bin das Licht und die Dunkelheit! Zittert, Sterbliche, vor dem Herold Todesschwinges!",

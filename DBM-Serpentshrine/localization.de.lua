@@ -11,7 +11,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-	WarnMark 		= "%s : %s",
+	WarnMark		= "%s : %s",
 	WarnPhase		= "%sphase",
 	SpecWarnMark	= "%s : %s"
 })
@@ -28,8 +28,9 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	Frost	= "Frost",
-	Nature	= "Natur"
+	Frost		= "Frost",
+	Nature		= "Natur",
+	YellPull	= "Ich kann nicht zulassen, dass Ihr Euch einmischt!"
 })
 
 -----------------------
@@ -84,7 +85,8 @@ L:SetMiscLocalization({
 	Human		= "Humanoide",
 	Demon		= "Dämonen",
 	YellDemon	= "Hinfort, unbedeutender Elf%.%s*Ich habe jetzt die Kontrolle!",
-	YellPhase2	= "Nein... nein! Was habt Ihr getan? Ich bin der Meister! Hört Ihr? Ich! Ich... aaaaah! Ich kann ihn... nicht aufhalten..."
+	YellPhase2	= "Nein... nein! Was habt Ihr getan? Ich bin der Meister! Hört Ihr? Ich! Ich... aaaaah! Ich kann ihn... nicht aufhalten...",
+	YellPull	= "Endlich hat meine Verbannung ein Ende!"
 })
 
 -----------------------------
@@ -99,7 +101,8 @@ L:SetGeneralLocalization({
 L:SetMiscLocalization({
 	Caribdis	= "Tiefenwächterin Caribdis",
 	Tidalvess	= "Tiefenwächter Flutvess",
-	Sharkkis	= "Tiefenwächter Haikis"
+	Sharkkis	= "Tiefenwächter Haikis",
+	YellPull	= "Achtung, Wachen! Wir haben Besuch..."
 })
 
 --------------------------
@@ -122,6 +125,11 @@ L:SetTimerLocalization({
 L:SetOptionLocalization({
 	SpecWarnMurlocs	= "Spezialwarnung, wenn Murlocs erscheinen",
 	TimerMurlocs	= "Zeige Zeit bis Murlocs erscheinen"
+})
+
+L:SetMiscLocalization({
+	Grave			= "%s schickt seine Feinde in ihr nasses Grab!",
+	Murlocs			= "Das heftige Erdbeben hat nahe Murlocs alarmiert!"
 })
 
 -----------------

@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Ossirian", "DBM-AQ20", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(15339)
 
 mod:SetModelID(15339)
@@ -19,7 +19,7 @@ local warnVulnerable	= mod:NewAnnounce("WarnVulnerable", 3, "Interface\\Icons\\I
 local timerCyclone		= mod:NewTargetTimer(10, 25189, nil, nil, nil, 3)
 local timerVulnerable	= mod:NewTimer(45, "TimerVulnerable", "Interface\\Icons\\INV_Enchant_EssenceMagicLarge", nil, nil, 6)
 
-local firstBossMod = DBM:GetModByName("Kurinnaxx")
+-- local firstBossMod = DBM:GetModByName("Kurinnaxx")
 
 --function mod:OnCombatStart(delay, yellTriggered)
 
@@ -28,7 +28,7 @@ local firstBossMod = DBM:GetModByName("Kurinnaxx")
 --[[
 function mod:OnCombatEnd(wipe)
 	if not wipe then
-		DBM.Bars:CancelBar(DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT)
+		DBT:CancelBar(DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT)
 		if firstBossMod.vb.firstEngageTime then
 			local thisTime = time() - firstBossMod.vb.firstEngageTime
 			if thisTime and thisTime > 0 then

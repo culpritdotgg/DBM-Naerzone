@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Azuregos", "DBM-Azeroth")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(6109)--121820 TW ID, 6109 classic ID
 --mod:SetModelID(17887)
 mod:EnableWBEngageSync()--Enable syncing engage in outdoors
@@ -25,7 +25,7 @@ local specWarnReflection		= mod:NewSpecialWarningSpell(22067, "CasterDps", nil, 
 
 --mod:AddReadyCheckOption(48620, false)
 
-function mod:OnCombatStart(delay, yellTriggered)
+function mod:OnCombatStart(_, yellTriggered)
 	if yellTriggered then
 		--timerFrostBreathCD:Start(5.8-delay)
 		--timerArcaneVacuumCD:Start(5.7-delay)--5.7-12

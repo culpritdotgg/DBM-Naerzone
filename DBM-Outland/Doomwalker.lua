@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Doomwalker", "DBM-Outland")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(17711)
 mod:SetModelID(21435)
 mod:EnableWBEngageSync()--Enable syncing engage in outdoors
@@ -22,7 +22,7 @@ local timerQuake			= mod:NewBuffActiveTimer(8, 32686, nil, nil, nil, 2)
 
 mod:AddRangeFrameOption("10")
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart()
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(10)
 	end

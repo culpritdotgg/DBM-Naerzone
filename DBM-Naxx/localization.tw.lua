@@ -15,9 +15,9 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	ArachnophobiaTimer	= "蜘蛛恐懼症"
---	Pull1				= "對，跑吧!那樣傷口出血就更多了!",
---	Pull2				= "一些小點心..."
+	ArachnophobiaTimer	= "蜘蛛恐懼症",
+	Pull1				= "對，跑吧!那樣傷口出血就更多了!",
+	Pull2				= "一些小點心..."
 })
 
 ----------------------------
@@ -92,7 +92,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
---	Pull				= "死吧，入侵者!",
+	Pull				= "死吧，入侵者!",
 	Adds				= "召喚了骷髏戰士!",
 	AddsTwo				= "喚醒了更多骷髏!"
 })
@@ -121,6 +121,10 @@ L:SetOptionLocalization({
 	TimerTeleport		= "為傳送顯示計時器"
 })
 
+L:SetMiscLocalization({
+	Pull				= "你現在是我的了。"
+})
+
 ---------------
 --  Loatheb  --
 ---------------
@@ -138,7 +142,10 @@ L:SetWarningLocalization({
 L:SetOptionLocalization({
 	WarningHealSoon		= "為3秒後可以治療顯示預先警告",
 	WarningHealNow		= "為現在治療顯示警告",
-	SporeDamageAlert	= "在團隊中提示誰殺死了孢子並發送密語給兇手\n(需要團隊隊長或助理權限)"
+	SporeDamageAlert	= "在團隊中提示誰殺死了孢子並發送密語給兇手\n(需要團隊隊長或助理權限)",
+	CorruptedSorting	= "Set infoframe sorting behaviour for $spell:55593", -- translation missing
+	Alphabetical		= "Sort in alphabetical order", -- translation missing
+	Duration			= "Sort by duration" -- translation missing
 })
 
 -----------------
@@ -204,8 +211,8 @@ L:SetMiscLocalization({
 	Yell	= "斯塔拉格要碾碎你!",
 	Emote	= "%s超過負荷!",
 	Emote2	= "泰斯拉線圈超過負荷!",
-	Boss1 	= "伏晨",
-	Boss2 	= "斯塔拉格",
+	Boss1	= "伏晨",
+	Boss2	= "斯塔拉格",
 	Charge1 = "負極",
 	Charge2 = "正極"
 })
@@ -314,7 +321,8 @@ L:SetWarningLocalization({
 	WarningAirPhaseSoon	= "10秒後 空中階段",
 	WarningAirPhaseNow	= "空中階段",
 	WarningLanded		= "薩菲隆降落了",
-	WarningDeepBreath	= "冰息術"
+	WarningDeepBreath	= "冰息術",
+	SpecWarnSapphLow	= "薩菲隆不能飛！"
 })
 
 L:SetTimerLocalization({
@@ -330,7 +338,8 @@ L:SetOptionLocalization({
 	TimerAir			= "為空中階段顯示計時器",
 	TimerLanding		= "為降落顯示計時器",
 	TimerIceBlast		= "為冰息術顯示計時器",
-	WarningDeepBreath	= "為冰息術顯示特別警告"
+	WarningDeepBreath	= "為冰息術顯示特別警告",
+	SpecWarnSapphLow	= "10%執行階段特別警告（取消空中階段）"
 })
 
 L:SetMiscLocalization({

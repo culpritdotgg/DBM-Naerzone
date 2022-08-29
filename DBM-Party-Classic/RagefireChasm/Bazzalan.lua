@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Bazzalan", "DBM-Party-Classic", 9)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(11519)
 
 mod:RegisterCombat("combat")
@@ -13,7 +13,7 @@ mod:RegisterEventsInCombat(
 
 local warningDeadlyPoison			= mod:NewTargetNoFilterAnnounce(744, 2, nil, "RemovePoison")
 
-local timerDeadlyPoisonCD			= mod:NewAITimer(180, 744, nil, "RemovePoison", nil, 5, nil, DBM_CORE_L.POISON_ICON)
+local timerDeadlyPoisonCD			= mod:NewAITimer(180, 744, nil, "RemovePoison", nil, 5, nil, DBM_COMMON_L.POISON_ICON)
 
 function mod:OnCombatStart(delay)
 	timerDeadlyPoisonCD:Start(1-delay)

@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("MCTrash", "DBM-MC", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 --mod:SetModelID(47785)
 
 
@@ -36,7 +36,7 @@ do
 				self.vb.firstEngageTime = time()
 				if self.Options.FastestClear2 and self.Options.SpeedClearTimer then
 					--Custom bar creation that's bound to core, not mod, so timer doesn't stop when mod stops it's own timers
-					DBM.Bars:CreateBar(self.Options.FastestClear2, DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT, "Interface\\Icons\\Spell_Nature_TimeStop")
+					DBT:CreateBar(self.Options.FastestClear2, DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT, "Interface\\Icons\\Spell_Nature_TimeStop")
 				end
 				self:SendSync("MCStarted", self.vb.firstEngageTime)--Also sync engage time
 			end
@@ -60,14 +60,14 @@ do
 	end
 	mod.SWING_MISSED = mod.SWING_DAMAGE
 
-	function mod:OnSync(msg, startTime, sender)
+	function mod:OnSync(msg, startTime)
 		--Sync recieved with start time and ours is currently not started
 		if msg == "MCStarted" and startTime and not self.vb.firstEngageTime then
 			self.vb.firstEngageTime = tonumber(startTime)
 			if self.Options.FastestClear2 and self.Options.SpeedClearTimer then
 				--Custom bar creation that's bound to core, not mod, so timer doesn't stop when mod stops it's own timers
 				local adjustment = time() - self.vb.firstEngageTime
-				DBM.Bars:CreateBar(self.Options.FastestClear2 - adjustment, DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT)
+				DBT:CreateBar(self.Options.FastestClear2 - adjustment, DBM_CORE_L.SPEED_CLEAR_TIMER_TEXT)
 			end
 			--Unregister high CPU combat log events
 			self:UnregisterShortTermEvents()

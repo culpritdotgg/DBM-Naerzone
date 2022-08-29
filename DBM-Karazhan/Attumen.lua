@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Attumen", "DBM-Karazhan")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(16151, 16152)--15550
 
 mod:SetModelID(16416)
@@ -19,9 +19,9 @@ local warnKnockdown	= mod:NewSpellAnnounce(29711, 4)
 local warningCurse	= mod:NewSpellAnnounce(29833, 4)
 local warnPhase2	= mod:NewPhaseAnnounce(2)
 
-local timerCurseCD	= mod:NewCDTimer(27, 43127, nil, nil, nil, 3, nil, DBM_CORE_L.CURSE_ICON)
+local timerCurseCD	= mod:NewCDTimer(27, 43127, nil, nil, nil, 3, nil, DBM_COMMON_L.CURSE_ICON)
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart()
 	self:SetStage(1)
 end
 

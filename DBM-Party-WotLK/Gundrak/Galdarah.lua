@@ -1,7 +1,9 @@
 local mod	= DBM:NewMod("Galdarah", "DBM-Party-WotLK", 5)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 2250 $"):sub(12, -3))
+mod.statTypes = "normal,heroic,mythic"
+
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(29306)
 
 mod:RegisterCombat("combat")
@@ -22,7 +24,7 @@ local timerCharge		= mod:NewCDTimer(21, 59827)
 local timerPhase1		= mod:NewTimer(52, "TimerPhase1", 72262)
 local timerPhase2		= mod:NewTimer(52, "TimerPhase2", 72262)
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart()
 	self:SetStage(1)
 	timerSlash:Start()
 	timerPhase2:Start(52)

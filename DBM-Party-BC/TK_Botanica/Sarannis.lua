@@ -1,7 +1,7 @@
 local mod = DBM:NewMod(558, "DBM-Party-BC", 14, 257)
 local L = mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(17976)
 
 mod:SetModelID(18929)
@@ -37,8 +37,8 @@ do
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
-	if spellId == 34803 and self:AntiSpam(3, 1) then
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName)
+	if spellName == GetSpellInfo(34803) and self:AntiSpam(3, 1) then
 		timerReinforcements:Start(60 )
 		warnReinforcementsSoon:Schedule(55)
 		warnReinforcementsNow:Show()

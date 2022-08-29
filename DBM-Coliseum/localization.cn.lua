@@ -21,9 +21,9 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerNextBoss		= "下一场战斗",
-	TimerEmerge			= "钻地结束",
-	TimerSubmerge		= "钻地"
+	TimerNextBoss		= "下一场战斗"
+--	TimerEmerge			= "钻地结束",
+--	TimerSubmerge		= "钻地"
 })
 
 L:SetOptionLocalization({
@@ -31,8 +31,8 @@ L:SetOptionLocalization({
 	PingCharge			= "当冰吼即将向你你冲锋时自动点击小地图",
 	ClearIconsOnIceHowl	= "冲锋前清除所有标记",
 	TimerNextBoss		= "显示下一场战斗倒计时",
-	TimerEmerge			= "显示钻地计时",
-	TimerSubmerge		= "显示钻地结束计时",
+--	TimerEmerge			= "显示钻地计时",
+--	TimerSubmerge		= "显示钻地结束计时",
 	IcehowlArrow		= "当冰吼即将向你附近冲锋时显示DBM箭头"
 })
 
@@ -94,7 +94,7 @@ L:SetMiscLocalization({
 	Tyrius				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:32:64:64:96|t 泰利乌斯·达斯布雷德",		-- 34461
 	Kavina				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:95:126.5:0:32|t 卡雯娜·林歌",				-- 34460
 	Melador				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:95:126.5:0:32|t 麦拉多·深谷游者",			-- 34469
-	Alyssia             = "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:0:32:32:64|t 阿莱希娅·月行者",				-- 34467
+	Alyssia				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:0:32:32:64|t 阿莱希娅·月行者",				-- 34467
 	Noozle				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:32:63.5:0:32|t 努兹尔·啸钉",				-- 34468
 	Baelnor				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:0:32:64:96|t 圣光使者巴尔诺",				-- 34471
 	Velanaa				= "|TInterface\\WorldStateFrame\\Icons-Classes.blp:24:24:0:0:128:128:0:32:64:96|t 维兰纳",						-- 34465
@@ -161,7 +161,7 @@ L:SetOptionLocalization({
 L = DBM:GetModLocalization("Anub'arak_Coliseum")
 
 L:SetGeneralLocalization({
-	name 				= "阿努巴拉克"
+	name				= "阿努巴拉克"
 })
 
 L:SetTimerLocalization({
@@ -195,7 +195,7 @@ L:SetOptionLocalization({
 	timerAdds			= "为下一次掘地者出现显示计时器",
 	TimerEmerge			= "为首领钻地显示计时器",
 	TimerSubmerge		= "为下一次钻地显示计时器",
-	AnnouncePColdIcons	= "公布$spell:68510目标设置的标记到团队频道<br/>(需要团长或助理权限)",
-	AnnouncePColdIconsRemoved	= "当移除$spell:68510的标记时也提示<br/>(需要上述选项)",
+	AnnouncePColdIcons	= "公布$spell:68510目标设置的标记到团队频道 (需要团长或助理权限)",
+	AnnouncePColdIconsRemoved	= "当移除$spell:68510的标记时也提示 (需要上述选项)",
 	RemoveHealthBuffsInP3	= "在第 3 阶段开始时移除健康增益"
 })

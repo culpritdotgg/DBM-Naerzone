@@ -112,8 +112,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	WarningSplitSoon	= "Предупреждать заранее о разделении",
-	RangeFrame			= "Показывать окно проверки дистанции (12 м)"
+	WarningSplitSoon	= "Предупреждать заранее о разделении"
 })
 
 -------------------------
@@ -123,10 +122,6 @@ L = DBM:GetModLocalization("Saviana")
 
 L:SetGeneralLocalization({
 	name = "Савиана Огненная Пропасть"
-})
-
-L:SetOptionLocalization({
-	RangeFrame				= "Показывать окно проверки дистанции (10 м)"
 })
 
 --------------------------
@@ -180,6 +175,7 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	Halion					= "Халион",
+	PhysicalRealm			= "Реальный мир",
 	MeteorCast				= "Небеса в огне!",
 	Phase2					= "В мире сумерек вы найдете лишь страдания! Входите, если посмеете!",
 	Phase3					= "Я есть свет и я есть тьма! Трепещите, ничтожные, перед посланником Смертокрыла!",

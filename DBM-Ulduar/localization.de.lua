@@ -39,6 +39,10 @@ L:SetGeneralLocalization({
 	name = "Ignis, Meister des Eisenwerks"
 })
 
+L:SetOptionLocalization({
+	soundConcAuraMastery	= "Spielt den Sound von $spell:31821, um die Effekte von $spell:63472 zu negieren (nur für den |cFFF48CBAPaladin|r, der der Besitzer von $spell:19746 ist)"
+})
+
 ------------------
 --  Razorscale  --
 ------------------
@@ -131,10 +135,10 @@ L:SetOptionLocalization({
 L:SetMiscLocalization({
 --	HealthInfo				= "Heilen für Sterne",
 --	FirstPull				= "Seht Eure Welt durch meine Augen: Ein Universum so gewaltig - grenzenlos - unbegreiflich selbst für die Klügsten unter Euch.",
---	YellPull2 				= "Euer Handeln ist unlogisch. Alle Möglichkeiten dieser Begegnung wurden berechnet. Das Pantheon wird die Nachricht des Beobachters erhalten, ungeachtet des Ausgangs.",
+--	YellPull2				= "Euer Handeln ist unlogisch. Alle Möglichkeiten dieser Begegnung wurden berechnet. Das Pantheon wird die Nachricht des Beobachters erhalten, ungeachtet des Ausgangs.",
 	YellKill				= "Ich sah Welten umhüllt von den Flammen der Schöpfer, sah ohne einen Hauch von Trauer ihre Bewohner vergehen. Ganze Planetensysteme geboren und vernichtet, während Eure sterblichen Herzen nur einmal schlagen. Doch immer war mein Herz kalt... ohne Mitgefühl. Ich - habe - nichts - gefühlt. Millionen, Milliarden Leben verschwendet. Trugen sie alle dieselbe Beharrlichkeit in sich, wie Ihr? Liebten sie alle das Leben so sehr, wie Ihr es tut?",
 	Emote_CollapsingStar	= "%s beginnt damit, kollabierende Sterne zu beschwören!",
---	Phase2					= "Erblicket die Instrumente der Schöpfung!",
+	Phase2					= "Erblicket die Instrumente der Schöpfung!",
 	CollapsingStar			= "Kollabierender Stern"
 })
 
@@ -182,14 +186,14 @@ L:SetWarningLocalization({
 	WarnCatDiedOne	= "Wilder Verteidiger tot (1 Leben übrig)"
 })
 
-L:SetTimerLocalization({
-	timerDefender	= "Wilder Verteidiger wird aktiviert"
-})
+-- L:SetTimerLocalization({
+-- 	timerDefender	= "Wilder Verteidiger wird aktiviert"
+-- })
 
 L:SetOptionLocalization({
 	WarnCatDied		= "Zeige Warnung, wenn der Wilde Verteidiger stirbt",
-	WarnCatDiedOne	= "Zeige Warnung, wenn der Wilde Verteidiger nur noch 1 Leben übrig hat",
-	timerDefender	= "Zeige Zeit bis zur Aktivierung des Wilden Verteidigers"
+	WarnCatDiedOne	= "Zeige Warnung, wenn der Wilde Verteidiger nur noch 1 Leben übrig hat"
+--	timerDefender	= "Zeige Zeit bis zur Aktivierung des Wilden Verteidigers"
 })
 
 L:SetMiscLocalization({
@@ -207,6 +211,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetMiscLocalization({
+	Pull		= "Für Euer Eindringen werdet Ihr bezahlen!",
 	YellKill	= "Ich... bin von ihm befreit... endlich."
 })
 
@@ -267,7 +272,9 @@ L:SetMiscLocalization({
 	YellAdds1			= "Eonar, Eure Dienerin braucht Hilfe!",
 	YellAdds2			= "Der Schwarm der Elemente soll über Euch kommen!",
 	EmoteLGift			= "fängt an zu wachsen!", -- Ein |cFF00FFFFGeschenk der Lebensbinderin|r fängt an zu wachsen!
-	TrashRespawnTimer	= "Freya-Trash-Respawn"
+	TrashRespawnTimer	= "Freya-Trash-Respawn",
+	YellPullNormal		= "Das Konservatorium muss verteidigt werden!",
+	YellPullHard		= "Ihr Ältesten, gewährt mir Eure Macht!"
 })
 
 ----------------------
@@ -322,6 +329,7 @@ L:SetMiscLocalization({
 	MobPhase1		= "Leviathan Mk II",
 	MobPhase2		= "VX-001",
 	MobPhase3		= "Luftkommandoeinheit",
+	MobPhase4		= "V-07-TR-0N", -- don't localize
 	YellPull		= "Wir haben nicht viel Zeit, Freunde! Ihr werdet mir dabei helfen, meine neueste und großartigste Kreation zu testen. Bevor Ihr nun Eure Meinung ändert, denkt daran, dass Ihr mir etwas schuldig seid, nach dem Unfug, den Ihr mit dem XT-002 angestellt habt.",
 	YellHardPull	= "Selbstzerstörungssequenz eingeleitet.",
 	YellPhase2		= "WUNDERBAR! Das sind Ergebnisse nach meinem Geschmack! Integrität der Hülle bei 98,9 Prozent! So gut wie keine Dellen! Und weiter geht's.",
@@ -363,10 +371,10 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-	WarningGuardianSpawned 			= "Wächter %d erschienen",
+	WarningGuardianSpawned			= "Wächter %d erschienen",
 	WarningCrusherTentacleSpawned	= "Schmettertentakel erschienen",
-	WarningSanity 					= "%d Geistige Gesundheit übrig",
-	SpecWarnSanity 					= "%d Geistige Gesundheit übrig",
+	WarningSanity					= "%d Geistige Gesundheit übrig",
+	SpecWarnSanity					= "%d Geistige Gesundheit übrig",
 	SpecWarnGuardianLow				= "Wächter nicht mehr angreifen!",
 	SpecWarnMadnessOutNow			= "Wahnsinn hervorrufen - LAUF RAUS!",
 	WarnBrainPortalSoon				= "Gehirnportale in 3 Sek",
@@ -392,6 +400,19 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	YellPull 			= "Bald ist die Zeit gekommen, dem Untier den Kopf abzuschlagen! Konzentriert Euren Zorn und Euren Hass auf seine Diener!",
-	Sara 				= "Sara"
+	YellPull			= "Bald ist die Zeit gekommen, dem Untier den Kopf abzuschlagen! Konzentriert Euren Zorn und Euren Hass auf seine Diener!",
+	S1TheLucidDream		= "Phase 1: Der strahlende Traum",
+	Sara				= "Sara",
+	GuardianofYoggSaron	= "Wächter des Yogg-Saron",
+	S2DescentIntoMadness= "Phase 2: Abstieg in den Wahnsinn",
+	CrusherTentacle		= "Schmettertentakel",
+	CorruptorTentacle	= "Verderbertentakel",
+	ConstrictorTentacle	= "Würgetentakel",
+	DescentIntoMadness	= "Abstieg in den Wahnsinn",
+	InfluenceTentacle	= "Einflusstentakel",
+	LaughingSkull		= "Lachender Schädel",
+	BrainofYoggSaron	= "Yogg-Sarons Gehirn",
+	S3TrueFaceofDeath	= "Phase 3: Das wahre Antlitz des Todes",
+	YoggSaron			= "Yogg-Saron",
+	ImmortalGuardian	= "Unvergängliche Wache"
 })

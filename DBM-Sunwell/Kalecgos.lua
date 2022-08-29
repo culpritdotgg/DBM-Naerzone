@@ -1,8 +1,8 @@
 local mod	= DBM:NewMod("Kal", "DBM-Sunwell")
-local Kal 	= DBM:GetModByName("Kal")
+local Kal	= DBM:GetModByName("Kal")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 530 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(24850)
 
 mod:RegisterCombat("combat")
@@ -28,7 +28,7 @@ local specWarnBuffet	= mod:NewSpecialWarningStack(45018, nil, 10, nil, nil, 1, 6
 local specWarnWildMagic	= mod:NewSpecialWarning("SpecWarnWildMagic")
 
 local timerNextPortal	= mod:NewNextCountTimer(25, 46021, nil, nil, nil, 5)
-local timerBreathCD		= mod:NewCDTimer(15, 44799, nil, false, nil, 5, nil, DBM_CORE_L.TANK_ICON)--Tanks?
+local timerBreathCD		= mod:NewCDTimer(15, 44799, nil, false, nil, 5, nil, DBM_COMMON_L.TANK_ICON)--Tanks?
 local timerBuffetCD		= mod:NewCDTimer(8, 45018, nil, nil, nil, 2)
 local timerPorted		= mod:NewBuffActiveTimer(60, 46021, nil, nil, nil, 6)
 local timerExhausted	= mod:NewBuffActiveTimer(60, 44867, nil, nil, nil, 6)
@@ -163,6 +163,6 @@ end
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	if self:IsInCombat() and not UnitExists("boss1") and self.Options.ShowRespawn then
-		DBM.Bars:CreateBar(30, DBM_CORE_L.TIMER_RESPAWN:format(L.name), "Interface\\Icons\\Spell_Holy_BorrowedTime")
+		DBT:CreateBar(30, DBM_CORE_L.TIMER_RESPAWN:format(L.name), "Interface\\Icons\\Spell_Holy_BorrowedTime")
 	end
 end

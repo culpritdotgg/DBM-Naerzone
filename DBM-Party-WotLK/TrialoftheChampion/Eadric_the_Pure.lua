@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("EadricthePure", "DBM-Party-WotLK", 13)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 3726 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(35119)
 mod:SetUsedIcons(8)
 
@@ -14,7 +14,7 @@ mod:RegisterEventsInCombat(
 )
 
 local warnHammerofRighteous		= mod:NewSpellAnnounce(66867, 3)
-local warnVengeance             = mod:NewTargetNoFilterAnnounce(66889, 3)
+local warnVengeance				= mod:NewTargetNoFilterAnnounce(66889, 3)
 
 local specwarnRadiance			= mod:NewSpecialWarningLookAway(66935, nil, nil, nil, 2, 2)
 local specwarnHammerofJustice	= mod:NewSpecialWarningDispel(66940, "Healer", nil, nil, 1, 2)

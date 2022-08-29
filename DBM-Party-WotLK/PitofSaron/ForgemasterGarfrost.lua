@@ -1,9 +1,7 @@
 local mod	= DBM:NewMod("ForgemasterGarfrost", "DBM-Party-WotLK", 15)
 local L		= mod:GetLocalizedStrings()
 
-mod.statTypes = "normal,heroic"
-
-mod:SetRevision(("$Revision: 4430 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(36494)
 mod:SetUsedIcons(8)
 
@@ -26,7 +24,7 @@ local specWarnSaroniteRockNear	= mod:NewSpecialWarningClose(68789, nil, nil, nil
 local specWarnPermafrost		= mod:NewSpecialWarningStack(68786, nil, 9, nil, nil, 1, 2)
 
 local timerSaroniteRockCD		= mod:NewCDTimer(15.5, 68789, nil, nil, nil, 3)--15.5-20
-local timerDeepFreezeCD			= mod:NewCDTimer(19, 70381, nil, "Healer", 2, 5, nil, DBM_CORE_L.HEALER_ICON)
+local timerDeepFreezeCD			= mod:NewCDTimer(19, 70381, nil, "Healer", 2, 5, nil, DBM_COMMON_L.HEALER_ICON)
 local timerDeepFreeze			= mod:NewTargetTimer(14, 70381, nil, false, 3, 5)
 
 mod:AddSetIconOption("SetIconOnSaroniteRockTarget", 68789, true, false, {8})
@@ -34,7 +32,7 @@ mod:AddBoolOption("AchievementCheck", false, "announce")
 
 mod.vb.warnedfailed = false
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart()
 	self.vb.warnedfailed = false
 end
 
@@ -90,11 +88,12 @@ end
 
 function mod:OnSync(msg, targetName)
 	if msg == "SaroniteRock" then
+		if not targetName then return end
 		if targetName == UnitName("player") then
-			specWarnSaroniteRock:Show()
-			specWarnSaroniteRock:Play("watchstep")
-			yellRock:Yell()
-		elseif targetName then
+				specWarnSaroniteRock:Show()
+				specWarnSaroniteRock:Play("watchstep")
+				yellRock:Yell()
+		else
 			local uId = DBM:GetRaidUnitId(targetName)
 			if uId and not UnitIsUnit(uId, "player") and self:CheckNearby(10, targetName) then
 				specWarnSaroniteRockNear:Show(targetName)
@@ -102,9 +101,9 @@ function mod:OnSync(msg, targetName)
 			else
 				warnSaroniteRock:Show(targetName)
 			end
-			if self.Options.SetIconOnSaroniteRockTarget then
-				self:SetIcon(targetName, 8, 5)
-			end
+		end
+		if self.Options.SetIconOnSaroniteRockTarget then
+			self:SetIcon(targetName, 8, 5)
 		end
 	end
 end

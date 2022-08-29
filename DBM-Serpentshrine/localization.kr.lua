@@ -11,7 +11,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-	WarnMark 		= "%s : %s",
+	WarnMark		= "%s : %s",
 	WarnPhase		= "%s 단계",
 	SpecWarnMark	= "%s : %s"
 })
@@ -28,8 +28,9 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	Frost	= "냉기",
-	Nature	= "자연"
+	Frost		= "냉기",
+	Nature		= "자연",
+	YellPull	= "방해하도록 놔두지 않겠습니다!"
 })
 
 -----------------------
@@ -84,7 +85,8 @@ L:SetMiscLocalization({
 	Human		= "인간",
 	Demon		= "악마",
 	YellDemon	= "꺼져라, 엘프 꼬맹이. 지금부터는 내가 주인이다!",
-	YellPhase2	= "안 돼... 안 돼! 무슨 짓이냐? 내가 주인이야! 내 말 듣지 못해? 나란 말이야! 내가... 으아악! 놈을 억누를 수... 없...어."
+	YellPhase2	= "안 돼... 안 돼! 무슨 짓이냐? 내가 주인이야! 내 말 듣지 못해? 나란 말이야! 내가... 으아악! 놈을 억누를 수... 없...어.",
+	YellPull	= "드디어, 내가 풀려났도다!"
 })
 
 -----------------------------
@@ -99,7 +101,8 @@ L:SetGeneralLocalization({
 L:SetMiscLocalization({
 	Caribdis	= "심연의 경비병 카리브디스",
 	Tidalvess	= "심연의 경비병 타이달베스",
-	Sharkkis	= "심연의 경비병 샤르키스"
+	Sharkkis	= "심연의 경비병 샤르키스",
+	YellPull	= "경비병! 여기 침입자들이 있다..."
 })
 
 --------------------------
@@ -122,6 +125,11 @@ L:SetTimerLocalization({
 L:SetOptionLocalization({
 	SpecWarnMurlocs	= "멀록 등장 특수 경고 보기",
 	TimerMurlocs	= "멀록 등장 타이머 바 보기"
+})
+
+L:SetMiscLocalization({
+	Grave			= "%s|1이;가; 자신의 적을 수중 무덤으로 내몹니다!",
+	Murlocs			= "근처에 있던 멀록들이 격렬한 지진을 느끼고 주위로 달려듭니다!"
 })
 
 -----------------

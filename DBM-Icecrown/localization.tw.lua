@@ -48,9 +48,9 @@ L:SetOptionLocalization({
 L:SetMiscLocalization({
 	YellReanimatedFanatic	= "起來，在純粹的形態中感受狂喜!",
 	ShieldPercent			= "法力屏障",
-	Fanatic1				= "神教狂熱者",
-	Fanatic2				= "畸形的狂熱者",
-	Fanatic3				= "再活化的狂熱者",
+--	Fanatic1				= "神教狂熱者",
+--	Fanatic2				= "畸形的狂熱者",
+--	Fanatic3				= "再活化的狂熱者",
 	setMissing				= "注意力！ 在您創建名為 pve 的裝備集之前，DBM 自動武器卸載/裝備將不起作用",
 	EqUneqLineDescription	= "自動裝備/取消裝備"
 })
@@ -94,11 +94,10 @@ L:SetMiscLocalization({
 L = DBM:GetModLocalization("Deathbringer")
 
 L:SetGeneralLocalization({
-	name 				= "死亡使者薩魯法爾"
+	name				= "死亡使者薩魯法爾"
 })
 
 L:SetOptionLocalization({
-	RangeFrame			= "顯示距離框 (12碼)",
 	RunePowerFrame		= "顯示首領血量及$spell:72371條",
 	RemoveDI			= "清除 $spell:19752 如果用於防止 $spell:72293"
 })
@@ -119,7 +118,6 @@ L:SetGeneralLocalization({
 })
 
 L:SetOptionLocalization({
-	RangeFrame			= "顯示距離框 (8碼)",
 	AnnounceSporeIcons	= "公佈$spell:69279目標設置的標記到團隊頻道<br/>(需要團隊隊長)",
 	AchievementCheck	= "公佈 '流感疫苗短缺' 成就失敗到團隊頻道<br/>(需助理權限)"
 })
@@ -146,7 +144,6 @@ L:SetWarningLocalization({
 L:SetOptionLocalization({
 	WarnOozeSpawn				= "為小軟泥的出現顯示警告",
 	SpecWarnLittleOoze			= "當你被小軟泥怪盯上時顯示特別警告",
-	RangeFrame					= "顯示距離框 (8碼)",
 	TankArrow					= "為大軟泥怪副坦顯示DBM箭頭 (測試中)"
 })
 
@@ -162,11 +159,6 @@ L = DBM:GetModLocalization("Putricide")
 
 L:SetGeneralLocalization({
 	name = "普崔希德教授"
-})
-
-L:SetOptionLocalization({
-	MalleableGooIcon			= "為第一個中$spell:72295的目標設置標記",
-	GooArrow					= "當你附近的人中了$spell:72295時顯示DBM箭頭"
 })
 
 ----------------------------
@@ -192,8 +184,7 @@ L:SetOptionLocalization({
 	WarnTargetSwitchSoon	= "為轉換目標顯示預先警告",
 	TimerTargetSwitch		= "為轉換目標顯示冷卻計時器",
 	ActivePrinceIcon		= "設置標記在強化的親王身上(頭顱)",
-	RangeFrame				= "顯示距離框 (12碼)",
-	VortexArrow				= "當你附近的人中了$spell:72037時顯示DBM箭頭"
+	ShadowPrisonMetronome	= "播放重複的 1 秒點擊聲音以避免 $spell:72999"
 })
 
 L:SetMiscLocalization({
@@ -211,10 +202,6 @@ L = DBM:GetModLocalization("Lanathel")
 
 L:SetGeneralLocalization({
 	name = "血腥女王菈娜薩爾"
-})
-
-L:SetOptionLocalization({
-	RangeFrame				= "顯示距離框 (8碼)"
 })
 
 L:SetMiscLocalization({
@@ -243,7 +230,6 @@ L:SetTimerLocalization({
 })
 
 L:SetOptionLocalization({
-	SetIconOnBlazingSkeleton	= "為熾熱骷髏設置標記 (頭顱)",
 	WarnPortalOpen				= "當夢魘之門開啟時顯示警告",
 	TimerPortalsOpen			= "當夢魘之門開啟時顯示計時器",
 	TimerPortalsClose			= "Show timer when Nightmare Portals are closed", --Needs Translating
@@ -326,7 +312,6 @@ L:SetOptionLocalization({
 	PhaseTransition				= "為轉換階段顯示計時器",
 	ValkyrWarning				= "提示誰給華爾琪影衛抓住了",
 	SpecWarnYouAreValkd			= "當你給華爾琪影衛抓住時顯示特別警告",
-	TrapArrow					= "當你附近的人中了$spell:73539時顯示DBM箭頭",
 	AnnounceValkGrabs			= "提示誰被華爾琪影衛抓住到團隊頻道<br/>(需開啟團隊廣播及助理權限)",
 	SpecWarnValkyrLow			= "當華爾琪血量低於55%時顯示特別警告",
 	AnnouncePlagueStack			= "提示$spell:73912層數到團隊頻道 (10層, 10層後每5層提示一次)<br/>(需開啟助理權限)",

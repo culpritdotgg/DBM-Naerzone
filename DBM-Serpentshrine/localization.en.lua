@@ -10,7 +10,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-	WarnMark 		= "%s : %s",
+	WarnMark		= "%s : %s",
 	WarnPhase		= "%s Phase",
 	SpecWarnMark	= "%s : %s"
 })
@@ -27,8 +27,9 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	Frost	= "Frost",
-	Nature	= "Nature"
+	Frost		= "Frost",
+	Nature		= "Nature",
+	YellPull	= "I cannot allow you to interfere!"
 })
 
 -----------------------
@@ -83,7 +84,8 @@ L:SetMiscLocalization({
 	Human		= "Human",
 	Demon		= "Demon",
 	YellDemon	= "Be gone, trifling elf%.%s*I am in control now!",
-	YellPhase2	= "No... no! What have you done? I am the master! Do you hear me? I am... aaggh! Can't... contain him."
+	YellPhase2	= "No... no! What have you done? I am the master! Do you hear me? I am... aaggh! Can't... contain him.",
+	YellPull	= "Finally, my banishment ends!"
 })
 
 -----------------------------
@@ -98,7 +100,8 @@ L:SetGeneralLocalization({
 L:SetMiscLocalization({
 	Caribdis	= "Fathom-Guard Caribdis",
 	Tidalvess	= "Fathom-Guard Tidalvess",
-	Sharkkis	= "Fathom-Guard Sharkkis"
+	Sharkkis	= "Fathom-Guard Sharkkis",
+	YellPull	= "Guards, attention! We have visitors...."
 })
 
 --------------------------
@@ -120,8 +123,12 @@ L:SetTimerLocalization({
 
 L:SetOptionLocalization({
 	SpecWarnMurlocs	= "Show special warning when Murlocs spawning",
-	TimerMurlocs	= "Show timer for Murlocs spawning",
-	GraveIcon		= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(38049)
+	TimerMurlocs	= "Show timer for Murlocs spawning"
+})
+
+L:SetMiscLocalization({
+	Grave			= "%s sends his enemies to their watery graves!",
+	Murlocs			= "The violent earthquake has alerted nearby Murlocs!"
 })
 
 -----------------
@@ -160,7 +167,6 @@ L:SetOptionLocalization({
 	TimerStrider		= "Show timer for next Strider",
 	TimerNaga			= "Show timer for next Naga",
 	SpecWarnElemental	= "Show special warning when Tainted Elemental coming",
-	ChargeIcon			= DBM_CORE_L.AUTO_ICONS_OPTION_TEXT:format(38280),
 	AutoChangeLootToFFA	= "Switch loot mode to Free for All in Phase 2"
 })
 

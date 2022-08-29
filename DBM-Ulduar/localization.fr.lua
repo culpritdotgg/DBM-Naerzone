@@ -39,6 +39,10 @@ L:SetGeneralLocalization({
 	name = "Ignis le maître de la Fournaise"
 })
 
+L:SetOptionLocalization({
+	soundConcAuraMastery	= "Jouer le son $spell:31821 pour annuler les effets de $spell:63472 (seulement pour le |cFFF48CBAPaladin|r qui est le propriétaire de $spell:19746)"
+})
+
 ------------------
 --  Razorscale  --
 ------------------
@@ -143,7 +147,7 @@ L:SetMiscLocalization({
 --	YellPull				= "Vos actions sont illogiques. Tous les résultats possibles de cette rencontre ont été calculés. Le Panthéon recevra le message de l'Observateur quelle que soit l'issue.",
 	YellKill				= "J'ai vu des mondes baignés dans les flammes des Faiseurs. Leurs occupants s'évaporer sans même un gémissement. Des systèmes planétaires entiers créés et détruits dans le temps qu'il faut à un cœur mortel pour battre une fois. Et devant tout cela, dans mon propre cœur, pas la moindre émotion... la moindre empathie. Je. Ne. Ressentais. Rien. Mille milliards de vies gâchées. Avaient-elles toutes possédé une telle ténacité ? Aimaient-elles la vie autant que vous ?",
 	Emote_CollapsingStar	= "%s commence à lancer un effondrement d'étoiles !",
---	Phase2					= "Découvrez les outils de la création !",
+	Phase2					= "Découvrez les outils de la création !",
 	CollapsingStar			= "Effondrement d'étoile"
 })
 
@@ -194,14 +198,14 @@ L:SetWarningLocalization({
 	WarnCatDiedOne		= "Défenseur farouche mort (1 vie en moins)",
 })
 
-L:SetTimerLocalization({
-	timerDefender		= "Défenseur farouche activé"
-})
+-- L:SetTimerLocalization({
+-- 	timerDefender		= "Défenseur farouche activé"
+-- })
 
 L:SetOptionLocalization({
 	WarnCatDied			= "Activer l'avertissement quand un défenseur farouche meurt",
-	WarnCatDiedOne		= "Montre une alerte spéciale quand un Défenseur farouche meurt",
-	timerDefender		= "Montre un timer quand le Défenseur farouche est activé"
+	WarnCatDiedOne		= "Montre une alerte spéciale quand un Défenseur farouche meurt"
+--	timerDefender		= "Montre un timer quand le Défenseur farouche est activé"
 })
 
 L:SetMiscLocalization({
@@ -219,6 +223,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetMiscLocalization({
+	Pull			= "Vous allez souffrir pour cette intrusion !",
 	YellKill		= "Je suis... libéré de son emprise... enfin.",
 })
 
@@ -279,7 +284,9 @@ L:SetMiscLocalization({
 	YellAdds1			= "Eonar, ta servante a besoin d'aide !",
 	YellAdds2			= "La nuée des éléments va vous submerger !",
 	EmoteLGift			= "commence à pousser !", -- Un |cFF00FFFFdon de la Lieuse-de-vie|r commence à pousser !
-	TrashRespawnTimer	= "Respawn des Trashs de Freya"
+	TrashRespawnTimer	= "Respawn des Trashs de Freya",
+	YellPullNormal		= "Le jardin doit être protégé !",
+	YellPullHard		= "Anciens, donnez-moi votre force !"
 })
 
 ----------------------
@@ -334,6 +341,7 @@ L:SetMiscLocalization({
 	MobPhase1		= "Léviathan Mod. II",
 	MobPhase2		= "VX-001",
 	MobPhase3		= "Unité de commandement aérien",
+	MobPhase4		= "V-07-TR-0N", -- don't localize
 	YellPull		= "Nous n'avons pas beaucoup de temps, les amis ! Vous allez m'aider à tester ma dernière création en date, la plus grande de toutes. Avant de changer d'avis, n'oubliez pas que que vous me devez bien ça après m'avoir complètement déglingué le XT-002.",
 	YellHardPull	= "Initialisation de la séquence d'autodestruction.",
 	YellPhase2		= "MERVEILLEUX ! Résultats parfaitement formidables !",
@@ -376,10 +384,10 @@ L:SetGeneralLocalization({
 
 
 L:SetWarningLocalization({
-	WarningGuardianSpawned 			= "Un gardien vient d'arriver",
+	WarningGuardianSpawned			= "Un gardien vient d'arriver",
 	WarningCrusherTentacleSpawned	= "Une Tentacule écraseur vient d'arriver",
-	WarningSanity 					= "%d de Santé mentale restant",
-	SpecWarnSanity 					= "%d de Santé mentale restant",
+	WarningSanity					= "%d de Santé mentale restant",
+	SpecWarnSanity					= "%d de Santé mentale restant",
 	SpecWarnGuardianLow				= "Arrêtez d'attaquer ce gardien !",
 	SpecWarnMadnessOutNow			= "Incantation de Susciter la folie fini - SORTEZ",
 	WarnBrainPortalSoon				= "Portail dans 3 sec",
@@ -405,6 +413,19 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	YellPull1	= "Il sera bientôt temps de frapper la tête de la bête ! Concentrez votre rage et votre haine sur ses laquais !",
-	Sara		= "Sara"
+	YellPull1			= "Il sera bientôt temps de frapper la tête de la bête ! Concentrez votre rage et votre haine sur ses laquais !",
+	S1TheLucidDream		= "Phase 1 : Le rêve lucide",
+	Sara				= "Sara",
+	GuardianofYoggSaron	= "Gardien de Yogg-Saron",
+	S2DescentIntoMadness= "Phase 2 : La Descente dans la folie",
+	CrusherTentacle		= "Tentacule écraseur",
+	CorruptorTentacle	= "Tentacule corrupteur",
+	ConstrictorTentacle	= "Tentacule constricteur",
+	DescentIntoMadness	= "Descente dans la folie",
+	InfluenceTentacle	= "Tentacule d’influence",
+	LaughingSkull		= "Crâne-Ricanant",
+	BrainofYoggSaron	= "Cerveau de Yogg-Saron",
+	S3TrueFaceofDeath	= "Phase 3 : le vrai visage de la mort",
+	YoggSaron			= "Yogg-Saron",
+	ImmortalGuardian	= "Gardien immortel"
 })

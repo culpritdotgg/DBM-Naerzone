@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Venoxis", "DBM-ZG", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(14507)
 
 
@@ -27,14 +27,14 @@ local specWarnHolyFire	= mod:NewSpecialWarningInterrupt(23860, "HasInterrupt", n
 local specWarnRenew		= mod:NewSpecialWarningDispel(23895, "MagicDispeller", nil, nil, 1, 2)
 
 local timerCloud		= mod:NewBuffActiveTimer(10, 23861, nil, nil, nil, 3)
-local timerRenew		= mod:NewTargetTimer(15, 23895, nil, "MagicDispeller", nil, 5, nil, DBM_CORE_L.MAGIC_ICON)
-local timerFire			= mod:NewTargetTimer(8, 23860, nil, "RemoveMagic|Healer", nil, 5, nil, DBM_CORE_L.MAGIC_ICON)
+local timerRenew		= mod:NewTargetTimer(15, 23895, nil, "MagicDispeller", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
+local timerFire			= mod:NewTargetTimer(8, 23860, nil, "RemoveMagic|Healer", nil, 5, nil, DBM_COMMON_L.MAGIC_ICON)
 
 mod:AddRangeFrameOption("10")
 
 mod.vb.prewarn_Phase2 = false
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart()
 	self.vb.prewarn_Phase2 = false
 	if self.Options.RangeFrame then
 		DBM.RangeCheck:Show(10)

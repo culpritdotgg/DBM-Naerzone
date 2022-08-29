@@ -1,7 +1,7 @@
 local mod = DBM:NewMod(548, "DBM-Party-BC", 15, 254)
 local L = mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(20870)
 
 mod:SetModelID(19882)
@@ -14,13 +14,13 @@ mod:RegisterEventsInCombat(
 	"SPELL_AURA_REMOVED 39367 32863"
 )
 
-local warnVoid      = mod:NewSpellAnnounce(36119, 3)
+local warnVoid		= mod:NewSpellAnnounce(36119, 3)
 
 local specwarnNova	= mod:NewSpecialWarningSpell(39005, nil, nil, nil, 2, 2)
 local specwarnSoC	= mod:NewSpecialWarningDispel(39367, "Healer", nil, nil, 1, 2)
 local specWarnGTFO	= mod:NewSpecialWarningGTFO(36121, nil, nil, nil, 1, 8)
 
-local timerSoC      = mod:NewTargetTimer(18, 39367, nil, "Healer", 2, 3, nil, DBM_CORE_L.MAGIC_ICON)
+local timerSoC		= mod:NewTargetTimer(18, 39367, nil, "Healer", 2, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 
 function mod:SPELL_CAST_START(args)
 	if args:IsSpellID(36127, 39005) then

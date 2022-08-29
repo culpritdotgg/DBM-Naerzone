@@ -9,11 +9,6 @@ L:SetGeneralLocalization({
 	name = "Flame Leviathan"
 })
 
-L:SetMiscLocalization({
-	YellPull	= "Hostile entities detected. Threat assessment protocol active. Primary target engaged. Time minus 30 seconds to re-evaluation.",
-	Emote		= "%%s pursues (%S+)%."
-})
-
 L:SetWarningLocalization({
 	PursueWarn				= "Pursuing >%s<",
 	warnNextPursueSoon		= "Target change in 5 seconds",
@@ -28,6 +23,12 @@ L:SetOptionLocalization({
 	warnWardofLife			= "Show special warning for Ward of Life spawn"
 })
 
+L:SetMiscLocalization({
+	RadioGateSmash	= "Quickly! Evasive action! Evasive act--",
+	YellPull		= "Hostile entities detected. Threat assessment protocol active. Primary target engaged. Time minus 30 seconds to re-evaluation.",
+	Emote			= "%%s pursues (%S+)%."
+})
+
 --------------------------------
 --  Ignis the Furnace Master  --
 --------------------------------
@@ -35,6 +36,10 @@ L = DBM:GetModLocalization("Ignis")
 
 L:SetGeneralLocalization({
 	name = "Ignis the Furnace Master"
+})
+
+L:SetOptionLocalization({
+	soundConcAuraMastery	= "Play $spell:31821 sound to negate the effects of $spell:63472 (only for the |cFFF48CBAPaladin|r that is the owner of $spell:19746)"
 })
 
 ------------------
@@ -73,7 +78,7 @@ L:SetMiscLocalization({
 	YellAir				= "Give us a moment to prepare to build the turrets.",
 	YellAir2			= "Fires out! Let's rebuild those turrets!",
 	YellGround			= "Move quickly! She won't remain grounded for long!",
-	EmotePhase2			= "%%s grounded permanently!"
+	EmotePhase2			= "%s is grounded permanently!"
 })
 
 ----------------------------
@@ -139,10 +144,10 @@ L:SetOptionLocalization({
 L:SetMiscLocalization({
 --	HealthInfo				= "Heal for star",
 --	FirstPull				= "See your world through my eyes: A universe so vast as to be immeasurable - incomprehensible even to your greatest minds.",
---	YellPull 				= "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
+--	YellPull				= "Your actions are illogical. All possible results for this encounter have been calculated. The Pantheon will receive the Observer's message regardless of outcome.",
 	YellKill				= "I have seen worlds bathed in the Makers' flames, their denizens fading without as much as a whimper. Entire planetary systems born and razed in the time that it takes your mortal hearts to beat once. Yet all throughout, my own heart devoid of emotion... of empathy. I. Have. Felt. Nothing. A million-million lives wasted. Had they all held within them your tenacity? Had they all loved life as you do?",
 	Emote_CollapsingStar	= "%s begins to Summon Collapsing Stars!",
---	Phase2					= "Behold the tools of creation",
+	Phase2					= "Behold the tools of creation",
 	CollapsingStar			= "Collapsing Star"
 })
 
@@ -176,7 +181,7 @@ L:SetMiscLocalization({
 	Health_Body				= "Kologarn Body",
 	Health_Right_Arm		= "Right Arm",
 	Health_Left_Arm			= "Left Arm",
-	FocusedEyebeam			= "his eyes on you"
+	FocusedEyebeam			= "Kologarn focuses his eyes on you!"
 })
 
 ---------------
@@ -193,14 +198,14 @@ L:SetWarningLocalization({
 	WarnCatDiedOne	= "Feral Defender down (1 life remaining)"
 })
 
-L:SetTimerLocalization({
-	timerDefender	= "Feral Defender activates"
-})
+-- L:SetTimerLocalization({
+-- 	timerDefender	= "Feral Defender activates"
+-- })
 
 L:SetOptionLocalization({
 	WarnCatDied		= "Show warning when Feral Defender dies",
-	WarnCatDiedOne	= "Show warning when Feral Defender has 1 life remaining",
-	timerDefender	= "Show timer for when Feral Defender is activated"
+	WarnCatDiedOne	= "Show warning when Feral Defender has 1 life remaining"
+--	timerDefender	= "Show timer for when Feral Defender is activated"
 })
 
 L:SetMiscLocalization({
@@ -218,6 +223,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetMiscLocalization({
+	Pull		= "You will suffer for this trespass!",
 	YellKill	= "I... I am released from his grasp... at last."
 })
 
@@ -278,7 +284,9 @@ L:SetMiscLocalization({
 	YellAdds1			= "Eonar, your servant requires aid!",
 	YellAdds2			= "The swarm of the elements shall overtake you!",
 	EmoteLGift			= "begins to grow!", -- A |cFF00FFFFLifebinder's Gift|r begins to grow!
-	TrashRespawnTimer	= "Freya trash respawn"
+	TrashRespawnTimer	= "Freya trash respawn",
+	YellPullNormal		= "The Conservatory must be protected!",
+	YellPullHard		= "Elders grant me your strength!"
 })
 
 ----------------------
@@ -333,12 +341,13 @@ L:SetMiscLocalization({
 	MobPhase1		= "Leviathan Mk II",
 	MobPhase2		= "VX-001",
 	MobPhase3		= "Aerial Command Unit",
-	YellPull		= "We haven't much time, friends! You're going to help me test out my latest and greatest creation. Now, before you change your minds, remember, that you kind of owe it to me after the mess you made with the XT-002.",
+	MobPhase4		= "V-07-TR-0N", -- Retail has this "wrong" in the EJ section as V0-L7R-0N. Yell and audiofile corroborate this. Also there are sloppy differences across locales, which I am now harmonizing.
+	YellPull		= "We haven't much time, friends! You're going to help me test out my latest and greatest creation. Now, before you change your minds, remember that you kind of owe it to me after the mess you made with the XT-002.",
 	YellHardPull	= "Self-destruct sequence initiated.",
 	YellPhase2		= "WONDERFUL! Positively marvelous results! Hull integrity at 98.9 percent! Barely a dent! Moving right along.",
-	YellPhase3		= "Thank you, friends! Your efforts have yielded some fantastic data! Now, where did I put-- oh, there it is!", -- ! last
+	YellPhase3		= "Thank you, friends! Your efforts have yielded some fantastic data! Now, where did I put-- oh, there it is.",
 	YellPhase4		= "Preliminary testing phase complete. Now comes the true test!",
-	YellKilled		= "It would appear that I've made a slight miscalculation. I allowed my mind to be corrupted by the fiend in the prison. overriding my primary directive. All systems seem to be functional now. Clear.",
+	YellKilled		= "It would appear that I've made a slight miscalculation. I allowed my mind to be corrupted by the fiend in the prison, overriding my primary directive. All systems seem to be functional now. Clear.",
 	LootMsg			= "([^%s]+).*Hitem:(%d+)"
 })
 
@@ -374,10 +383,10 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-	WarningGuardianSpawned 			= "Guardian %d spawned",
+	WarningGuardianSpawned			= "Guardian %d spawned",
 	WarningCrusherTentacleSpawned	= "Crusher Tentacle spawned",
-	WarningSanity 					= "%d Sanity remaining",
-	SpecWarnSanity 					= "%d Sanity remaining",
+	WarningSanity					= "%d Sanity remaining",
+	SpecWarnSanity					= "%d Sanity remaining",
 	SpecWarnGuardianLow				= "Stop attacking this Guardian",
 	SpecWarnMadnessOutNow			= "Induce Madness ending - Move out",
 	WarnBrainPortalSoon				= "Brain Portal in 3 seconds",
@@ -403,6 +412,19 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	YellPull 			= "The time to strike at the head of the beast will soon be upon us! Focus your anger and hatred on his minions!",
-	Sara 				= "Sara"
+	YellPull			= "The time to strike at the head of the beast will soon be upon us! Focus your anger and hatred on his minions!",
+	S1TheLucidDream		= "Stage One: The Lucid Dream",
+	Sara				= "Sara",
+	GuardianofYoggSaron	= "Guardian of Yogg-Saron",
+	S2DescentIntoMadness= "Stage Two: Descent into Madness",
+	CrusherTentacle		= "Crusher Tentacle",
+	CorruptorTentacle	= "Corruptor Tentacle",
+	ConstrictorTentacle	= "Constrictor Tentacle",
+	DescentIntoMadness	= "Descent into Madness",
+	InfluenceTentacle	= "Influence Tentacle",
+	LaughingSkull		= "Laughing Skull",
+	BrainofYoggSaron	= "Brain of Yogg-Saron",
+	S3TrueFaceofDeath	= "Stage Three: True Face of Death",
+	YoggSaron			= "Yogg-Saron",
+	ImmortalGuardian	= "Immortal Guardian"
 })

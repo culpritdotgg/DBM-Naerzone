@@ -11,7 +11,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-	WarnMark 		= "%s:%s",
+	WarnMark		= "%s:%s",
 	WarnPhase		= "%s階段",
 	SpecWarnMark	= "%s:%s"
 })
@@ -28,8 +28,9 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	Frost	= "冰霜",
-	Nature	= "自然"
+	Frost		= "冰霜",
+	Nature		= "自然",
+	YellPull	= "我不准你涉入這件事!"
 })
 
 -----------------------
@@ -84,7 +85,8 @@ L:SetMiscLocalization({
 	Human		= "人形",
 	Demon		= "惡魔",
 	YellDemon	= "消失吧，微不足道的精靈。現在開始由我掌管!",
-	YellPhase2	= "不...不!你做了什麼?我是主人!你沒聽見我在說話嗎?我....啊!無法...控制它。"
+	YellPhase2	= "不...不!你做了什麼?我是主人!你沒聽見我在說話嗎?我....啊!無法...控制它。",
+	YellPull	= "終於結束了我的流放生涯!"
 })
 
 -----------------------------
@@ -99,7 +101,8 @@ L:SetGeneralLocalization({
 L:SetMiscLocalization({
 	Caribdis	= "深淵守衛卡利迪斯",
 	Tidalvess	= "提達費斯",
-	Sharkkis	= "深淵守衛沙卡奇斯"
+	Sharkkis	= "深淵守衛沙卡奇斯",
+	YellPull	= "守衛，注意!我們有訪客了..."
 })
 
 --------------------------
@@ -122,6 +125,11 @@ L:SetTimerLocalization({
 L:SetOptionLocalization({
 	SpecWarnMurlocs	= "為魚人出現顯示特別警告",
 	TimerMurlocs	= "為魚人出現顯示計時器"
+})
+
+L:SetMiscLocalization({
+	Grave			= "%s將敵人放進他們的水墓穴中!",
+	Murlocs			= "強烈的地震驚動了附近的魚人!"
 })
 
 -----------------

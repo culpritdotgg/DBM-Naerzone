@@ -112,8 +112,7 @@ L:SetWarningLocalization({
 })
 
 L:SetOptionLocalization({
-	WarningSplitSoon	= "분리 이전에 알림 보기",
-	RangeFrame			= "거리 창 보기 (12 미터)"
+	WarningSplitSoon	= "분리 이전에 알림 보기"
 })
 
 -------------------------
@@ -123,10 +122,6 @@ L = DBM:GetModLocalization("Saviana")
 
 L:SetGeneralLocalization({
 	name = "사비아나 레이지파이어"
-})
-
-L:SetOptionLocalization({
-	RangeFrame				= "거리 창 보기 (10 미터)"
 })
 
 --------------------------
@@ -179,6 +174,7 @@ L:SetOptionLocalization({
 
 L:SetMiscLocalization({
 	Halion					= "할리온",
+	PhysicalRealm			= "물리 영역",
 	MeteorCast				= "하늘이 타오른다!",
 	Phase2					= "황혼 세계에서는 고통만이 있으리라! 자신 있다면 들어와 봐라!",
 	Phase3					= "나는 빛이자 어둠이다! 필멸자들아, 데스윙의 사자 앞에 무릎 꿇어라!",

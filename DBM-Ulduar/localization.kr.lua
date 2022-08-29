@@ -39,6 +39,10 @@ L:SetGeneralLocalization({
 	name = "용광로 군주 이그니스"
 })
 
+L:SetOptionLocalization({
+	soundConcAuraMastery	= "$spell:31821 사운드를 재생하여 $spell:63472의 효과를 무효화합니다($spell:19746의 소유자인 |cFFF48CBA성기사|r만 해당)"
+})
+
 ------------------
 --  Razorscale  --
 ------------------
@@ -133,7 +137,7 @@ L:SetMiscLocalization({
 --	YellPull				= "너희 행동은 비논리적이다. 이 전투에서 가능한 결말은 모두 계산되었다. 결과와 상관없이 판테온은 관찰자의 전갈을 받을 것이다.",
 	YellKill				= "나는 창조주의 불길이 씻어내린 세상을 보았다. 모두 변변히 저항도 못하고 사그라졌지. 너희 필멸자의 심장이 단 한 번 뛸 시간에 전 행성계가 탄생하고 무너졌다. 그러나 그 모든 시간 동안, 나는 공감이란 감정을... 몰랐다. 나는, 아무것도, 느끼지, 못했다. 무수한, 무수한 생명이 꺼졌다. 그들이 모두 너희처럼 강인했더냐? 그들이 모두 너희처럼 삶을 사랑했단 말이냐?",
 	Emote_CollapsingStar	= "%s|1이;가; 붕괴하는 별을 소환하기 시작합니다!",
---	Phase2					= "창조의 도구를 바라보아라!",
+	Phase2					= "창조의 도구를 바라보아라!",
 	CollapsingStar			= "붕괴하는 별"
 })
 
@@ -181,14 +185,14 @@ L:SetWarningLocalization({
 	WarnCatDiedOne		= "수호 야수 죽음 (1 번 남음)"
 })
 
-L:SetTimerLocalization({
-	timerDefender		= "수호 야수 활성"
-})
+-- L:SetTimerLocalization({
+-- 	timerDefender		= "수호 야수 활성"
+-- })
 
 L:SetOptionLocalization({
 	WarnCatDied			= "수호 야수의 남은부활 횟수 알림 보기",
-	WarnCatDiedOne		= "수호 야수 부활 횟수가 1번 남았을 때 알림 보기",
-	timerDefender		= "다음 수호 야수 활성 바 보기"
+	WarnCatDiedOne		= "수호 야수 부활 횟수가 1번 남았을 때 알림 보기"
+--	timerDefender		= "다음 수호 야수 활성 바 보기"
 })
 
 L:SetMiscLocalization({
@@ -206,6 +210,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetMiscLocalization({
+	Pull			= "침입자는 쓴맛을 보게 될 게다!",
 	YellKill		= "드디어... 드디어 그의 손아귀를... 벗어나는구나."
 })
 
@@ -249,7 +254,7 @@ L:SetWarningLocalization({
 })
 
 L:SetTimerLocalization({
-	TimerSimulKill 		= "소환수 부활"
+	TimerSimulKill		= "소환수 부활"
 })
 
 L:SetOptionLocalization({
@@ -260,13 +265,15 @@ L:SetOptionLocalization({
 L:SetMiscLocalization({
 	SpawnYell			= "얘들아, 날 도와라!",
 	WaterSpirit			= "고대 물의 정령",
-	Snaplasher 			= "악어덩굴손",
-	StormLasher 		= "폭풍덩굴손",
+	Snaplasher			= "악어덩굴손",
+	StormLasher		= "폭풍덩굴손",
 	YellKill			= "내게서 그의 지배력이 걷혔다. 다시 온전한 정신을 찾았도다. 영웅들이여, 고맙다.",
 	YellAdds1			= "이오나여, 당신의 종이 도움을 청합니다!",
 	YellAdds2			= "정령의 무리가 너희를 덮치리라!",
 	EmoteLGift			= "이 자라기 시작합니다!", -- |cFF00FFFF생명의 어머니의 선물|r이 자라기 시작합니다!
-	TrashRespawnTimer	= "프레이야 지역 리젠타임"
+	TrashRespawnTimer	= "프레이야 지역 리젠타임",
+	YellPullNormal		= "어떻게 해서든 정원을 수호해야 한다!",
+	YellPullHard		= "장로여, 내게 힘을 나눠다오!"
 })
 
 ----------------------
@@ -321,6 +328,7 @@ L:SetMiscLocalization({
 	MobPhase1		= "거대 전차 Mk II",
 	MobPhase2		= "VX-001",
 	MobPhase3		= "공중지휘기",
+	MobPhase4		= "V-07-TR-0N", -- don't localize
 	YellPull		= "시간이 없어, 친구들! 내가 최근에 만든 기막힌 발명품을 시험하게 도와 주겠지? 자, 마음 바꿀 생각은 말라고. XT-002를 그 꼬락서니로 만들었으니, 너흰 나한테 빚진 셈이란 걸 잊지 마!",
 	YellHardPull	= "자폭 절차를 시작합니다.",
 	YellPhase2		= "멋지군! 참으로 경이적인 결과야! 차체 내구도 98.9 퍼센트라! 손상이라고 보기도 어렵지! 계속하자고.",
@@ -391,6 +399,19 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	YellPull	= "짐승의 대장을 칠 때가 곧 다가올 거예요! 놈의 졸개들에게 노여움과 미움을 쏟아부으세요!",
-	Sara		= "사라"
+	YellPull			= "짐승의 대장을 칠 때가 곧 다가올 거예요! 놈의 졸개들에게 노여움과 미움을 쏟아부으세요!",
+	S1TheLucidDream		= "1단계: 깨어 있는 꿈",
+	Sara				= "사라",
+	GuardianofYoggSaron	= "요그사론의 수호병",
+	S2DescentIntoMadness= "2단계: 광기의 내리막길",
+	CrusherTentacle		= "분쇄의 촉수",
+	CorruptorTentacle	= "부패의 촉수",
+	ConstrictorTentacle	= "압착의 촉수",
+	DescentIntoMadness	= "광기의 내리막길",
+	InfluenceTentacle	= "환각의 촉수",
+	LaughingSkull		= "웃는 해골",
+	BrainofYoggSaron	= "요그사론의 뇌",
+	S3TrueFaceofDeath	= "3단계: 죽음의 진정한 얼굴",
+	YoggSaron			= "요그사론",
+	ImmortalGuardian	= "불멸의 수호병"
 })

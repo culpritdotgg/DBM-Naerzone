@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Sartura", "DBM-AQ40", 1)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(15516)
 
 mod:SetModelID(15516)
@@ -21,7 +21,7 @@ local specWarnWhirlwind	= mod:NewSpecialWarningRun(26083, false, nil, nil, 4, 2)
 
 mod.vb.prewarn_enrage = false
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart()
 	self.vb.prewarn_enrage = false
 end
 

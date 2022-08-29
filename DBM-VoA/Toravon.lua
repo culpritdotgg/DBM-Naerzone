@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("Toravon", "DBM-VoA")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4264 $"):sub(12, -3))
+mod:SetRevision("20220705003611")
 mod:SetCreatureID(38433)
 
 mod:RegisterCombat("combat")
@@ -10,7 +10,8 @@ mod:RegisterEventsInCombat(
 	"SPELL_CAST_START 72096 72034 72095 72091",
 	"SPELL_CAST_SUCCESS 72104 72090",
 	"SPELL_AURA_APPLIED 72098 72004",
-	"SPELL_AURA_APPLIED_DOSE 72098 72004"
+	"SPELL_AURA_APPLIED_DOSE 72098 72004",
+	"SPELL_AURA_REMOVED 72098 72004"
 )
 
 local warnFreezingGround	= mod:NewSpellAnnounce(72090, 1)
@@ -18,7 +19,7 @@ local warnWhiteout			= mod:NewSpellAnnounce(72034, 2)
 local warnOrb				= mod:NewSpellAnnounce(72091, 3)
 local warnFrostbite			= mod:NewStackAnnounce(72004, 2, nil, "Tank|Healer")
 
-local timerNextFrostbite	= mod:NewNextTimer(5, 72004, nil, "Tank", nil, 5, nil, DBM_CORE_L.TANK_ICON)
+local timerNextFrostbite	= mod:NewNextTimer(5, 72004, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerFrostbite		= mod:NewTargetTimer(20, 72004, nil, "Tank|Healer", nil, 5)
 local timerWhiteout			= mod:NewNextTimer(38, 72034, nil, nil, nil, 2)
 local timerNextOrb			= mod:NewNextTimer(32, 72091, nil, nil, nil, 1)
@@ -55,3 +56,9 @@ function mod:SPELL_AURA_APPLIED(args)
 	end
 end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
+
+function mod:SPELL_AURA_REMOVED(args)
+	if args:IsSpellID(72098, 72004) then		-- Frostbite (tanks only debuff)
+		timerFrostbite:Stop(args.destName)
+	end
+end

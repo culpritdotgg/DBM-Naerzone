@@ -1,7 +1,7 @@
 local mod	= DBM:NewMod("ZulJin", "DBM-ZulAman")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 7007 $"):sub(12, -3))
+mod:SetRevision("20220518110528")
 mod:SetCreatureID(23863)
 
 mod:SetZone()
@@ -23,9 +23,9 @@ local warnPhase			= mod:NewPhaseChangeAnnounce(2, nil, nil, nil, nil, nil, 2)
 
 local specWarnParalyze	= mod:NewSpecialWarningDispel(43095, "RemoveMagic", nil, nil, 1, 2)
 
-local timerParalyzeCD	= mod:NewCDTimer(27, 43095, nil, nil, nil, 3, nil, DBM_CORE_L.MAGIC_ICON)
+local timerParalyzeCD	= mod:NewCDTimer(27, 43095, nil, nil, nil, 3, nil, DBM_COMMON_L.MAGIC_ICON)
 
-function mod:OnCombatStart(delay)
+function mod:OnCombatStart()
 	self:SetStage(1)
 end
 
@@ -43,7 +43,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(43095) then
 		warnParalyzeSoon:Schedule(22)
 		if self.Options.SpecWarn43095dispel and self:CheckDispelFilter() then
-			specWarnParalyze:Show(DBM_CORE_L.ALLIES)
+			specWarnParalyze:Show(DBM_COMMON_L.ALLIES)
 			specWarnParalyze:Play("helpdispel")
 		else
 			warnParalyze:Show()

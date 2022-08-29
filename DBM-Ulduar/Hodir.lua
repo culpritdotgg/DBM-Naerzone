@@ -1,11 +1,11 @@
 local mod	= DBM:NewMod("Hodir", "DBM-Ulduar")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision(("$Revision: 4154 $"):sub(12, -3))
+mod:SetRevision("20220711215623")
 mod:SetCreatureID(32845,32926)
 mod:SetUsedIcons(7, 8)
 
-mod:RegisterCombat("combat")
+mod:RegisterCombat("combat_yell", L.Pull)
 mod:RegisterKill("yell", L.YellKill)
 
 mod:RegisterEventsInCombat(
@@ -20,13 +20,13 @@ local warnStormCloud		= mod:NewTargetNoFilterAnnounce(65123)
 
 local specWarnFlashFreeze	= mod:NewSpecialWarningSpell(61968, nil, nil, nil, 3, 2)
 local specWarnStormCloud	= mod:NewSpecialWarningYou(65123, nil, nil, nil, 1, 2)
-local yellStormCloud		= mod:NewYell(65133)
+local yellStormCloud		= mod:NewYell(65123)
 local specWarnBitingCold	= mod:NewSpecialWarningMove(62188, nil, nil, nil, 1, 2)
 
 local enrageTimer			= mod:NewBerserkTimer(475)
-local timerFlashFreeze		= mod:NewCastTimer(9, 61968, nil, nil, nil, 2)
-local timerFrozenBlows		= mod:NewBuffActiveTimer(20, 63512, nil, nil, nil, 5, nil, DBM_CORE_L.TANK_ICON..DBM_CORE_L.HEALER_ICON)
-local timerFlashFrCD		= mod:NewCDTimer(60, 61968, nil, nil, nil, 2)
+local timerFlashFreeze		= mod:NewCastTimer(9, 61968, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON..DBM_COMMON_L.DEADLY_ICON)
+local timerFrozenBlows		= mod:NewBuffActiveTimer(20, 63512, nil, nil, nil, 5, nil, DBM_COMMON_L.TANK_ICON..DBM_COMMON_L.HEALER_ICON)
+local timerFlashFrCD		= mod:NewCDTimer(48, 61968, nil, nil, nil, 2, nil, DBM_COMMON_L.IMPORTANT_ICON..DBM_COMMON_L.DEADLY_ICON) -- REVIEW! Need logs to validate (25 man S2 VOD review) - 48, 48
 local timerAchieve			= mod:NewAchievementTimer(179, 3182)
 
 mod:AddSetIconOption("SetIconOnStormCloud", 65123, true, false, {8, 7})
@@ -34,10 +34,10 @@ mod:AddSetIconOption("SetIconOnStormCloud", 65123, true, false, {8, 7})
 mod.vb.stormCloudIcon = 8
 
 function mod:OnCombatStart(delay)
+	self.vb.stormCloudIcon = 8
 	enrageTimer:Start(-delay)
 	timerAchieve:Start()
-	timerFlashFrCD:Start(-delay)
-	self.vb.stormCloudIcon = 8
+	timerFlashFrCD:Start(63-delay) -- REVIEW! Need more logs to validate variance (25 man log review (2022/07/10) || S2 VOD review) - 66.7 || 63, 65
 end
 
 function mod:SPELL_CAST_START(args)

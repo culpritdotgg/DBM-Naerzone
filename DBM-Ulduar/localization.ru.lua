@@ -39,6 +39,10 @@ L:SetGeneralLocalization({
 	name = "Повелитель Горнов Игнис"
 })
 
+L:SetOptionLocalization({
+	soundConcAuraMastery	= "Воспроизвести звук $spell:31821, чтобы отменить эффекты $spell:63472 (только для |cFFF48CBAПаладин|r, который является владельцем $spell:19746)"
+})
+
 ------------------
 --  Razorscale  --
 ------------------
@@ -68,7 +72,7 @@ L:SetOptionLocalization({
 	timerTurret2				= "Отсчет времени до пушки 2",
 	timerTurret3				= "Отсчет времени до пушки 3 (25 чел.)",
 	timerTurret4				= "Отсчет времени до пушки 4 (25 чел.)",
-	timerGrounded			    = "Отсчет времени для наземной фазы"
+	timerGrounded				= "Отсчет времени для наземной фазы"
 })
 
 L:SetMiscLocalization({
@@ -143,7 +147,7 @@ L:SetMiscLocalization({
 --	YellPull				= "Ваши действия нелогичны. Все возможные исходы этой схватки просчитаны. Пантеон получит сообщение от Наблюдателя в любом случае.",
 	YellKill				= "Я видел миры, охваченные пламенем Творцов. Их жители гибли, не успев издать ни звука. Я был свидетелем того, как галактики рождались и умирали в мгновение ока. И все время я оставался холодным... и безразличным. Я. Не чувствовал. Ничего. Триллионы загубленных судеб. Неужели все они были подобны вам? Неужели все они так же любили жизнь?",
 	Emote_CollapsingStar	= "%s призывает взрывающиеся звезды!",
---	Phase2					= "Узрите чудо созидания!",
+	Phase2					= "Узрите чудо созидания!",
 	CollapsingStar			= "Вспыхивающая звезда"
 })
 
@@ -194,14 +198,14 @@ L:SetWarningLocalization({
 	WarnCatDiedOne	= "Дикий эащитник погибает (осталась 1 жизнь)"
 })
 
-L:SetTimerLocalization({
-	timerDefender	= "Возрождение Дикого защитника"
-})
+-- L:SetTimerLocalization({
+-- 	timerDefender	= "Возрождение Дикого защитника"
+-- })
 
 L:SetOptionLocalization({
 	WarnCatDied		= "Предупреждение, когда Дикий защитник погибает",
-	WarnCatDiedOne	= "Предупреждение, когда у Дикого защитника остается 1 жизнь",
-	timerDefender	= "Отсчет времени до возрождения Дикого защитника"
+	WarnCatDiedOne	= "Предупреждение, когда у Дикого защитника остается 1 жизнь"
+--	timerDefender	= "Отсчет времени до возрождения Дикого защитника"
 })
 
 L:SetMiscLocalization({
@@ -219,6 +223,7 @@ L:SetGeneralLocalization({
 })
 
 L:SetMiscLocalization({
+	Pull		= "Вы будете наказаны за это вторжение!",
 	YellKill	= "Наконец-то я... свободен от его оков…"
 })
 
@@ -271,15 +276,17 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	SpawnYell          = "Помогите мне, дети мои!",
-	WaterSpirit        = "Древний дух воды",
-	Snaplasher         = "Хватоплет",
-	StormLasher        = "Грозовой плеточник",
-	YellKill           = "Он больше не властен надо мной. Мой взор снова ясен. Благодарю вас, герои.",
-	YellAdds1          = "Эонар, твоей прислужнице нужна помощь!",
-	YellAdds2          = "Вас захлестнет сила стихий!",
-	EmoteLGift         = "начинает расти!", -- |cFF00FFFFДар Хранительницы жизни|r начинает расти!
-	TrashRespawnTimer  = "Возрождение монстров"
+	SpawnYell			= "Помогите мне, дети мои!",
+	WaterSpirit			= "Древний дух воды",
+	Snaplasher			= "Хватоплет",
+	StormLasher			= "Грозовой плеточник",
+	YellKill			= "Он больше не властен надо мной. Мой взор снова ясен. Благодарю вас, герои.",
+	YellAdds1			= "Эонар, твоей прислужнице нужна помощь!",
+	YellAdds2			= "Вас захлестнет сила стихий!",
+	EmoteLGift			= "начинает расти!", -- |cFF00FFFFДар Хранительницы жизни|r начинает расти!
+	TrashRespawnTimer	= "Возрождение монстров",
+	YellPullNormal		= "Нужно защитить Оранжерею!",
+	YellPullHard		= "Древни, дайте мне силы!"
 })
 
 ----------------------
@@ -334,6 +341,7 @@ L:SetMiscLocalization({
 	MobPhase1		= "Левиафан II",
 	MobPhase2		= "VX-001 <Противопехотная пушка>",
 	MobPhase3		= "Воздушное судно",
+	MobPhase4		= "В-0-7-ТРОН",
 	YellPull		= "У нас мало времени, друзья! Вы поможете испытать новейшее и величайшее из моих изобретений. И учтите: после того, что вы натворили с XT-002, отказываться просто некрасиво.",
 	YellHardPull	= "Отсчет времени до самоуничтожения начат.",
 	YellPhase2		= "ПРЕВОСХОДНО! Просто восхитительный результат! Целостность обшивки – 98,9 процента! Почти что ни царапинки! Продолжаем!",
@@ -375,10 +383,10 @@ L:SetGeneralLocalization({
 })
 
 L:SetWarningLocalization({
-	WarningGuardianSpawned 			= "Страж %d",
+	WarningGuardianSpawned			= "Страж %d",
 	WarningCrusherTentacleSpawned	= "Тяжелое щупальце",
-	WarningSanity 					= "Осталось %d Здравомыслия",
-	SpecWarnSanity 					= "Осталось %d Здравомыслия",
+	WarningSanity					= "Осталось %d Здравомыслия",
+	SpecWarnSanity					= "Осталось %d Здравомыслия",
 	SpecWarnGuardianLow				= "Прекратите атаковать этого Стража",
 	SpecWarnMadnessOutNow			= "Доведение до помешательства заканчивается - выбегайте",
 	WarnBrainPortalSoon				= "Провал Безумия через 3 секунды",
@@ -404,6 +412,19 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	YellPull	= "Скоро мы сразимся с главарем этих извергов! Обратите гнев и ненависть против его прислужников!",
-	Sara		= "Сара"
+	YellPull			= "Скоро мы сразимся с главарем этих извергов! Обратите гнев и ненависть против его прислужников!",
+	S1TheLucidDream		= "Фаза 1: осознанный сон",
+	Sara				= "Сара",
+	GuardianofYoggSaron	= "Страж Йогг-Сарона",
+	S2DescentIntoMadness= "Фаза 2: Провал Безумия",
+	CrusherTentacle		= "Тяжелое щупальце",
+	CorruptorTentacle	= "Щупальце разложения",
+	ConstrictorTentacle	= "Удушающее щупальце",
+	DescentIntoMadness	= "Провал Безумия",
+	InfluenceTentacle	= "Чувствительное щупальце",
+	LaughingSkull		= "Веселый череп",
+	BrainofYoggSaron	= "Мозг Йогг-Сарона",
+	S3TrueFaceofDeath	= "Фаза 3: истинный лик смерти",
+	YoggSaron			= "Йогг-Сарон",
+	ImmortalGuardian	= "Бессмертный страж"
 })
