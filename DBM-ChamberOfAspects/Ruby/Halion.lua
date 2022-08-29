@@ -146,6 +146,14 @@ function mod:SPELL_AURA_APPLIED(args)--We don't use spell cast success for actua
 		if self.Options.SetIconOnShadowConsumption then
 			self:SetIcon(args.destName, 3)
 		end
+		if self:IsHeroic() then
+			timerShadowConsumptionCD:Start(20)
+		else
+			timerShadowConsumptionCD:Start()
+		end
+		if self:LatencyCheck() then
+			self:SendSync("ShadowCD")
+		end
 	elseif spellId == 74562 then
 		if self:LatencyCheck() then
 			self:SendSync("FieryTarget", args.destName)
@@ -160,6 +168,14 @@ function mod:SPELL_AURA_APPLIED(args)--We don't use spell cast success for actua
 		end
 		if self.Options.SetIconOnFireConsumption then
 			self:SetIcon(args.destName, 7)
+		end
+		if self:IsHeroic() then
+			timerFieryConsumptionCD:Start(20)
+		else
+			timerFieryConsumptionCD:Start()
+		end
+		if self:LatencyCheck() then
+			self:SendSync("FieryCD")
 		end
 	end
 end

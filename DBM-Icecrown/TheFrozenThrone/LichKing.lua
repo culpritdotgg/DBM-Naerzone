@@ -172,7 +172,7 @@ local specWarnIceSpheresYou			= mod:NewSpecialWarningMoveAway(69103, nil, 69090,
 local specWarnGTFO					= mod:NewSpecialWarningGTFO(68983, nil, nil, nil, 1, 8)
 
 local timerPhaseTransition			= mod:NewTimer(62.5, "PhaseTransition", 72262, nil, nil, 6)
-local timerRagingSpiritCD			= mod:NewNextCountTimer(20, 69200, nil, nil, nil, 1)
+local timerRagingSpiritCD			= mod:NewNextCountTimer(22, 69200, nil, nil, nil, 1)
 local timerSoulShriekCD				= mod:NewCDTimer(12, 69242, nil, nil, nil, 1)
 
 mod:AddRangeFrameOption(8, 72133)
@@ -235,11 +235,11 @@ local function NextPhase(self)
 		if self.Options.ShowFrame then
 			self:CreateFrame()
 		end
-		timerSummonValkyr:Start(20, self.vb.valkyrWaveCount+1)
-		timerSoulreaperCD:Start(30, self.vb.soulReaperCount+1)
-		soundSoulReaperSoon:Schedule(30-2.5, "Interface\\AddOns\\DBM-Core\\sounds\\RaidAbilities\\soulreaperSoon.mp3")
+		timerSummonValkyr:Start(18, self.vb.valkyrWaveCount+1)
+		timerSoulreaperCD:Start(28, self.vb.soulReaperCount+1)
+		soundSoulReaperSoon:Schedule(28-2.5, "Interface\\AddOns\\DBM-Core\\sounds\\RaidAbilities\\soulreaperSoon.mp3")
 		timerDefileCD:Start(37.5, self.vb.defileCount+1)
-		timerInfestCD:Start(14, self.vb.infestCount+1)
+		timerInfestCD:Start(10, self.vb.infestCount+1)
 		soundInfestSoon:Schedule(14-2, "Interface\\AddOns\\DBM-Core\\sounds\\RaidAbilities\\infestSoon.mp3")
 		warnDefileSoon:Schedule(33, self.vb.defileCount+1)
 		warnDefileSoon:ScheduleVoice(33, "scatter") -- Voice Pack - Scatter.ogg: "Spread!"
@@ -462,7 +462,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 		if self.vb.phase == 1 then
 			timerRagingSpiritCD:Start(nil, self.vb.ragingSpiritCount)
 		else
-			timerRagingSpiritCD:Start(17, self.vb.ragingSpiritCount)
+			timerRagingSpiritCD:Start(20, self.vb.ragingSpiritCount)
 		end
 		if self.Options.RagingSpiritIcon then
 			self:SetIcon(args.destName, 6, 5)
