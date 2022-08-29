@@ -38,6 +38,8 @@
 local _, private = ...
 
 local wowVersionString, wowBuild, _, wowTOC = GetBuildInfo()
+local testBuild = false -- no API for 3.3.5a, just assume false since it's a final build for private servers
+
 local DBMPrefix = "DBMv4"
 private.DBMPrefix = DBMPrefix
 
