@@ -190,10 +190,10 @@ function mod:SPELL_CAST_SUCCESS(args)
 	if args.spellId == 73070 then				--Incite Terror (fear before air phase)
 		warnInciteTerror:Show()
 		timerInciteTerror:Start()
-		timerNextSwarmingShadows:Restart()--This resets the swarming shadows timer
+		timerNextSwarmingShadows:Start()--This resets the swarming shadows timer
 		warnSwarmingShadowsSoon:Schedule(25.5)
 		warnSwarmingShadowsSoon:ScheduleVoice(25.5, "flamessoon")
-		timerNextPactDarkfallen:Restart(25)--and the Pact timer also reset -5 seconds
+		timerNextPactDarkfallen:Start(25)--and the Pact timer also reset -5 seconds
 		warnPactDarkfallenSoon:Schedule(20)
 		warnPactDarkfallenSoon:ScheduleVoice(20, "linesoon")
 		if self:IsDifficulty("normal10", "heroic10") then
