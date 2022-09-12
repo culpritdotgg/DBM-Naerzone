@@ -347,9 +347,7 @@ L:SetOptionLocalization({
 })
 
 L:SetMiscLocalization({
-	EmoteBreath			= "%s holt tief Luft.",
-	AirPhase			= "Saphiron erhebt sich in die Lüfte!",
-	LandingPhase		= "Saphiron nimmt seine Angriffe wieder auf!"
+	EmoteBreath			= "%s holt tief Luft."
 })
 
 ------------------

@@ -37,9 +37,8 @@ L:SetOptionLocalization({
 	WeaponsStatus				= "Special warning at combat start if unequip/equip function is enabled",
 	ShieldHealthFrame			= "Show boss health with a health bar for $spell:70842",
 	SoundWarnCountingMC			= "Play a 5 second audio countdown for Mind Control",
-	RemoveDruidBuff				= "Remove $spell:48469 / $spell:48470 24 seconds into the fight",
-	RemoveDruidBuffOnMCOnly     = "Remove $spell:48469 / $spell:48470 only if $spell:71289 is cast on you",
-	EqUneqWeapons				= "Unequip/equip weapons if $spell:71289 is cast on you. For equipping to work, create a COMPLETE (with the weapons of choice that will be equipped) equipment set named \"pve\".",
+	RemoveDruidBuff				= "Remove MotW / GotW 24 seconds into the fight",
+	EqUneqWeapons				= "Unequip/equip weapons if MC is cast on you. For equipping to work, create an equipment set called 'pve'.",
 	EqUneqTimer					= "Remove weapons by timer ALWAYS, not on cast (if ping is high). The option above must be enabled.",
 	BlockWeapons				= "Completely block the unequip/equip functions above"
 })
@@ -232,8 +231,8 @@ L:SetTimerLocalization({
 
 L:SetOptionLocalization({
 	WarnPortalOpen				= "Show warning when Nightmare Portals are opened up",
-	TimerPortalsOpen			= "Show timer until Nightmare Portals are opened up",
-	TimerPortalsClose			= "Show timer until Nightmare Portals are closed",
+	TimerPortalsOpen			= "Show timer when Nightmare Portals are opened up",
+	TimerPortalsClose			= "Show timer when Nightmare Portals are closed",
 	TimerBlazingSkeleton		= "Show timer for next Blazing Skeleton spawn"
 })
 
