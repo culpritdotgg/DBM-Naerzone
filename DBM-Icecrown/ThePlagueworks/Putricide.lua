@@ -1,13 +1,13 @@
 local mod	= DBM:NewMod("Putricide", "DBM-Icecrown", 2)
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20220905173355")
 local GetTime = GetTime
 local format = string.format
 
+mod:SetRevision("20220908184858")
 mod:SetCreatureID(36678)
 mod:SetUsedIcons(1, 2, 3, 4)
-mod:SetMinSyncRevision(20220905000000)
+mod:SetMinSyncRevision(20220908000000)
 
 mod:RegisterCombat("combat")
 
@@ -212,6 +212,8 @@ function mod:SPELL_CAST_START(args)
 			timerChokingGasBombCD:Start(50)
 			soundChokingGasSoon:Schedule(50-3, "Interface\\AddOns\\DBM-Core\\sounds\\RaidAbilities\\choking_soon.mp3")
 			warnChokingGasBombSoon:Schedule(50-5)
+			timerMalleableGooCD:Start(45.1) -- timer after phase 2 (25H Lordaeron 2022/09/07) - 10.1 ; 10.1
+			soundMalleableGooSoon:Schedule(45.1-3, "Interface\\AddOns\\DBM-Core\\sounds\\RaidAbilities\\malleable_soon.mp3")
 			timerUnboundPlagueCD:Start(120-(GetTime()-UnboundTime))
 		else
 			timerNextPhase:Start(9.5)

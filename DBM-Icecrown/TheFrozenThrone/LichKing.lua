@@ -3,7 +3,7 @@ local L		= mod:GetLocalizedStrings()
 
 local UnitGUID, UnitName, GetSpellInfo = UnitGUID, UnitName, GetSpellInfo
 
-mod:SetRevision("20220905010015")
+mod:SetRevision("20220909005309")
 mod:SetCreatureID(36597)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7)
 mod:SetMinSyncRevision(20220904000000)
@@ -95,7 +95,7 @@ local specWarnTrapNear				= mod:NewSpecialWarningClose(73539, nil, nil, nil, 3, 
 local specWarnEnrage				= mod:NewSpecialWarningSpell(72143, "Tank")
 local specWarnEnrageLow				= mod:NewSpecialWarningSpell(28747, false)
 
-local timerInfestCD					= mod:NewCDCountTimer(22.5, 70541, nil, "Healer|RaidCooldown", nil, 5, nil, DBM_COMMON_L.HEALER_ICON)
+local timerInfestCD					= mod:NewCDCountTimer(21.2, 70541, nil, "Healer|RaidCooldown", nil, 5, nil, DBM_COMMON_L.HEALER_ICON, true) -- 4s variance [21-25] Added "keep" arg. (10N Icecrown 2022/08/25 || 25H Lordaeron 2022/09/03) - 23.1, 22.9, 22.8, Stage 2/84.3, 12.4/96.8, 23.6, 22.2, 21.7, 22.1, 22.7, 22.0, 23.5, 22.0 || 23.0, 21.2, 24.5, 22.8, 22.1, Stage 2/72.4, 12.5/84.9, 22.1, 21.2, 23.9, 23.3, 22.7, 23.1, 22.9, 23.5 ; 22.6, 21.2, 24.8, 22.9, 22.5, Stage 2/72.4, 12.5/84.9, 21.3, 21.6, 22.4, 21.5
 local timerNecroticPlagueCleanse	= mod:NewTimer(5, "TimerNecroticPlagueCleanse", 70337, "Healer", nil, 5, DBM_COMMON_L.HEALER_ICON, nil, nil, nil, nil, nil, nil, 70337)
 local timerNecroticPlagueCD			= mod:NewCDTimer(30, 70337, nil, nil, nil, 3, nil, DBM_COMMON_L.DISEASE_ICON, true) -- 3s variance [30.1-32.9] Added "keep" arg. (10N Icecrown 2022/08/20 || 10N Icecrown 2022/08/25 || 25H Lordaeron 2022/09/03) - 32.8, 31.6 ; 32.7 ; 31.2;  31.7, 32.7 || 30.2 || 32.3, 32.9 ; 31.3, 31.9 ; 32.9, 30.4 ; 30.7, 31.7 ; 30.1, 30.2 ; 32.6, 31.2 ; 31.1 ; 32.5, 30.3, 31.7
 local timerEnrageCD					= mod:NewCDCountTimer("d20", 72143, nil, "Tank|RemoveEnrage", nil, 5, nil, DBM_COMMON_L.ENRAGE_ICON, true) -- String timer starting with "d" means "allowDouble". 5s variance [20.1-24.7] Added "keep" arg. (25H Lordaeron 2022/09/03) - 20.5, 24.7
@@ -235,9 +235,9 @@ local function NextPhase(self)
 		if self.Options.ShowFrame then
 			self:CreateFrame()
 		end
-		timerSummonValkyr:Start(18, self.vb.valkyrWaveCount+1)
 		timerSoulreaperCD:Start(28, self.vb.soulReaperCount+1)
 		soundSoulReaperSoon:Schedule(28-2.5, "Interface\\AddOns\\DBM-Core\\sounds\\RaidAbilities\\soulreaperSoon.mp3")
+		timerSummonValkyr:Start(18.5, self.vb.valkyrWaveCount+1)
 		timerDefileCD:Start(37.5, self.vb.defileCount+1)
 		timerInfestCD:Start(10, self.vb.infestCount+1)
 		soundInfestSoon:Schedule(14-2, "Interface\\AddOns\\DBM-Core\\sounds\\RaidAbilities\\infestSoon.mp3")
@@ -483,7 +483,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args:IsSpellID(73654, 74295, 74296, 74297) then -- Harvest Souls (Heroic)
 		specWarnHarvestSouls:Show()
 		--specWarnHarvestSouls:Play("phasechange")
-		timerHarvestSoulCD:Start(107) -- Custom edit to make Harvest Souls timers work again
+		timerHarvestSoulCD:Start(106.4) -- Custom edit to make Harvest Souls timers work again. REVIEW! 1s variance? (25H Lordaeron 2022/09/03) - 106.4, 107.5, 106.5
 		timerVileSpirit:Cancel()
 		timerSoulreaperCD:Cancel()
 		soundSoulReaperSoon:Cancel()

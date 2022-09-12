@@ -1,11 +1,11 @@
 local mod	= DBM:NewMod("NorthrendBeasts", "DBM-Coliseum")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20220702173444")
-mod:SetMinSyncRevision(7007)
+mod:SetRevision("20220907010557")
 mod:SetCreatureID(34796, 35144, 34799, 34797)
-mod:SetMinCombatTime(30)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 6, 7, 8)
+mod:SetMinSyncRevision(20220905000000)
+mod:SetMinCombatTime(30)
 mod:SetBossHPInfoToHighest()
 
 mod:RegisterCombat("combat")

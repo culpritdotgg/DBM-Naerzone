@@ -1,11 +1,11 @@
 local mod	= DBM:NewMod("Jaraxxus", "DBM-Coliseum")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20220609005636")
-mod:SetMinSyncRevision(7007)
+mod:SetRevision("20220907103245")
 mod:SetCreatureID(34780)
 --mod:SetMinCombatTime(30)
 mod:SetUsedIcons(7, 8)
+mod:SetMinSyncRevision(20220907000000)
 
 mod:RegisterCombat("combat")
 

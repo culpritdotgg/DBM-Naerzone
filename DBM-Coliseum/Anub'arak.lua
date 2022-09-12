@@ -1,15 +1,13 @@
 local mod	= DBM:NewMod("Anub'arak_Coliseum", "DBM-Coliseum")
 local L		= mod:GetLocalizedStrings()
 
-mod:SetRevision("20220624005857")
-mod:SetMinSyncRevision(7007)
 local CancelUnitBuff = CancelUnitBuff
 local GetSpellInfo = GetSpellInfo
 
 mod:SetRevision("20220909005309")
 mod:SetCreatureID(34564)
 mod:SetUsedIcons(1, 2, 3, 4, 5, 8)
-mod:SetMinSyncRevision(20220623000000)
+mod:SetMinSyncRevision(20220909000000)
 
 mod:RegisterCombat("combat")
 
