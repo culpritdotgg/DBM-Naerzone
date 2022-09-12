@@ -2,7 +2,6 @@ local _, private = ...
 
 local L = DBM_CORE_L
 
-local IsInGroup = private.IsInGroup
 local SendAddonMessage = SendAddonMessage
 
 local frame, fontstring, editBox, button3

@@ -475,9 +475,9 @@ local type, select = type, select
 local GetTime = GetTime
 local bband = bit.band
 local floor, mhuge, mmin, mmax, mrandom = math.floor, math.huge, math.min, math.max, math.random
-local GetNumGroupMembers, GetNumSubgroupMembers, GetNumPartyMembers, GetNumRaidMembers, GetRaidRosterInfo = private.GetNumGroupMembers, private.GetNumSubgroupMembers, GetNumPartyMembers, GetNumRaidMembers, GetRaidRosterInfo -- with compat.lua
+local GetNumGroupMembers, GetNumPartyMembers, GetNumRaidMembers, GetRaidRosterInfo = GetNumGroupMembers, GetNumPartyMembers, GetNumRaidMembers, GetRaidRosterInfo -- with compat.lua
 local UnitName, GetUnitName = UnitName, GetUnitName
-local IsInRaid, IsInGroup, IsInInstance = private.IsInRaid, private.IsInGroup, IsInInstance -- with compat.lua
+local IsInRaid, IsInGroup, IsInInstance = IsInRaid, IsInGroup, IsInInstance -- with compat.lua
 local UnitAffectingCombat, InCombatLockdown, IsFalling, UnitPlayerOrPetInRaid, UnitPlayerOrPetInParty = UnitAffectingCombat, InCombatLockdown, IsFalling, UnitPlayerOrPetInRaid, UnitPlayerOrPetInParty
 local UnitGUID, UnitHealth, UnitHealthMax, UnitBuff, UnitDebuff, UnitAura = UnitGUID, UnitHealth, UnitHealthMax, UnitBuff, UnitDebuff, UnitAura
 local UnitExists, UnitIsDead, UnitIsFriend, UnitIsUnit = UnitExists, UnitIsDead, UnitIsFriend, UnitIsUnit
@@ -493,30 +493,6 @@ local SendAddonMessage = SendAddonMessage
 
 -- for Phanx' Class Colors
 local RAID_CLASS_COLORS = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
-
----------------------------
---  Retail API backport  --
----------------------------
--- prevent other addons from messing with the global function from compat.lua
-function DBM:tIndexOf(tbl, item)
-	return private.tIndexOf(tbl, item)
-end
-
-function DBM:IsInGroup()
-	return private.IsInGroup()
-end
-
-function DBM:IsInRaid()
-	return private.IsInRaid()
-end
-
-function DBM:GetNumSubgroupMembers()
-	return private.GetNumSubgroupMembers()
-end
-
-function DBM:GetNumGroupMembers()
-	return private.GetNumGroupMembers()
-end
 
 ---------------------------------
 --  General (local) functions  --
@@ -704,7 +680,7 @@ do
 	local args = setmetatable({}, argsMT)
 
 	function argsMT.__index:IsSpellID(...)
-		return DBM:tIndexOf({...}, args.spellId) ~= nil
+		return tIndexOf({...}, args.spellId) ~= nil
 	end
 
 	function argsMT.__index:IsPlayer()
@@ -809,16 +785,11 @@ do
 							break
 						end
 					end
-					-- Remove empty event uId table
+					-- Remove empty tables
 					if #mod.registeredUnitEvents[event] <= 0 then
 						mod.registeredUnitEvents[event] = nil
 					end
-					-- Remove empty registered unit events table
-					local count = 0
-					for _ in pairs(mod.registeredUnitEvents) do
-						count = count + 1
-					end
-					if count <= 0 then
+					if #mod.registeredUnitEvents <= 0 then
 						mod.registeredUnitEvents = nil
 					end
 				end
@@ -2022,6 +1993,10 @@ do
 		end
 	end
 
+	function DBM:IsInRaid()
+		return inRaid
+	end
+
 	function DBM:GetNumGuildPlayersInZone() -- Classic/BCC only
 		if not IsInGroup() then return 1 end
 		local total = 0
@@ -2227,9 +2202,12 @@ function DBM:GetCIDFromGUID(guid)
 end
 
 function DBM:IsNonPlayableGUID(guid)
-	if not guid or type(guid) ~= "string" then return false end
-	local guidType = tonumber(guid:sub(5,5), 16)
-	return guidType and (guidType == 3 or guidType == 5) -- Creature and NPC. To determine, add pet or not?
+	if type(guid) == "number" then return false end
+	local guidsub = guid:sub(1, 5)
+	if type(guidsub) == "number" then
+		local guidType = bband(guidsub, 0x00F)
+		return guidType and (guidType == 3 or guidType == 5) -- Creature and NPC. To determine, add pet or not?
+	end
 end
 
 function DBM:IsCreatureGUID(guid)
@@ -3032,14 +3010,14 @@ do
 		-- Auto Logging for entire zone if record only bosses is off
 		if not self.Options.RecordOnlyBosses then
 			if LastInstanceType == "raid" or LastInstanceType == "party" then
-				self:StartLogging(0)
+				self:StartLogging(0, nil)
 			else
 				self:StopLogging()
 			end
 		end
 		if self.Options.FixCLEUOnCombatStart then
 			self:Schedule(0.5, CombatLogClearEntries)
-			self:Debug("Scheduled FixCLEU from SecondaryLoadCheck")
+			DBM:Debug("Scheduled FixCLEU")
 		end
 		--These can still change even if mapID doesn't
 		difficultyIndex = difficulty
@@ -3097,7 +3075,7 @@ do
 		self:Schedule(5, SecondaryLoadCheck, self)
 		if self.Options.FixCLEUOnCombatStart then
 			self:Schedule(0.5, CombatLogClearEntries)
-			self:Debug("Scheduled FixCLEU from ZONE_CHANGED_NEW_AREA")
+			DBM:Debug("Scheduled FixCLEU")
 		end
 	end
 
@@ -3552,7 +3530,7 @@ do
 		if VPVersion then
 			sendSync("DBMv4-Ver", ("%s\t%s\t%s\t%s\t%s\t%s"):format(tostring(DBM.Revision), tostring(DBM.ReleaseRevision), DBM.DisplayVersion, GetLocale(), tostring(not DBM.Options.DontSetIcons), VPVersion))
 		else
-			sendSync("DBMv4-Ver", ("%s\t%s\t%s\t%s\t%s"):format(tostring(DBM.Revision), tostring(DBM.ReleaseRevision), DBM.DisplayVersion, GetLocale(), tostring(not DBM.Options.DontSetIcons)))
+			sendSync("DBMv4-Ver", ("%s\t%s\t%s\t%s"):format(DBM.Revision, DBM.ReleaseRevision, DBM.DisplayVersion, GetLocale()))
 		end
 	end
 
@@ -4329,7 +4307,7 @@ do
 	end
 
 	function DBM:ShowUpdateReminder(newVersion, newRevision, text, url)
-		urlText = url or L.UPDATEREMINDER_URL or "https://github.com/Zidras/DBM-Warmane"
+		urlText = url or L.UPDATEREMINDER_URL or "https://github.com/culpritcr/DBM-Naerzone"
 		if not frame then
 			createFrame()
 		else
@@ -4621,9 +4599,9 @@ do
 			WatchFrame:Show()
 			watchFrameRestore = false
 		end
-		if self.Options.FixCLEUOnCombatStart then
+		if DBM.Options.FixCLEUOnCombatStart then
 			self:Schedule(0.5, CombatLogClearEntries)
-			self:Debug("Scheduled FixCLEU from PLAYER_REGEN_DISABLED")
+			DBM:Debug("Scheduled FixCLEU")
 		end
 	end
 
@@ -5024,7 +5002,7 @@ do
 			--process global options
 			self:HideBlizzardEvents(1)
 			if self.Options.RecordOnlyBosses then
-				self:StartLogging(0)
+				self:StartLogging(0, nil)
 			end
 			if self.Options.HideObjectivesFrame and GetNumTrackedAchievements() == 0 then -- doesn't need InCombatLockdown() check since it's not a protected function
 				if WatchFrame:IsVisible() then
@@ -5171,9 +5149,8 @@ do
 				SendWorldSync(self, "WBE", modId.."\t"..playerRealm.."\t"..startHp.."\t8\t"..name)
 			end
 		end
-		if self.Options.FixCLEUOnCombatStart then
+		if DBM.Options.FixCLEUOnCombatStart then
 			self:Schedule(0.5, CombatLogClearEntries) -- schedule prevents client crash with DBM:StartCombat function (tested on Leotheras)
-			self:Debug("Scheduled FixCLEU from CombatStart")
 		end
 	end
 
@@ -7603,15 +7580,15 @@ do
 	local font2u = CreateFrame("Frame", "DBMWarning2Updater", UIParent)
 	local font3u = CreateFrame("Frame", "DBMWarning3Updater", UIParent)
 	local font1 = frame:CreateFontString("DBMWarning1", "OVERLAY", "GameFontNormal")
-	font1:SetWidth(0) -- Don't hardcode, it WILL cause client crashes if a string with icons and certain fonts reach a certain FontHeight on the OnUpdate grow
+	font1:SetWidth(1024)
 	font1:SetHeight(0)
 	font1:SetPoint("TOP", 0, 0)
 	local font2 = frame:CreateFontString("DBMWarning2", "OVERLAY", "GameFontNormal")
-	font2:SetWidth(0) -- Don't hardcode, it WILL cause client crashes if a string with icons and certain fonts reach a certain FontHeight on the OnUpdate grow
+	font2:SetWidth(1024)
 	font2:SetHeight(0)
 	font2:SetPoint("TOP", font1, "BOTTOM", 0, 0)
 	local font3 = frame:CreateFontString("DBMWarning3", "OVERLAY", "GameFontNormal")
-	font3:SetWidth(0) -- Don't hardcode, it WILL cause client crashes if a string with icons and certain fonts reach a certain FontHeight on the OnUpdate grow
+	font3:SetWidth(1024)
 	font3:SetHeight(0)
 	font3:SetPoint("TOP", font2, "BOTTOM", 0, 0)
 	frame:SetMovable(1)
@@ -9652,7 +9629,7 @@ do
 		if not self.option or self.mod.Options[self.option] then
 			if self.type and (self.type == "cdcount" or self.type == "nextcount") and not self.allowdouble then--remove previous timer.
 				for i = #self.startedTimers, 1, -1 do
---					if DBM.Options.BadTimerAlert or DBM.Options.DebugMode and DBM.Options.DebugLevel > 1 then
+					if DBM.Options.BadTimerAlert or DBM.Options.DebugMode and DBM.Options.DebugLevel > 1 then
 						local bar = DBT:GetBar(self.startedTimers[i])
 						if bar then
 							local remaining = ("%.1f"):format(bar.timer)
@@ -9668,8 +9645,9 @@ do
 								end
 							end
 						end
---					end
+					end
 					DBT:CancelBar(self.startedTimers[i])
+					fireEvent("DBM_Announce", message, self.icon, self.type, self.spellId, self.mod.id, false)
 					fireEvent("DBM_TimerStop", self.startedTimers[i])
 					tremove(self.startedTimers, i)
 				end
@@ -9726,7 +9704,7 @@ do
 					end
 				end
 			end
---			if DBM.Options.BadTimerAlert or DBM.Options.DebugMode and DBM.Options.DebugLevel > 1 then
+			if DBM.Options.BadTimerAlert or DBM.Options.DebugMode and DBM.Options.DebugLevel > 1 then
 				if not self.type or (self.type ~= "target" and self.type ~= "active" and self.type ~= "fades" and self.type ~= "ai") and not self.allowdouble then
 					local bar = DBT:GetBar(id)
 					if bar then
@@ -9744,7 +9722,7 @@ do
 						end
 					end
 				end
---			end
+			end
 			local colorId
 			if self.option then
 				colorId = self.mod.Options[self.option .. "TColor"]
@@ -9908,6 +9886,7 @@ do
 
 	--TODO, figure out why this function doesn't properly stop count timers when calling stop without count on count timers
 	function timerPrototype:Stop(...)
+		fireEvent("DBM_Announce", message, self.icon, self.type, self.spellId, self.mod.id, false)
 		if select("#", ...) == 0 then
 			for i = #self.startedTimers, 1, -1 do
 				fireEvent("DBM_TimerStop", self.startedTimers[i])
