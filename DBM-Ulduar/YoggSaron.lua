@@ -120,6 +120,8 @@ local warnEmpowerSoon				= mod:NewSoonAnnounce(64486, 4)
 local timerEmpower					= mod:NewCDTimer(46.0, 64486, nil, nil, nil, 3) -- REVIEW! variance 45-50? (S3 HM log 2022/07/21) - 46.0, 46.0, 47.4, 48.2
 local timerEmpowerDuration			= mod:NewBuffActiveTimer(10, 64486, nil, nil, nil, 3)
 
+mod:GroupSpells(64486, 64465) -- Empowering Shadows, Shadow Beacon
+
 -- Hard Mode
 mod:AddTimerLine(DBM_COMMON_L.HEROIC_ICON..DBM_CORE_L.HARD_MODE)
 -- Stage Three: True Face of Death
