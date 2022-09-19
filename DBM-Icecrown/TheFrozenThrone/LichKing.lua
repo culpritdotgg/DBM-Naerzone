@@ -483,7 +483,7 @@ function mod:SPELL_CAST_SUCCESS(args)
 	elseif args:IsSpellID(73654, 74295, 74296, 74297) then -- Harvest Souls (Heroic)
 		specWarnHarvestSouls:Show()
 		--specWarnHarvestSouls:Play("phasechange")
-		timerHarvestSoulCD:Start(106.4) -- Custom edit to make Harvest Souls timers work again. REVIEW! 1s variance? (25H Lordaeron 2022/09/03) - 106.4, 107.5, 106.5
+		timerHarvestSoulCD:Start(104.5) -- Custom edit to make Harvest Souls timers work again. REVIEW! 1s variance? (25H Lordaeron 2022/09/03) - 106.4, 107.5, 106.5
 		timerVileSpirit:Cancel()
 		timerSoulreaperCD:Cancel()
 		soundSoulReaperSoon:Cancel()

@@ -55,7 +55,7 @@ local timerBlisteringCold		= mod:NewCastTimer(6, 70123, nil, nil, nil, 2)
 local timerUnchainedMagic		= mod:NewCDTimer(32, 69762, nil, nil, nil, 3) -- (25H Lordaeron 2022/07/09 || 10N Icecrown 2022/08/22 || 10N Icecrown 2022/08/25) - 32.0, 63.2, 32.1, 77.8, 32.1, 32.5, 31.9, 34.8 || 35.7, 58.4, 32.1, 77.9, 32.1, 78.6, 32.0, 32.0, 32.1 || 32.0, 62.1, 32.0, Stage 2/68.4, 9.9/78.3, 32.0
 local timerInstability			= mod:NewBuffFadesTimer(5, 69766, nil, nil, nil, 5)
 local timerChilledtotheBone		= mod:NewBuffFadesTimer(8, 70106, nil, nil, nil, 5)
-local timerTailSmash			= mod:NewCDTimer(27.4, 71077, nil, nil, nil, 2, nil, nil, true) -- ~7s variance [27-34]? Added "keep" arg. (25H Lordaeron 2022/07/09 || 10N Icecrown 2022/08/25) - 28.7; 93.3, 30.6, 83.1, 29.2, 29.6, 29.6, 33.8; 29.2, 65.7, 30.8, 79.1, 27.9, 31.1, 27.9, 27.4; 29.7; 28.9, 64.7, 27.4, 84.3, 32.4, 30.0, 29.2 || 94.0, 31.5, Stage 2/59.0, 19.1/78.0, 31.9
+local timerTailSmash			= mod:NewCDTimer(30, 71077, nil, nil, nil, 2, nil, nil, true) -- ~7s variance [27-34]? Added "keep" arg. (25H Lordaeron 2022/07/09 || 10N Icecrown 2022/08/25) - 28.7; 93.3, 30.6, 83.1, 29.2, 29.6, 29.6, 33.8; 29.2, 65.7, 30.8, 79.1, 27.9, 31.1, 27.9, 27.4; 29.7; 28.9, 64.7, 27.4, 84.3, 32.4, 30.0, 29.2 || 94.0, 31.5, Stage 2/59.0, 19.1/78.0, 31.9
 
 local soundUnchainedMagic		= mod:NewSoundYou(69762, nil, "SpellCaster")
 
@@ -379,7 +379,7 @@ function mod:UNIT_TARGET(uId)
 		self:SetStage(1)
 		timerNextAirphase:Start()
 		timerUnchainedMagic:Start(10) -- REVIEW!
-		timerTailSmash:Start(19) -- REVIEW! 5s variance [19-23]? (10N Icecrown 2022/08/25) - 19.0
+--		timerTailSmash:Start(19) -- REVIEW! 5s variance [19-23]? (10N Icecrown 2022/08/25) - 19.0
 		timerNextBlisteringCold:Start(35) -- 5s variance [35-40]
 		self:UnregisterShortTermEvents()
 	end
@@ -395,7 +395,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerNextFrostBreath:Cancel()
 		timerUnchainedMagic:Cancel()
 		timerNextBlisteringCold:Cancel()
-		timerTailSmash:Cancel()
+--		timerTailSmash:Cancel()
+		timerTailSmash:Start(60)
 		timerNextGroundphase:Start()
 		warnGroundphaseSoon:Schedule(37.5)
 		self:RegisterShortTermEvents(
