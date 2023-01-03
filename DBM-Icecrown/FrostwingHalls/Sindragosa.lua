@@ -110,7 +110,7 @@ local function warnBeaconTargets(self)
 		end
 	end
 	if self.Options.AssignWarnDirectionsCount then
-		if self.vb.phase == 1 then
+		if self.vb.phase == 1.5 then
 			if self:IsDifficulty("normal25") then
 				-- 5 beacons
 				warnFrostBeacon:Show("\n<   >"..
@@ -148,7 +148,6 @@ local function warnUnchainedTargets(self)
 		end
 	end
 	warnUnchainedMagic:Show(table.concat(unchainedTargets, "<, >"))
-	timerUnchainedMagic:Start()
 	table.wipe(unchainedTargets)
 	self.vb.unchainedIcons = 1
 	playerUnchained = false
@@ -189,8 +188,9 @@ function mod:OnCombatStart(delay)
 	self:SetStage(1)
 	berserkTimer:Start(-delay)
 	timerNextAirphase:Start(50-delay)
-	timerNextBlisteringCold:Start(33-delay)
-	timerTailSmash:Start(20-delay)
+	timerNextBlisteringCold:Start(32.9-delay)
+	timerTailSmash:Start(20-delay) -- (25H Lordaeron 2022/07/09 || 10N Icecrown 2022/08/22 || 10N Icecrown 2022/08/25) - 20.0 || 20.0 || 20.0
+	timerUnchainedMagic:Start(10-delay) -- (25H Lordaeron 2022/07/09 || 10N Icecrown 2022/08/22 || 10N Icecrown 2022/08/25) - 10.1 || 10.1 || 10.0
 	self.vb.warned_P2 = false
 	self.vb.warnedfailed = false
 	table.wipe(beaconTargets)
@@ -228,6 +228,8 @@ function mod:SPELL_CAST_SUCCESS(args)
 			DBM.RangeCheck:SetBossRange(25, self:GetBossUnitByCreatureId(36853))
 			self:Schedule(5.5, ResetRange, self)
 		end
+	elseif spellId == 69762 then	-- Unchained Magic
+		timerUnchainedMagic:Start()
 	end
 end
 
@@ -238,7 +240,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		if args:IsPlayer() then
 			playerBeaconed = true
 			-- Beacon Direction snippet
-			if self.vb.phase == 1 and self.Options.SpecWarn70126moveto then
+			if self.vb.phase == 1.5 and self.Options.SpecWarn70126moveto then
 				for i = 1, #beaconTargets do
 					local targetName = beaconTargets[i]
 					if targetName == DBM:GetMyPlayerInfo() then
@@ -371,19 +373,38 @@ function mod:UNIT_HEALTH(uId)
 	end
 end
 
+function mod:UNIT_TARGET(uId)
+	-- Attempt to catch when she lands by checking for Sindragosa's target being a raid member
+	if UnitExists(uId.."target") then
+		self:SetStage(1)
+		timerNextAirphase:Start()
+		timerUnchainedMagic:Start(10) -- REVIEW!
+--		timerTailSmash:Start(19) -- REVIEW! 5s variance [19-23]? (10N Icecrown 2022/08/25) - 19.0
+		timerNextBlisteringCold:Start(35) -- 5s variance [35-40]
+		self:UnregisterShortTermEvents()
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if (msg == L.YellAirphase or msg:find(L.YellAirphase)) or (msg == L.YellAirphaseDem or msg:find(L.YellAirphaseDem)) then
 		if self.Options.ClearIconsOnAirphase then
 			self:ClearIcons()
 		end
+		self:SetStage(1.5)
 		warnAirphase:Show()
 		timerNextFrostBreath:Cancel()
+		timerUnchainedMagic:Cancel()
+		timerNextBlisteringCold:Cancel()
 		timerUnchainedMagic:Start(55)
 		timerNextBlisteringCold:Start(80)--Not exact anywhere from 80-110seconds after airphase begin
 		timerNextAirphase:Start()
+--		timerTailSmash:Cancel()
+		timerTailSmash:Start(60)
 		timerNextGroundphase:Start()
-		timerTailSmash:Start(60) -- 2 logs from late 2021 with 68 seconds after airphase begin. Need more logs to validate
 		warnGroundphaseSoon:Schedule(37.5)
+		self:RegisterShortTermEvents(
+			"UNIT_TARGET boss1"
+		)
 	elseif (msg == L.YellPhase2 or msg:find(L.YellPhase2)) or (msg == L.YellPhase2Dem or msg:find(L.YellPhase2Dem)) then
 		self:SetStage(2)
 		warnPhase2:Show()
