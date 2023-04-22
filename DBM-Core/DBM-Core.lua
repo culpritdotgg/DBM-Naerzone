@@ -4329,7 +4329,7 @@ do
 	end
 
 	function DBM:ShowUpdateReminder(newVersion, newRevision, text, url)
-		urlText = url or L.UPDATEREMINDER_URL or "https://github.com/Zidras/DBM-Warmane"
+		urlText = url or L.UPDATEREMINDER_URL or "https://github.com/culpritcr/DBM-Naerzone"
 		if not frame then
 			createFrame()
 		else

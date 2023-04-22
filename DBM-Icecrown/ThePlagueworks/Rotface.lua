@@ -142,7 +142,7 @@ mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_CAST_SUCCESS(args)
 	if args:IsSpellID(72272, 72273) then
-		DBM:AddMsg("Vile Gas SPELL_CAST_SUCCESS unhidden from combat log. Notify Zidras on Discord or GitHub")
+		DBM:AddMsg("Vile Gas SPELL_CAST_SUCCESS unhidden from combat log. Notify Culprit on Discord or GitHub")
 		timerVileGasCD:Start()
 	end
 end
