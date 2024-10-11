@@ -399,7 +399,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		timerNextBlisteringCold:Start(80)--Not exact anywhere from 80-110seconds after airphase begin
 		timerNextAirphase:Start()
 --		timerTailSmash:Cancel()
-		timerTailSmash:Start(60)
+		timerTailSmash:Start(65)
 		timerNextGroundphase:Start()
 		warnGroundphaseSoon:Schedule(37.5)
 		self:RegisterShortTermEvents(
