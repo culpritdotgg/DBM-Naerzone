@@ -33,6 +33,7 @@ local specWarnGoo			= mod:NewSpecialWarningDodge(72297, true, nil, nil, 1, 2) --
 local timerGasSpore			= mod:NewBuffFadesTimer(12, 69279, nil, nil, nil, 3)
 local timerVileGas			= mod:NewBuffFadesTimer(6, 69240, nil, "Ranged", nil, 3)
 local timerGasSporeCD		= mod:NewNextTimer(40, 69279, nil, nil, nil, 3)		-- Every 40 seconds except after 3rd and 6th cast, then it's 50sec CD
+local timerVileGasCD		= mod:NewNextTimer(45, 69279, nil, nil, nil, 3)		-- Every 40 seconds except after 3rd and 6th cast, then it's 50sec CD
 local timerPungentBlight	= mod:NewNextTimer(34, 69195, nil, nil, nil, 2)		-- Edited. ~34 seconds after 3rd stack of inhaled
 local timerInhaledBlight	= mod:NewNextTimer(34.2, 69166, nil, nil, nil, 6)	-- variance? (25H Lordaeron 2022/09/04) - 34.2, 34.7, *, 34.2
 local timerGastricBloat		= mod:NewTargetTimer(100, 72219, nil, "Tank|Healer", nil, 5, nil, DBM_COMMON_L.TANK_ICON)	-- 100 Seconds until expired
@@ -146,6 +147,7 @@ function mod:SPELL_AURA_APPLIED(args)
 		end
 	elseif args:IsSpellID(69240, 71218, 73019, 73020) and args:IsDestTypePlayer() then	-- Vile Gas
 		vileGasTargets[#vileGasTargets + 1] = args.destName
+		timerVileGasCD:Start()
 		if args:IsPlayer() then
 			specWarnVileGas:Show()
 			specWarnVileGas:Play("scatter")
@@ -160,6 +162,12 @@ function mod:SPELL_AURA_APPLIED(args)
 				self.vb.warnedfailed = true
 				SendChatMessage(L.AchievementFailed:format(args.destName, amount), "RAID_WARNING")
 			end
+		end
+	elseif args:IsSpellID(72550) then	-- Malleable Goo
+		if self:IsDifficulty("heroic25") then
+			timerGooCD:Start()
+		else
+			timerGooCD:Start(15)--30 seconds in between goos on 10 man heroic
 		end
 	end
 end

@@ -21,7 +21,7 @@ local warnRadiatingOoze			= mod:NewSpellAnnounce(69760, 3)
 local warnOozeSpawn				= mod:NewAnnounce("WarnOozeSpawn", 1)
 local warnStickyOoze			= mod:NewSpellAnnounce(69774, 1)
 local warnUnstableOoze			= mod:NewStackAnnounce(69558, 2)
-local warnVileGas				= mod:NewTargetAnnounce(72272, 3)
+local warnVileGas				= mod:NewTargetAnnounce(72273, 3)
 
 local specWarnMutatedInfection	= mod:NewSpecialWarningYou(69674, nil, nil, nil, 1, 2)
 local specWarnStickyOoze		= mod:NewSpecialWarningMove(69774, nil, nil, nil, 1, 2)
@@ -29,17 +29,17 @@ local specWarnOozeExplosion		= mod:NewSpecialWarningDodge(69839, nil, nil, nil, 
 local specWarnSlimeSpray		= mod:NewSpecialWarningSpell(69508, false, nil, nil, 1, 2)--For people that need a bigger warning to move
 local specWarnRadiatingOoze		= mod:NewSpecialWarningSpell(69760, "-Tank", nil, nil, 1, 2)
 local specWarnLittleOoze		= mod:NewSpecialWarning("SpecWarnLittleOoze", false, nil, nil, 1, 2)
-local specWarnVileGas			= mod:NewSpecialWarningYou(72272, nil, nil, nil, 1, 2)
+local specWarnVileGas			= mod:NewSpecialWarningYou(72273, nil, nil, nil, 1, 2)
 
 local timerStickyOoze			= mod:NewNextTimer(16, 69774, nil, "Tank", nil, 5, nil, DBM_COMMON_L.TANK_ICON)
 local timerWallSlime			= mod:NewNextTimer(25, 69789) -- Edited.
 local timerSlimeSpray			= mod:NewNextTimer(20, 69508, nil, nil, nil, 3) -- Log reviewed (25H Lordaeron 2022/07/09 || 10N Icecrown 2022/08/25) - 20.1, 20.0, 20.0, 20.1, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0 || 20.0, 20.1, 20.0, 20.0
 local timerMutatedInfection		= mod:NewTargetTimer(12, 69674, nil, nil, nil, 5)
 local timerOozeExplosion		= mod:NewCastTimer(4, 69839, nil, nil, nil, 2, nil, DBM_COMMON_L.MYTHIC_ICON, nil, 3)
-local timerVileGasCD			= mod:NewNextTimer(30, 72272, nil, nil, nil, 3) -- REVIEW! 5s variance [30-35]? (25H Lordaeron 2022/07/09) "Vile Gas-72273-npc:36678 = pull:28.9[+2], 1.4, 0.9, 28.5[+1], 0.8, 0.7, 31.7, 2.2[+1], 35.6, 0.1[+3], 38.9, 1.0, 0.8[+1], 30.4, 2.0, 0.9, 30.2, 0.4, 0.1, 33.4, 0.3[+1], 1.5[+1], 38.2"
+local timerVileGasCD			= mod:NewNextTimer(40, 72273, nil, nil, nil, 3) -- REVIEW! 5s variance [30-35]? (25H Lordaeron 2022/07/09) "Vile Gas-72273-npc:36678 = pull:28.9[+2], 1.4, 0.9, 28.5[+1], 0.8, 0.7, 31.7, 2.2[+1], 35.6, 0.1[+3], 38.9, 1.0, 0.8[+1], 30.4, 2.0, 0.9, 30.2, 0.4, 0.1, 33.4, 0.3[+1], 1.5[+1], 38.2"
 
 
-mod:AddRangeFrameOption(10, 72272, "Ranged")
+mod:AddRangeFrameOption(10, 72273, "Ranged")
 mod:AddSetIconOption("InfectionIcon", 69674, true, 0, {1, 2})
 mod:AddBoolOption("TankArrow", true, nil, nil, nil, nil, 69674)
 
@@ -141,8 +141,8 @@ end
 mod.SPELL_AURA_APPLIED_DOSE = mod.SPELL_AURA_APPLIED
 
 function mod:SPELL_CAST_SUCCESS(args)
-	if args:IsSpellID(72272, 72273) then
-		DBM:AddMsg("Vile Gas SPELL_CAST_SUCCESS unhidden from combat log. Notify Culprit on Discord or GitHub")
+	if args.spellId == 72273 and self:AntiSpam(3, 5) then
+		warnVileGas:Show()
 		timerVileGasCD:Start()
 	end
 end
